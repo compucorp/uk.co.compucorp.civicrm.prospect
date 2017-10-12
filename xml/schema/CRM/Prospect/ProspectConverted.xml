@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Prospect</base>
+  <class>ProspectConverted</class>
+  <name>civicrm_prospect_converted</name>
+  <comment>Relationship between Case (Prospect) and Contribution / Pledge payment entity.</comment>
+  <add>4.4</add>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique ID</comment>
+    <add>4.4</add>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>prospect_case_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>FK to Case (Prospect)</comment>
+    <add>4.4</add>
+  </field>
+  <foreignKey>
+    <name>prospect_case_id</name>
+    <table>civicrm_case</table>
+    <key>id</key>
+    <add>4.4</add>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+
+  <field>
+    <name>payment_entity_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>ID of Contribution / Pledge entity</comment>
+    <add>4.4</add>
+  </field>
+
+  <field>
+    <name>payment_type_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Payment type (1 - Contribution, 2 - Pledge)</comment>
+    <add>4.4</add>
+  </field>
+
+  <index>
+    <name>unique_prospect_converted</name>
+    <fieldName>prospect_case_id</fieldName>
+    <unique>true</unique>
+    <add>4.4</add>
+  </index>
+</table>

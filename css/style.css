@@ -1,0 +1,26 @@
+div.prospect-info {
+  position: absolute;
+  top: 35px;
+  right: 24px;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+div.accordion div.prospect-info {
+  display: none;
+}
+
+div.prospect-pledge-payment-wrapper div.prospect-info {
+  top: 6px;
+  right: 20px;
+}
+
+div.prospect-pledge-payment-wrapper div.case-id {
+  display: inline;
+}
+
+div.prospect-pledge-payment-wrapper div.restriction-code {
+  display: inline;
+  margin-left: 12px;
+}
