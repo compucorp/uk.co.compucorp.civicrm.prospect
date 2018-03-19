@@ -38,7 +38,7 @@ class CRM_Prospect_ProspectCustomGroups {
    * @param string $customGroupName
    * @param int $caseId
    */
-  public function __construct($customGroupName, $caseId) {
+  public function __construct($customGroupName, $caseId = 0) {
     $this->customGroupName = $customGroupName;
     $this->caseId = $caseId;
   }
@@ -49,17 +49,25 @@ class CRM_Prospect_ProspectCustomGroups {
    * @param array $params
    */
   public function updateFieldsFromParams($params) {
+    if (!$this->caseId) {
+      return;
+    }
+
     $updateParams = [
       'entity_id' => $this->caseId,
     ];
 
+    $customValuesParams = [];
     foreach ($params as $key => $value) {
       if (substr($key, 0, 7) === 'custom_') {
-        $updateParams[$key] = $value;
+        $customValuesParams[$key] = $value;
       }
     }
 
-    civicrm_api3('CustomValue', 'create', $updateParams);
+    if (!empty($customValuesParams)) {
+      $updateParams = array_merge($updateParams, $customValuesParams);
+      civicrm_api3('CustomValue', 'create', $updateParams);
+    }
 
     $this->getFields(TRUE);
   }
@@ -165,6 +173,20 @@ class CRM_Prospect_ProspectCustomGroups {
   }
 
   /**
+   * Checks if the custom field
+   * required.
+   *
+   * @param string $field
+   *
+   * @return boolean
+   */
+  public function isRequired($field) {
+    $fields = $this->getFields();
+
+    return $fields[$field]['is_required'];
+  }
+
+  /**
    * Gets Option Value's label of a custom field.
    *
    * @param string $field
@@ -239,10 +261,13 @@ class CRM_Prospect_ProspectCustomGroups {
 
     $customFieldData = $this->getCustomFieldData();
 
-    $caseProspectCustomValues = civicrm_api3('Case', 'getsingle', [
-      'id' => $this->caseId,
-      'return' => $this->getCustomFieldMachineNameList(),
-    ]);
+    if ($this->caseId) {
+      $caseProspectCustomValues = civicrm_api3('Case', 'getsingle', [
+        'id' => $this->caseId,
+        'return' => $this->getCustomFieldMachineNameList(),
+      ]);
+    }
+
 
     foreach ($customFieldData as $name => $value) {
       $this->fields[$name] = [
@@ -250,7 +275,8 @@ class CRM_Prospect_ProspectCustomGroups {
         'label' => $value['label'],
         'data_type' => $value['data_type'],
         'option_group_id' => $value['option_group_id'],
-        'value' => isset($caseProspectCustomValues[$value['key']]) ? $caseProspectCustomValues[$value['key']] : NULL,
+        'is_required' => $value['is_required'],
+        'value' => !empty($caseProspectCustomValues[$value['key']]) ? $caseProspectCustomValues[$value['key']] : NULL,
       ];
     }
 
@@ -274,7 +300,7 @@ class CRM_Prospect_ProspectCustomGroups {
 
     $customFields = civicrm_api3('CustomField', 'get', [
       'custom_group_id' => $this->customGroupName,
-      'return' => ['name', 'label', 'data_type', 'option_group_id'],
+      'return' => ['name', 'label', 'data_type', 'option_group_id', 'is_required'],
     ]);
 
     foreach ($customFields['values'] as $customField) {
@@ -283,6 +309,7 @@ class CRM_Prospect_ProspectCustomGroups {
         'label' => $customField['label'],
         'data_type' => $customField['data_type'],
         'option_group_id' => !empty($customField['option_group_id']) ? $customField['option_group_id'] : NULL,
+        'is_required' => !empty($customField['is_required']) ? TRUE : FALSE,
       ];
     }
 

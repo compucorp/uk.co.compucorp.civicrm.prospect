@@ -438,6 +438,32 @@ function _prospect_civicrm_get_campaign_label_by_id($id) {
 }
 
 /**
+ * Implements hook_civicrm_alterContent.
+ */
+function prospect_civicrm_alterContent(&$content, $context, $tplName, &$object) {
+  if (_prospect_isOpenCasePage($tplName)) {
+    _prospect_RemoveSubstatusCustomGroup($content);
+  }
+}
+
+function _prospect_isOpenCasePage($tplName) {
+  $pageType = CRM_Utils_Request::retrieve('type', 'String');
+  return ($tplName == 'CRM/Custom/Form/CustomDataByType.tpl') && ($pageType == 'Case');
+}
+
+/**
+ * Removes prospect substatus custom
+ * group from 'Open Case' form since
+ * we will re-add it in a different location.
+ *
+ * @param $content
+ */
+function _prospect_RemoveSubstatusCustomGroup(&$content) {
+  $extensionDirectory = CRM_Core_Resources::singleton()->getPath('uk.co.compucorp.civicrm.prospect');
+  $content .= file_get_contents($extensionDirectory . '/js/Prospect.Page.CaseOpen.js');
+}
+
+/**
  * Implements hook_civicrm_buildForm().
  */
 function prospect_civicrm_buildForm($formName, &$form) {
@@ -445,6 +471,7 @@ function prospect_civicrm_buildForm($formName, &$form) {
     new CRM_Prospect_Form_Handler_PaymentEntityAdd(),
     new CRM_Prospect_Form_Handler_PaymentEntityUpdate(),
     new CRM_Prospect_Form_Handler_CaseStatusUpdate(),
+    new CRM_Prospect_Form_Handler_OpenCase(),
   ];
 
   foreach($handlers as $handler) {

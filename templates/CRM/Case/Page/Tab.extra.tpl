@@ -5,7 +5,7 @@
       <tr>
         <td data-label="{$prospectFinancialInformationFields->getLabelOf('Campaign_Id')}">
           {$prospectFinancialInformationFields->getLabelOf('Campaign_Id')}:
-          <span class="crmf-{$prospectFinancialInformationFields->getMachineNameOf('Campaign_Id')} crm-editable" data-type="select">{$campaignLabel}</span>
+          <span class="crmf-{$prospectFinancialInformationFields->getMachineNameOf('Campaign_Id')} crm-editable no-select2" data-type="select">{$campaignLabel}</span>
         </td>
         <td data-label="{$prospectFinancialInformationFields->getLabelOf('Budgeted')}">
           {$prospectFinancialInformationFields->getLabelOf('Budgeted')}:
@@ -17,7 +17,7 @@
         </td>
         <td data-label="{$prospectFinancialInformationFields->getLabelOf('Restricted_Code')}">
           {$prospectFinancialInformationFields->getLabelOf('Restricted_Code')}:
-          <span class="crmf-{$prospectFinancialInformationFields->getMachineNameOf('Restricted_Code')} crm-editable" data-type="select">{$prospectFinancialInformationFields->getOptionLabelOf('Restricted_Code')}</span>
+          <span class="crmf-{$prospectFinancialInformationFields->getMachineNameOf('Restricted_Code')} crm-editable no-select2" data-type="select">{$prospectFinancialInformationFields->getOptionLabelOf('Restricted_Code')}</span>
         </td>
       </tr>
       <tr>
