@@ -203,9 +203,16 @@ class CRM_Prospect_ProspectCustomGroups {
     // So if the field's type is Date then we need to pick its value
     // from Request array and then convert it into CiviCRM date format.
     if ($dataType === 'Date') {
-      $dateArray = [
-        'value' => CRM_Utils_Request::getValue($fieldKey, CRM_Utils_Request::exportValues()),
-      ];
+      if(method_exists(CRM_Utils_Request, 'retrieveValue')) {
+        $dateArray = [
+          'value' => CRM_Utils_Request::retrieveValue($fieldKey, 'String', NULL, FALSE, CRM_Utils_Request::exportValues()),
+        ];
+      }
+      else {
+        $dateArray = [
+          'value' => CRM_Utils_Request::getValue($fieldKey, CRM_Utils_Request::exportValues()),
+        ];
+      }
 
       CRM_Utils_Date::convertToDefaultDate($dateArray, 1, 'value');
 
