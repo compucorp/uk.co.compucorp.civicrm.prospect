@@ -232,7 +232,7 @@ class CRM_Prospect_ProspectCustomGroups {
       }
       else {
         $dateArray = [
-          'value' => CRM_Utils_Request::getValue($fieldKey, CRM_Utils_Request::exportValues()),
+          'value' => CRM_Utils_Array::value($fieldKey, CRM_Utils_Request::exportValues()),
         ];
       }
 
