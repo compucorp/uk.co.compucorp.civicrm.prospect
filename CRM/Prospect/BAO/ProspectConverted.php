@@ -55,6 +55,7 @@ class CRM_Prospect_BAO_ProspectConverted extends CRM_Prospect_DAO_ProspectConver
       'payment_entity' => NULL,
       'payment_entity_id' => NULL,
       'payment_url' => NULL,
+      'payment_status' => NULL,
     ];
 
     switch ($this->payment_type_id) {
@@ -66,6 +67,7 @@ class CRM_Prospect_BAO_ProspectConverted extends CRM_Prospect_DAO_ProspectConver
         }
 
         $result['payment_completed'] = $contribution['total_amount'];
+        $result['payment_status'] = $contribution['contribution_status'];
         $result['payment_entity'] = 'contribute';
         $result['payment_url'] = '/civicrm/contact/view/contribution?reset=1&id=' . $this->payment_entity_id . '&action=view&context=contribution&selectedChild=contribute';
       break;

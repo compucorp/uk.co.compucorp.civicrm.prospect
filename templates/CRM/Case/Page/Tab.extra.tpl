@@ -52,7 +52,8 @@
             <div class="converted-case-payment-info">
               {if $paymentInfo.payment_completed}
                 <div class="payment-completed">
-                  {ts}Payment completed{/ts}: <span>{$paymentInfo.payment_completed}</span>
+
+                  {ts}Payment {$paymentInfo.payment_status}:{/ts} <span>{$paymentInfo.payment_completed}</span>
                 </div>
               {/if}
               {if $paymentInfo.pledge_balance}

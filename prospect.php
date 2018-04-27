@@ -250,7 +250,8 @@ function _prospect_civicrm_post_case($op, $objectId, &$objectRef) {
  * @param object $objectRef
  */
 function _prospect_civicrm_post_contribution($op, $objectId, &$objectRef) {
-  _prospect_civicrm_convert($objectId, CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_CONTRIBUTION);
+  $contributionPostHook = new CRM_Prospect_Hook_Post_Contribution($op, $objectId, $objectRef);
+  $contributionPostHook->runHook();
 }
 
 /**
@@ -276,30 +277,6 @@ function _prospect_civicrm_post_pledge($op, $objectId, &$objectRef) {
  * @param int $paymentTypeId
  */
 function _prospect_civicrm_convert($paymentEntityId, $paymentTypeId) {
-  $caseId = CRM_Utils_Request::retrieve('caseId', 'Integer');
-
-  if (!$caseId) {
-    return;
-  }
-
-  $prospectConverted = CRM_Prospect_BAO_ProspectConverted::findByCaseID($caseId);
-  if (!empty($prospectConverted)) {
-    return;
-  }
-
-  $fields = new CRM_Prospect_prospectFinancialInformationFields($caseId);
-
-  CRM_Prospect_BAO_ProspectConverted::create([
-    'prospect_case_id' => $caseId,
-    'payment_entity_id' => $paymentEntityId,
-    'payment_type_id' => $paymentTypeId,
-  ]);
-
-  // Sets (Prospect Amount) value to 0.
-  $fields->setValueOf('Prospect_Amount', 0);
-
-  // Sets (Expectation) value to 0.
-  $fields->setValueOf('Expectation', 0);
 }
 
 /**
