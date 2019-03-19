@@ -14,11 +14,11 @@ When a prospect becomes successful, you can easily convert the prospect into a c
 Since CiviProspect is an extended part of CiviCase, all CiviCase reports in CiviCRM can be used to report on CiviProspect. Apart from these default reports in CiviCRM, we also integrated CiviProspect with the powerful [ Pivot Reports extension](https://civicrm.org/extensions/civicrm-pivot-reports). Install the extension and you can start create your own flexible prospect reports!
 
 ## How do I get CiviProspect?
-Manual is designed to work with CiviCRM 4.7.x or 5.x plus. If you are on an earlier version of CiviCRM, you will need to upgrade your site first or contact info@compucorp.co.uk if you needs assistance to do so.
+CiviProspect is designed to work with CiviCRM 4.7.x or 5.x plus. If you are on an earlier version of CiviCRM, you will need to upgrade your site first or contact info@compucorp.co.uk if you needs assistance to do so.
 
 If your CiviCRM is already on CiviCRM 4.7.x or 5.x plus and this is the first time you use an extension,  please see [Here](http://wiki.civicrm.org/confluence/display/CRMDOC/Extensions "CiviCRM Extensions Installation") for full instructions and information on how to set and configure extensions.
 
-You can get the latest release of Membership Extras from [CiviCRM extension directory page](https://civicrm.org/extensions/civiprospect) or our [Github repository release page](https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/releases).
+You can get the latest release of CiviProspect from [CiviCRM extension directory page](https://civicrm.org/extensions/civiprospect) or our [Github repository release page](https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/releases).
 
 ## How to configure CiviProspect?
 CiviProspect does not require any additional configurations. For basic CiviCase configurations, please visit  [here](https://docs.civicrm.org/user/en/latest/case-management/set-up/) .
