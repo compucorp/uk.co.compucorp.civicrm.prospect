@@ -201,7 +201,7 @@ function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
     return;
   }
 
-  call_user_func_array($postFunction, [$op, $objectId, $objectRef]);
+  call_user_func_array($postFunction, [$op, $objectId, &$objectRef]);
 }
 
 /**
@@ -323,7 +323,7 @@ function prospect_civicrm_alterTemplateFile($formName, &$form, $context, &$tplNa
     return;
   }
 
-  call_user_func_array($functionName, [$formName, &$form, $context, $tplName]);
+  call_user_func_array($functionName, [$formName, &$form, $context, &$tplName]);
 }
 
 /**
