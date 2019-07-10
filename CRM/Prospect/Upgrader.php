@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Prospect_Setup_CreateProspectingOptionValue as CreateProspectingOptionValue;
+
 /**
  * Collection of upgrade steps.
  */
@@ -41,6 +43,19 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    */
   public function disable() {
     $this->toggleDefaulValues(0);
+  }
+
+  /**
+   * Tasks to perform when the module is installed.
+   */
+  public function install() {
+    $steps = [
+      new CreateProspectingOptionValue(),
+    ];
+
+    foreach ($steps as $step) {
+      $step->apply();
+    }
   }
 
   /**
