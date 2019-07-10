@@ -122,6 +122,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
     if (empty($currentRevisionNum)) {
       return TRUE;
     }
+
     return ($currentRevisionNum < max(array_keys($revisions)));
   }
 
@@ -163,6 +164,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    */
   public function runStepUpgrade($context, $step) {
     $step->apply();
+
     return TRUE;
   }
 
@@ -184,6 +186,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       $sortedKeyedClasses[$revisionNum] = $class;
     }
     ksort($sortedKeyedClasses, SORT_NUMERIC);
+
     return $sortedKeyedClasses;
   }
 
@@ -198,6 +201,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
     $file = str_replace(realpath(__DIR__ . '/../../'), '', $file);
     $file = str_replace('.php', '', $file);
     $file = str_replace('/', '_', $file);
+
     return ltrim($file, '_');
   }
 }
