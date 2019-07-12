@@ -1,6 +1,7 @@
 <?php
 
 use CRM_Prospect_Setup_CreateProspectingOptionValue as CreateProspectingOptionValue;
+use CRM_Prospect_Setup_CreateProspectMenus as CreateProspectMenus;
 
 /**
  * Collection of upgrade steps.
@@ -51,6 +52,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   public function install() {
     $steps = [
       new CreateProspectingOptionValue(),
+      new CreateProspectMenus()
     ];
 
     foreach ($steps as $step) {
@@ -132,7 +134,8 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   public function enqueuePendingRevisions(CRM_Queue_Queue $queue) {
     $currentRevisionNum = (int) $this->getCurrentRevision();
     foreach ($this->getRevisions() as $revisionNum => $revisionClass) {
-      if ($revisionNum < $currentRevisionNum) {
+
+      if ($revisionNum <= $currentRevisionNum) {
         continue;
       }
       $tsParams = [1 => $this->extensionName, 2 => $revisionNum];
