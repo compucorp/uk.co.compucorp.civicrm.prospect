@@ -1,0 +1,30 @@
+{
+  "name": "uk.co.compucorp.civicrm.prospect",
+  "version": "2.0.0",
+  "description": "CiviProspect provides the core structure for creating/ managing/ converting the fundraising opportunities of an organisation. It can also be used to manage any monetary opportunities such as sales opportunities and event sponsorships.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "lint-staged",
+    "postinstall": "cd bin && chmod +x ./install-php-linter && ./install-php-linter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git"
+  },
+  "lint-staged": {
+    "*.php": [
+      "./bin/phpcs.phar --standard=phpcs-ruleset.xml"
+    ]
+  },
+  "author": "Compucorp <info@compucorp.co.uk>",
+  "license": "GNU Affero Public License 3.0",
+  "bugs": {
+    "url": "https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/issues"
+  },
+  "homepage": "https://github.com/compucorp/uk.co.compucorp.civicrm.prospect#readme",
+  "devDependencies": {
+    "husky": "^3.0.0",
+    "lint-staged": "^9.2.0"
+  }
+}
