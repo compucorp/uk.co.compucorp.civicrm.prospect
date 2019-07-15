@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "lint-staged",
-    "postinstall": "cd bin && chmod +x ./install-php-linter && ./install-php-linter"
+    "postinstall": "cd bin && ./install-php-linter"
   },
   "repository": {
     "type": "git",
