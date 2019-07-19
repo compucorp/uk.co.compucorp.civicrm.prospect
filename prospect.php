@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Prospect Extention.
+ */
+
 require_once 'prospect.civix.php';
 
 /**
@@ -122,34 +127,6 @@ function prospect_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
   _prospect_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
-// --- Functions below this ship commented out. Uncomment as required. ---
-
-/**
- * Implements hook_civicrm_preProcess().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_preProcess
- *
-function prospect_civicrm_preProcess($formName, &$form) {
-
-} // */
-
-/**
- * Implements hook_civicrm_navigationMenu().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
- *
-function prospect_civicrm_navigationMenu(&$menu) {
-  _prospect_civix_insert_navigation_menu($menu, NULL, array(
-    'label' => ts('The Page', array('domain' => 'uk.co.compucorp.civicrm.prospect')),
-    'name' => 'the_page',
-    'url' => 'civicrm/the-page',
-    'permission' => 'access CiviReport,access CiviContribute',
-    'operator' => 'OR',
-    'separator' => 0,
-  ));
-  _prospect_civix_navigationMenu($menu);
-} // */
-
 /**
  * Implements hook_civicrm_entityTypes().
  */
@@ -164,7 +141,7 @@ function prospect_civicrm_entityTypes(&$entityTypes) {
 /**
  * Implements hook_civicrm_custom().
  */
-function prospect_civicrm_custom($op, $groupID, $entityID, &$params ) {//
+function prospect_civicrm_custom($op, $groupID, $entityID, &$params) {
   if ((int) $groupID === _prospect_civicrm_get_custom_group_id('Prospect_Financial_Information') && $op === 'edit') {
     $fields = new CRM_Prospect_prospectFinancialInformationFields($entityID);
 
@@ -175,7 +152,8 @@ function prospect_civicrm_custom($op, $groupID, $entityID, &$params ) {//
 /**
  * Returns 'Prospect_Financial_Information' Custom Group ID.
  *
- * @return int|NULL
+ * @return int|null
+ *   Custom Group ID.
  */
 function _prospect_civicrm_get_custom_group_id($customGroupName) {
   $customGroupResponse = civicrm_api3('CustomGroup', 'get', [
@@ -197,7 +175,7 @@ function _prospect_civicrm_get_custom_group_id($customGroupName) {
 function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   $postFunction = '_prospect_civicrm_post_' . strtolower($objectName);
 
-  if(!function_exists($postFunction)) {
+  if (!function_exists($postFunction)) {
     return;
   }
 
@@ -205,17 +183,19 @@ function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
 }
 
 /**
- * Function which will be called when hook_civicrm_post is executed for the
- * Case entity.
+ * Called when hook_civicrm_post is executed for the Case entity.
  *
  * @param string $op
+ *   Operation name.
  * @param int $objectId
+ *   Object ID.
  * @param object $objectRef
+ *   Object Reference.
  */
 function _prospect_civicrm_post_case($op, $objectId, &$objectRef) {
   if (in_array($op, ['create', 'edit'])) {
     try {
-      // Update Financial Information fields data
+      // Update Financial Information fields data.
       $fields = new CRM_Prospect_prospectFinancialInformationFields($objectId);
       $fields->updateFieldsFromRequest([
         'Prospect_Amount',
@@ -224,12 +204,13 @@ function _prospect_civicrm_post_case($op, $objectId, &$objectRef) {
       ]);
       $fields->updateExpectation();
 
-      // Update Substatus fields data
+      // Update Substatus fields data.
       $fields = new CRM_Prospect_ProspectCustomGroups('Prospect_Substatus', $objectId);
       $fields->updateFieldsFromRequest([
         'Substatus',
       ]);
-    } catch (CiviCRM_API3_Exception $e) {
+    }
+    catch (CiviCRM_API3_Exception $e) {
       CRM_Core_Session::setStatus(
         ts('Cannot find Case entry. The Case didn\'t get created properly or there is other issue with retrieving the Case.'),
         ts('Error updating Expectation value'),
@@ -242,30 +223,36 @@ function _prospect_civicrm_post_case($op, $objectId, &$objectRef) {
 }
 
 /**
- * Function which will be called when hook_civicrm_post is executed for the
- * Contribution entity.
+ * Called when hook_civicrm_post is executed for the Contribution entity.
  *
  * @param string $op
+ *   Operation name.
  * @param int $objectId
+ *   Object ID.
  * @param object $objectRef
+ *   Object Reference.
  */
 function _prospect_civicrm_post_contribution($op, $objectId, &$objectRef) {
   _prospect_civicrm_convert($objectId, CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_CONTRIBUTION);
 }
 
 /**
- * Function which will be called when hook_civicrm_post is executed for the
- * Pledge entity.
+ * Called when hook_civicrm_post is executed for the Pledge entity.
  *
  * @param string $op
+ *   Operation name.
  * @param int $objectId
+ *   Object ID.
  * @param object $objectRef
+ *   Object Reference.
  */
 function _prospect_civicrm_post_pledge($op, $objectId, &$objectRef) {
   _prospect_civicrm_convert($objectId, CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_PLEDGE);
 }
 
 /**
+ * Creates ProspectConverted entity.
+ *
  * If Case Id is passed through New Contribution / Pledge form then it means
  * that the entity is asked to be converted by Prospect form.
  *
@@ -273,7 +260,9 @@ function _prospect_civicrm_post_pledge($op, $objectId, &$objectRef) {
  * and Case Id.
  *
  * @param int $paymentEntityId
+ *   Payment Entity ID.
  * @param int $paymentTypeId
+ *   Payment Type ID.
  */
 function _prospect_civicrm_convert($paymentEntityId, $paymentTypeId) {
   $caseId = CRM_Utils_Request::retrieve('caseId', 'Integer');
@@ -319,7 +308,7 @@ function prospect_civicrm_apiWrappers(&$wrappers, $apiRequest) {
 function prospect_civicrm_alterTemplateFile($formName, &$form, $context, &$tplName) {
   $functionName = '_prospect_civicrm_alterTemplateFile_' . $formName;
 
-  if(!function_exists($functionName)) {
+  if (!function_exists($functionName)) {
     return;
   }
 
@@ -327,13 +316,9 @@ function prospect_civicrm_alterTemplateFile($formName, &$form, $context, &$tplNa
 }
 
 /**
- * Implements hook_civicrm_alterTemplateFile callback for 'CRM_Case_Page_Tab'
- * form name.
+ * Implements hook_civicrm_alterTemplateFile().
  *
- * @param string $formName
- * @param object $form
- * @param string $context
- * @param string $tplName
+ * Callback for 'CRM_Case_Page_Tab' form name.
  */
 function _prospect_civicrm_alterTemplateFile_CRM_Case_Page_Tab($formName, &$form, $context, &$tplName) {
   $caseId = CRM_Utils_Request::retrieve('id', 'Integer');
@@ -359,13 +344,9 @@ function _prospect_civicrm_alterTemplateFile_CRM_Case_Page_Tab($formName, &$form
 }
 
 /**
- * Implements hook_civicrm_alterTemplateFile callback for 'CRM_Pledge_Page_Payment'
- * form name.
+ * Implements hook_civicrm_alterTemplateFile().
  *
- * @param string $formName
- * @param object $form
- * @param string $context
- * @param string $tplName
+ * Callback for 'CRM_Pledge_Page_Payment' form name.
  */
 function _prospect_civicrm_alterTemplateFile_CRM_Pledge_Page_Payment($formName, &$form, $context, &$tplName) {
   _prospect_civicrm_addMainCSSFile();
@@ -380,7 +361,7 @@ function _prospect_civicrm_alterTemplateFile_CRM_Pledge_Page_Payment($formName, 
     'sequential' => 1,
     'payment_entity_id' => $pledgeId,
     'payment_type_id' => CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_PLEDGE,
-    'options' => [ 'limit' => 1 ],
+    'options' => ['limit' => 1],
   ]);
 
   if (empty($prospectConverted['count'])) {
@@ -392,26 +373,18 @@ function _prospect_civicrm_alterTemplateFile_CRM_Pledge_Page_Payment($formName, 
 }
 
 /**
- * Implements hook_civicrm_alterTemplateFile callback for 'CRM_Contribute_Page_Tab'
- * form name.
+ * Implements hook_civicrm_alterTemplateFile().
  *
- * @param string $formName
- * @param object $form
- * @param string $context
- * @param string $tplName
+ * Callback for 'CRM_Contribute_Page_Tab' form name.
  */
 function _prospect_civicrm_alterTemplateFile_CRM_Contribute_Page_Tab($formName, &$form, $context, &$tplName) {
   _prospect_civicrm_addMainCSSFile();
 }
 
 /**
- * Implements hook_civicrm_alterTemplateFile callback for 'CRM_Pledge_Page_Tab'
- * form name.
+ * Implements hook_civicrm_alterTemplateFile().
  *
- * @param string $formName
- * @param object $form
- * @param string $context
- * @param string $tplName
+ * Callback for 'CRM_Pledge_Page_Tab' form name.
  */
 function _prospect_civicrm_alterTemplateFile_CRM_Pledge_Page_Tab($formName, &$form, $context, &$tplName) {
   _prospect_civicrm_addMainCSSFile();
@@ -428,8 +401,10 @@ function _prospect_civicrm_addMainCSSFile() {
  * Gets Campaign label by Campaign ID.
  *
  * @param int $id
+ *   ID.
  *
- * @return string|NULL
+ * @return string|null
+ *   Campaign Label.
  */
 function _prospect_civicrm_get_campaign_label_by_id($id) {
   $campaign = _prospect_civicrm_get_campaign_options($id);
@@ -438,7 +413,7 @@ function _prospect_civicrm_get_campaign_label_by_id($id) {
 }
 
 /**
- * Implements hook_civicrm_alterContent.
+ * Implements hook_civicrm_alterContent().
  */
 function prospect_civicrm_alterContent(&$content, $context, $tplName, &$object) {
   if (_prospect_isOpenCasePage($tplName)) {
@@ -446,17 +421,19 @@ function prospect_civicrm_alterContent(&$content, $context, $tplName, &$object) 
   }
 }
 
+/**
+ * Check if the sent page is Open Case page.
+ */
 function _prospect_isOpenCasePage($tplName) {
   $pageType = CRM_Utils_Request::retrieve('type', 'String');
   return ($tplName == 'CRM/Custom/Form/CustomDataByType.tpl') && ($pageType == 'Case');
 }
 
 /**
- * Removes prospect substatus custom
- * group from 'Open Case' form since
- * we will re-add it in a different location.
+ * Removes prospect substatus custom.
  *
- * @param $content
+ * Group from 'Open Case' form since
+ * we will re-add it in a different location.
  */
 function _prospect_RemoveSubstatusCustomGroup(&$content) {
   $extensionDirectory = CRM_Core_Resources::singleton()->getPath('uk.co.compucorp.civicrm.prospect');
@@ -474,7 +451,7 @@ function prospect_civicrm_buildForm($formName, &$form) {
     new CRM_Prospect_Form_Handler_OpenCase(),
   ];
 
-  foreach($handlers as $handler) {
+  foreach ($handlers as $handler) {
     $handler->handle($formName, $form);
   }
 }
@@ -494,8 +471,10 @@ function prospect_civicrm_fieldOptions($entity, $field, &$options, $params) {
  * Get list of active Campaigns or a single Campaign if ID is specified.
  *
  * @param int $id
+ *   ID.
  *
  * @return array
+ *   Result.
  */
 function _prospect_civicrm_get_campaign_options($id = NULL) {
   $result = [];
