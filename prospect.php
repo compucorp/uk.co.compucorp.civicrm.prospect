@@ -7,8 +7,6 @@
 
 require_once 'prospect.civix.php';
 
-define("PROSPECT_CASE_TYPE_CATEGORY_NAME", "Prospecting");
-
 /**
  * Implements hook_civicrm_config().
  *
@@ -175,153 +173,37 @@ function _prospect_civicrm_get_custom_group_id($customGroupName) {
  * Implements hook_civicrm_post().
  */
 function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
-  $postFunction = '_prospect_civicrm_post_' . strtolower($objectName);
+  $hooks = [
+    new CRM_Prospect_Hook_Post_UpdateProspectFields(),
+    new CRM_Prospect_Hook_Post_ConvertContributionToProspect(),
+    new CRM_Prospect_Hook_Post_ConvertPledgeToProspect(),
+  ];
 
-  if (!function_exists($postFunction)) {
-    return;
+  foreach ($hooks as $hook) {
+    $hook->run($op, $objectName, $objectId, $objectRef);
   }
-
-  call_user_func_array($postFunction, [$op, $objectId, &$objectRef]);
-}
-
-/**
- * Called when hook_civicrm_post is executed for the Case entity.
- *
- * @param string $op
- *   Operation name.
- * @param int $objectId
- *   Object ID.
- * @param object $objectRef
- *   Object Reference.
- */
-function _prospect_civicrm_post_case($op, $objectId, &$objectRef) {
-  if (in_array($op, ['create', 'edit']) && isAPICallProspectCategory($objectRef->case_type_id)) {
-    try {
-      // Update Financial Information fields data.
-      $fields = new CRM_Prospect_prospectFinancialInformationFields($objectId);
-      $fields->updateFieldsFromRequest([
-        'Prospect_Amount',
-        'Probability',
-        'Expected_Date',
-      ]);
-      $fields->updateExpectation();
-
-      // Update Substatus fields data.
-      $fields = new CRM_Prospect_ProspectCustomGroups('Prospect_Substatus', $objectId);
-      $fields->updateFieldsFromRequest([
-        'Substatus',
-      ]);
-    }
-    catch (CiviCRM_API3_Exception $e) {
-      CRM_Core_Session::setStatus(
-        ts('Cannot find Case entry. The Case didn\'t get created properly or there is other issue with retrieving the Case.'),
-        ts('Error updating Expectation value'),
-        'error'
-      );
-
-      return;
-    }
-  }
-}
-
-/**
- * Called when hook_civicrm_post is executed for the Contribution entity.
- *
- * @param string $op
- *   Operation name.
- * @param int $objectId
- *   Object ID.
- * @param object $objectRef
- *   Object Reference.
- */
-function _prospect_civicrm_post_contribution($op, $objectId, &$objectRef) {
-  _prospect_civicrm_convert($objectId, CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_CONTRIBUTION);
-}
-
-/**
- * Called when hook_civicrm_post is executed for the Pledge entity.
- *
- * @param string $op
- *   Operation name.
- * @param int $objectId
- *   Object ID.
- * @param object $objectRef
- *   Object Reference.
- */
-function _prospect_civicrm_post_pledge($op, $objectId, &$objectRef) {
-  _prospect_civicrm_convert($objectId, CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_PLEDGE);
-}
-
-/**
- * Creates ProspectConverted entity.
- *
- * If Case Id is passed through New Contribution / Pledge form then it means
- * that the entity is asked to be converted by Prospect form.
- *
- * Creates ProspectConverted entity with specified payment entity, payment type
- * and Case Id.
- *
- * @param int $paymentEntityId
- *   Payment Entity ID.
- * @param int $paymentTypeId
- *   Payment Type ID.
- */
-function _prospect_civicrm_convert($paymentEntityId, $paymentTypeId) {
-  $caseId = CRM_Utils_Request::retrieve('caseId', 'Integer');
-
-  if (!$caseId) {
-    return;
-  }
-
-  $prospectConverted = CRM_Prospect_BAO_ProspectConverted::findByCaseID($caseId);
-  if (!empty($prospectConverted)) {
-    return;
-  }
-
-  $fields = new CRM_Prospect_prospectFinancialInformationFields($caseId);
-
-  CRM_Prospect_BAO_ProspectConverted::create([
-    'prospect_case_id' => $caseId,
-    'payment_entity_id' => $paymentEntityId,
-    'payment_type_id' => $paymentTypeId,
-  ]);
-
-  // Sets (Prospect Amount) value to 0.
-  $fields->setValueOf('Prospect_Amount', 0);
-
-  // Sets (Expectation) value to 0.
-  $fields->setValueOf('Expectation', 0);
 }
 
 /**
  * Implements hook_civicrm_apiWrappers().
  */
 function prospect_civicrm_apiWrappers(&$wrappers, $apiRequest) {
-  if (!($apiRequest['entity'] === 'Case' && in_array($apiRequest['action'], ['create', 'edit']))) {
+  // hook_civicrm_config is responsible for including an extension path to
+  // autoload files for that extension.
+  // Since Prospect extension implements the hook_civicrm_fieldOptions
+  // it calls an API internally to fetch Campaign_Id Custom field,
+  // This causes the API wrapper hook to be invoked prematurely.
+  // Hence the below condition is required to avoid `Class Not Found` error.
+  if ($apiRequest['entity'] === 'CustomField') {
     return;
   }
 
-  if (isAPICallProspectCategory($apiRequest['params']['case_type_id'])) {
-    $wrappers[] = new CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields();
-  }
-}
+  $hooks = [
+    new CRM_Prospect_Hook_APIWrappers_CaseCreationAPIWrapper(),
+  ];
 
-/**
- * Checks if the API call belongs to Prospect Category.
- */
-function isAPICallProspectCategory($case_type_id) {
-  $result = civicrm_api3('CaseType', 'get', [
-    'sequential' => 1,
-    'return' => ['name', 'id'],
-    'case_type_category' => PROSPECT_CASE_TYPE_CATEGORY_NAME,
-  ])['values'];
-
-  $prospectCaseTypesByName = \CRM_Utils_Array::rekey($result, 'name');
-  $prospectCaseTypesByID = \CRM_Utils_Array::rekey($result, 'id');
-
-  if (isset($prospectCaseTypesByName[$case_type_id])
-    || isset($prospectCaseTypesByID[$case_type_id])) {
-    return TRUE;
+  foreach ($hooks as $hook) {
+    $hook->run($wrappers, $apiRequest);
   }
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Prospect_Helper_ProspectHelper as ProspectHelper;
+
 /**
  * Create Prospecting Option Value.
  */
@@ -14,8 +16,8 @@ class CRM_Prospect_Setup_CreateProspectingOptionValue {
   public function apply() {
     CRM_Core_BAO_OptionValue::ensureOptionValueExists([
       'option_group_id' => 'case_type_categories',
-      'name' => PROSPECT_CASE_TYPE_CATEGORY_NAME,
-      'label' => PROSPECT_CASE_TYPE_CATEGORY_NAME,
+      'name' => ProspectHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
+      'label' => ProspectHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
       'is_default' => 1,
       'is_active' => TRUE,
       'is_reserved' => TRUE,
