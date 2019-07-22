@@ -7,6 +7,8 @@
 
 require_once 'prospect.civix.php';
 
+define("PROSPECT_CASE_TYPE_CATEGORY_NAME", "Prospecting");
+
 /**
  * Implements hook_civicrm_config().
  *
@@ -179,7 +181,7 @@ function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
     return;
   }
 
-  call_user_func_array($postFunction, [$op, $objectId, $objectRef]);
+  call_user_func_array($postFunction, [$op, $objectId, &$objectRef]);
 }
 
 /**
@@ -193,7 +195,7 @@ function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
  *   Object Reference.
  */
 function _prospect_civicrm_post_case($op, $objectId, &$objectRef) {
-  if (in_array($op, ['create', 'edit'])) {
+  if (in_array($op, ['create', 'edit']) && isAPICallProspectCategory($objectRef->case_type_id)) {
     try {
       // Update Financial Information fields data.
       $fields = new CRM_Prospect_prospectFinancialInformationFields($objectId);
@@ -299,7 +301,28 @@ function prospect_civicrm_apiWrappers(&$wrappers, $apiRequest) {
     return;
   }
 
-  $wrappers[] = new CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields();
+  if (isAPICallProspectCategory($apiRequest['params']['case_type_id'])) {
+    $wrappers[] = new CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields();
+  }
+}
+
+/**
+ * Checks if the API call belongs to Prospect Category.
+ */
+function isAPICallProspectCategory($case_type_id) {
+  $result = civicrm_api3('CaseType', 'get', [
+    'sequential' => 1,
+    'return' => ['name', 'id'],
+    'case_type_category' => PROSPECT_CASE_TYPE_CATEGORY_NAME,
+  ])['values'];
+
+  $prospectCaseTypesByName = \CRM_Utils_Array::rekey($result, 'name');
+  $prospectCaseTypesByID = \CRM_Utils_Array::rekey($result, 'id');
+
+  if (isset($prospectCaseTypesByName[$case_type_id])
+    || isset($prospectCaseTypesByID[$case_type_id])) {
+    return TRUE;
+  }
 }
 
 /**
