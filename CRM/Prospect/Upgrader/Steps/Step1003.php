@@ -12,14 +12,14 @@ class CRM_Prospect_Upgrader_Steps_Step1003 {
    *   Return value in boolean.
    */
   public function apply() {
-    $prospectCustomroups = [
+    $prospectCustomGroups = [
       'Prospect_Financial_Information',
       'Prospect_Substatus',
     ];
 
     $result = civicrm_api3('CustomGroup', 'get', [
       'return' => ['id'],
-      'name' => ['IN' => $prospectCustomroups],
+      'name' => ['IN' => $prospectCustomGroups],
       'extends' => 'Case',
     ]);
 
