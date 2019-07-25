@@ -7,9 +7,20 @@ class CRM_Prospect_Hook_Post_UpdateProspectFields {
 
   /**
    * Hooks run function.
+   *
+   * Updates Prospect Custom Fields.
+   *
+   * @param string $op
+   *   Operation.
+   * @param string $objectName
+   *   Object name.
+   * @param int $objectId
+   *   Object ID.
+   * @param object $objectRef
+   *   Object Reference.
    */
   public function run($op, $objectName, $objectId, &$objectRef) {
-    if (!$this->shouldRun($op, $objectName, $objectId, $objectRef)) {
+    if (!$this->shouldRun($op, $objectName, $objectRef)) {
       return;
     }
 
@@ -18,16 +29,30 @@ class CRM_Prospect_Hook_Post_UpdateProspectFields {
 
   /**
    * Determines if the hook will run.
+   *
+   * @param string $op
+   *   Operation.
+   * @param string $objectName
+   *   Object name.
+   * @param object $objectRef
+   *   Object Reference.
    */
-  public function shouldRun($op, $objectName, $objectId, &$objectRef) {
+  public function shouldRun($op, $objectName, &$objectRef) {
     if (strtolower($objectName) == 'case' && in_array($op, ['create', 'edit'])
-      && CRM_Prospect_Helper_ProspectHelper::isApiCallProspectCategory($objectRef->case_type_id)) {
+      && CRM_Prospect_Helper_CaseTypeCategory::isProspectCategory($objectRef->case_type_id)) {
       return TRUE;
     }
   }
 
   /**
    * Update the Prospect Custom Fields.
+   *
+   * @param string $op
+   *   Operation.
+   * @param int $objectId
+   *   Object name.
+   * @param object $objectRef
+   *   Object Reference.
    */
   private function updateProspectFields($op, $objectId, &$objectRef) {
     try {

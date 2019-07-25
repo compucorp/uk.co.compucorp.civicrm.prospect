@@ -3,7 +3,7 @@
 /**
  * API Wrapper for Financial Information Custom Fields.
  */
-class CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields implements API_Wrapper {
+class CRM_Prospect_APIWrapper_ProspectFinancialInformationCustomFields implements API_Wrapper {
 
   /**
    * Implements fromApiInput() interface.

@@ -1,30 +1,9 @@
 <?php
 
 /**
- * CRM_Prospect_Helper_ProspectHelper class.
+ * CRM_Prospect_Helper_ProspectConverted class.
  */
-class CRM_Prospect_Helper_ProspectHelper {
-
-  const PROSPECT_CASE_TYPE_CATEGORY_NAME = 'Prospecting';
-
-  /**
-   * Checks if the API call belongs to Prospect Category.
-   */
-  public static function isApiCallProspectCategory($case_type_id) {
-    $result = civicrm_api3('CaseType', 'get', [
-      'sequential' => 1,
-      'return' => ['name', 'id'],
-      'case_type_category' => self::PROSPECT_CASE_TYPE_CATEGORY_NAME,
-    ])['values'];
-
-    $prospectCaseTypesByName = \CRM_Utils_Array::rekey($result, 'name');
-    $prospectCaseTypesByID = \CRM_Utils_Array::rekey($result, 'id');
-
-    if (isset($prospectCaseTypesByName[$case_type_id])
-      || isset($prospectCaseTypesByID[$case_type_id])) {
-      return TRUE;
-    }
-  }
+class CRM_Prospect_Helper_ProspectConverted {
 
   /**
    * Creates ProspectConverted entity.
