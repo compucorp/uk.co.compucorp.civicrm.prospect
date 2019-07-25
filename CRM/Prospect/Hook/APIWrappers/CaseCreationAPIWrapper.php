@@ -35,13 +35,13 @@ class CRM_Prospect_Hook_APIWrappers_CaseCreationAPIWrapper {
   public function shouldRun(array $apiRequest) {
     $entityIsCaseAndActionCreateOrEdit = $apiRequest['entity'] === 'Case'
       && in_array($apiRequest['action'], ['create', 'edit']);
-    $isProspectCategory = CRM_Prospect_Helper_CaseTypeCategory::isProspectCategory(
-      $apiRequest['params']['case_type_id']
-    );
 
-    if ($entityIsCaseAndActionCreateOrEdit && $isProspectCategory) {
+    if ($entityIsCaseAndActionCreateOrEdit
+      && CRM_Prospect_Helper_CaseTypeCategory::isProspectCategory($apiRequest['params']['case_type_id'])) {
       return TRUE;
     }
+
+    return FALSE;
   }
 
 }

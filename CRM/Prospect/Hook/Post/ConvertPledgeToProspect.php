@@ -26,7 +26,7 @@ class CRM_Prospect_Hook_Post_ConvertPledgeToProspect {
       return;
     }
 
-    ProspectConvertedHelper::createProspectConverted(
+    ProspectConvertedHelper::create(
       $objectId,
       CRM_Prospect_BAO_ProspectConverted::PAYMENT_TYPE_PLEDGE
     );
