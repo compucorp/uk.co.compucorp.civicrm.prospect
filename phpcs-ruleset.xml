@@ -6,6 +6,7 @@
     <!-- Example: The Class `CRM_Civicase_Upgrader` has a file name of `Upgrader.php` -->
     <!-- Hence the following rules are excluded -->
     <exclude name="Drupal.NamingConventions.ValidClassName.NoUnderscores"/>
+    <exclude name="Drupal.NamingConventions.ValidFunctionName.InvalidName"/>
     <exclude name="Drupal.Classes.ClassFileName.NoMatch"/>
     <!--Drupal expects function names like civicase_civicrm_pre_process but civi can have-->
     <!--civicase_civicrm_preProcess which is valid for civi.-->

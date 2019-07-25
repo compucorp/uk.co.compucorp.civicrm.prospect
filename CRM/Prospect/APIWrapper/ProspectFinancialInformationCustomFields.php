@@ -1,13 +1,15 @@
 <?php
 
-class CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields implements API_Wrapper {
+/**
+ * API Wrapper for Financial Information Custom Fields.
+ */
+class CRM_Prospect_APIWrapper_ProspectFinancialInformationCustomFields implements API_Wrapper {
 
   /**
    * Implements fromApiInput() interface.
    *
-   * @param array $apiRequest
-   *
    * @return array
+   *   API Request.
    */
   public function fromApiInput($apiRequest) {
     return $apiRequest;
@@ -18,10 +20,8 @@ class CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields implement
    *
    * Used to update Case custom fields and Expectation value.
    *
-   * @param array $apiRequest
-   * @param array $result
-   *
    * @return array
+   *   Result
    */
   public function toApiOutput($apiRequest, $result) {
     if (empty($apiRequest['params']['id'])) {
@@ -35,4 +35,5 @@ class CRM_Prospect_APIWrapper_prospectFinancialInformationCustomFields implement
 
     return $result;
   }
+
 }
