@@ -5,7 +5,7 @@
     <CustomGroup>
       <name>Prospect_Financial_Information</name>
       <title>Financial Information</title>
-      <extends>prospecting</extends>
+      <extends>Case</extends>
       <style>Inline</style>
       <collapse_display>0</collapse_display>
       <weight>11</weight>
