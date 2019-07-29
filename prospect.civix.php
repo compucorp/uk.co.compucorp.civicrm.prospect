@@ -337,6 +337,20 @@ function _prospect_civix_civicrm_caseTypes(&$caseTypes) {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
  */
 function _prospect_civix_civicrm_angularModules(&$angularModules) {
+  _prospect_includeAngularModules($angularModules);
+  _prospect_addProspectAsRequirementForCivicase($angularModules);
+}
+
+/**
+ * Add Angular Modules.
+ *
+ * Find and return files matching "ang/*.ang.php" and includes them as
+ * angular modules.
+ *
+ * @param array $angularModules
+ *   Angular Modules.
+ */
+function _prospect_includeAngularModules(array &$angularModules) {
   if (!is_dir(__DIR__ . '/ang')) {
     return;
   }
@@ -349,6 +363,25 @@ function _prospect_civix_civicrm_angularModules(&$angularModules) {
       $module['ext'] = E::LONG_NAME;
     }
     $angularModules[$name] = $module;
+  }
+}
+
+/**
+ * Add Prospect as a requirement of civicase.
+ *
+ * @param array $angularModules
+ *   Angular Modules.
+ */
+function _prospect_addProspectAsRequirementForCivicase(array &$angularModules) {
+  if (isset($angularModules['civicase'])) {
+    $angularModules['civicase']['requires'][] = 'prospect';
+  }
+  else {
+    CRM_Core_Session::setStatus(
+      'The <strong>Prospect</strong> extension requires <strong>CiviCase</strong> to be installed first.',
+      'Warning',
+      'no-popup'
+    );
   }
 }
 
