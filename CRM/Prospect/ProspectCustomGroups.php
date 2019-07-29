@@ -269,12 +269,21 @@ class CRM_Prospect_ProspectCustomGroups {
     $customFieldData = $this->getCustomFieldData();
 
     if ($this->caseId) {
-      $caseProspectCustomValues = civicrm_api3('Case', 'getsingle', [
-        'id' => $this->caseId,
-        'return' => $this->getCustomFieldMachineNameList(),
-      ]);
-    }
+      $customFieldMachineNameList = $this->getCustomFieldMachineNameList();
+      $parameters = [
+        'entity_id' => $this->caseId,
+        'entity_type' => 'prospecting'
+      ];
+      foreach ($customFieldMachineNameList as $machineName) {
+        $parameters['return.' . $machineName] = 1;
+      }
+      $customValues = civicrm_api3('CustomValue', 'get', $parameters);
+      $caseProspectCustomValues = [];
 
+      foreach ($customValues['values'] as $customValue) {
+        $caseProspectCustomValues['custom_' . $customValue['id']] = $customValue['latest'];
+      }
+    }
 
     foreach ($customFieldData as $name => $value) {
       $this->fields[$name] = [
