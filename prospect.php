@@ -223,34 +223,6 @@ function prospect_civicrm_alterTemplateFile($formName, &$form, $context, &$tplNa
 /**
  * Implements hook_civicrm_alterTemplateFile().
  *
- * Callback for 'CRM_Case_Page_Tab' form name.
- */
-function _prospect_civicrm_alterTemplateFile_CRM_Case_Page_Tab($formName, &$form, $context, &$tplName) {
-  $caseId = CRM_Utils_Request::retrieve('id', 'Integer');
-
-  if (empty($caseId)) {
-    return;
-  }
-
-  $fields = new CRM_Prospect_prospectFinancialInformationFields($caseId);
-  $prospectConverted = CRM_Prospect_BAO_ProspectConverted::findByCaseID($caseId);
-
-  if (!empty($prospectConverted)) {
-    $form->assign('paymentInfo', $prospectConverted->getPaymentInfo());
-  }
-
-  $form->assign('isCaseConverted', !empty($prospectConverted));
-  $form->assign('prospectFinancialInformationFields', $fields);
-  $form->assign('campaignLabel', _prospect_civicrm_get_campaign_label_by_id($fields->getValueOf('Campaign_Id')));
-  $form->assign('currency', CRM_Core_BAO_Country::getDefaultCurrencySymbol());
-
-  CRM_Core_Resources::singleton()->addScriptFile('civicrm', 'js/jquery/jquery.crmEditable.js', CRM_Core_Resources::DEFAULT_WEIGHT, 'html-header');
-  CRM_Core_Resources::singleton()->addScriptFile('uk.co.compucorp.civicrm.prospect', 'js/Prospect.Page.CaseView.js', CRM_Core_Resources::DEFAULT_WEIGHT, 'html-header');
-}
-
-/**
- * Implements hook_civicrm_alterTemplateFile().
- *
  * Callback for 'CRM_Pledge_Page_Payment' form name.
  */
 function _prospect_civicrm_alterTemplateFile_CRM_Pledge_Page_Payment($formName, &$form, $context, &$tplName) {
