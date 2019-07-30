@@ -2,6 +2,10 @@
 
 use CRM_Prospect_Setup_CreateProspectingOptionValue as CreateProspectingOptionValue;
 use CRM_Prospect_Setup_CreateProspectMenus as CreateProspectMenus;
+use CRM_Prospect_Setup_CreateProspectOwnerRelationship as CreateProspectOwnerRelationship;
+use CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses as CreateProspectWorkflowCaseStatuses;
+use CRM_Prospect_Setup_CreateProspectWorkflowCaseType as CreateProspectWorkflowCaseType;
+use CRM_Prospect_Setup_MoveCustomFieldsToWorkflowCaseType as MoveCustomFieldsToWorkflowCaseType;
 
 /**
  * Collection of upgrade steps.
@@ -13,21 +17,21 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    *
    * @var array
    */
-  private static $DEFAULT_OPTION_GROUPS = [
+  private static $defaultOptionGroups = [
     'Prospect_Financial_Information_Campaign',
     'Prospect_Financial_Information_Fin_Yr',
     'Prospect_Financial_Information_Capital',
     'Prospect_Financial_Information_Restricted_Code',
     'Prospect_Financial_Information_Restricted',
-    'Prospect_Substatus_Substatus'
+    'Prospect_Substatus_Substatus',
   ];
 
   /**
-   * Custom groups created by the extension
+   * Custom groups created by the extension.
    *
    * @var array
    */
-  private static $DEFAULT_CUSTOM_GROUPS = [
+  private static $defaultCustomGroups = [
     'Prospect_Financial_Information',
     'Prospect_Substatus',
   ];
@@ -36,7 +40,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    * Action triggered on enable the extension.
    */
   public function enable() {
-      $this->toggleDefaulValues(1);
+    $this->toggleDefaulValues(1);
   }
 
   /**
@@ -52,7 +56,11 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   public function install() {
     $steps = [
       new CreateProspectingOptionValue(),
-      new CreateProspectMenus()
+      new CreateProspectMenus(),
+      new CreateProspectWorkflowCaseStatuses(),
+      new CreateProspectOwnerRelationship(),
+      new CreateProspectWorkflowCaseType(),
+      new MoveCustomFieldsToWorkflowCaseType(),
     ];
 
     foreach ($steps as $step) {
@@ -61,18 +69,21 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   }
 
   /**
+   * Disables/Enables Default Values.
+   *
    * Enables / Disables default values (custom groups, custom fields,
    * option values, etc) created by this extension.
    *
    * @param int $status
+   *   Status.
    */
   private function toggleDefaulValues($status) {
     $this->toggleDefaultOptionGroups($status);
     $this->toggleDefaultOptionValues($status);
     // We don't want to enable / disable particular Custom Fields
     // because some of them can be enabled / disabled manually by the client.
-    // So we enable / disable Custom Groups when enabling / disabling the extension
-    // leaving 'is_active' property of Custom Fields unchanged.
+    // So we enable / disable Custom Groups when enabling / disabling
+    // the extension leaving 'is_active' property of Custom Fields unchanged.
     $this->toggleDefaultCustomGroups($status);
   }
 
@@ -80,11 +91,12 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    * Enables / Disables OptionGroups.
    *
    * @param int $newStatus
+   *   The new status.
    */
   private function toggleDefaultOptionGroups($newStatus) {
     CRM_Core_DAO::executeQuery(
-      'UPDATE civicrm_option_group SET is_active = %1 WHERE name IN ("' . implode('", "', self::$DEFAULT_OPTION_GROUPS) . '")',
-      [ 1 => [ $newStatus, 'Integer' ] ]
+      'UPDATE civicrm_option_group SET is_active = %1 WHERE name IN ("' . implode('", "', self::$defaultOptionGroups) . '")',
+      [1 => [$newStatus, 'Integer']]
     );
   }
 
@@ -92,27 +104,31 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    * Enables / Disables OptionValues.
    *
    * @param int $newStatus
+   *   The new status.
    */
   private function toggleDefaultOptionValues($newStatus) {
     CRM_Core_DAO::executeQuery(
-      'UPDATE civicrm_option_value JOIN civicrm_option_group ON civicrm_option_group.id = civicrm_option_value.option_group_id SET civicrm_option_value.is_active = %1 WHERE civicrm_option_group.name IN ("' . implode('", "', self::$DEFAULT_OPTION_GROUPS) . '")',
-      [ 1 => [ $newStatus, 'Integer' ] ]
+      'UPDATE civicrm_option_value JOIN civicrm_option_group ON civicrm_option_group.id = civicrm_option_value.option_group_id SET civicrm_option_value.is_active = %1 WHERE civicrm_option_group.name IN ("' . implode('", "', self::$defaultOptionGroups) . '")',
+      [1 => [$newStatus, 'Integer']]
     );
   }
 
   /**
-   * Enables / Disables CustomGroups:
+   * Enables / Disables CustomGroups:.
    *
    * @param int $newStatus
+   *   The ne status.
    */
   private function toggleDefaultCustomGroups($newStatus) {
     CRM_Core_DAO::executeQuery(
-      'UPDATE civicrm_custom_group SET is_active = %1 WHERE name IN ("' . implode('", "', self::$DEFAULT_CUSTOM_GROUPS) . '")',
-      [ 1 => [ $newStatus, 'Integer' ] ]
+      'UPDATE civicrm_custom_group SET is_active = %1 WHERE name IN ("' . implode('", "', self::$defaultCustomGroups) . '")',
+      [1 => [$newStatus, 'Integer']]
     );
   }
 
   /**
+   * Checks for pending revisions for extension.
+   *
    * @inheritdoc
    */
   public function hasPendingRevisions() {
@@ -129,6 +145,8 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   }
 
   /**
+   * Enqueue pending revisions.
+   *
    * @inheritdoc
    */
   public function enqueuePendingRevisions(CRM_Queue_Queue $queue) {
@@ -156,16 +174,18 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   }
 
   /**
-   * This is a callback for running step upgraders from the queue
+   * This is a callback for running step upgraders from the queue.
    *
    * @param CRM_Queue_TaskContext $context
-   * @param \object $step
+   *   The Queue Task context.
+   * @param object $step
+   *   The upgrader step.
    *
    * @return true
    *   The queue requires that true is returned on successful upgrade, but we
    *   use exceptions to indicate an error instead.
    */
-  public function runStepUpgrade($context, $step) {
+  public function runStepUpgrade(CRM_Queue_TaskContext $context, $step) {
     $step->apply();
 
     return TRUE;
@@ -194,11 +214,13 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   }
 
   /**
-   * Gets the PEAR style classname from an upgrader file
+   * Gets the PEAR style classname from an upgrader file.
    *
    * @param string $file
+   *   The file name.
    *
    * @return string
+   *   Class name.
    */
   private function getUpgraderClassnameFromFile($file) {
     $file = str_replace(realpath(__DIR__ . '/../../'), '', $file);
@@ -207,4 +229,5 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
 
     return ltrim($file, '_');
   }
+
 }
