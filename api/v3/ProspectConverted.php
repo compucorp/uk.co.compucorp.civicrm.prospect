@@ -44,3 +44,15 @@ function civicrm_api3_prospect_converted_delete($params) {
 function civicrm_api3_prospect_converted_get($params) {
   return _civicrm_api3_basic_get(_civicrm_api3_get_BAO(__FUNCTION__), $params);
 }
+
+/**
+ * ProspectConverted.getpaymentinfo API
+ *
+ * @param array $params
+ * @return array API result descriptor
+ * @throws API_Exception
+ */
+function civicrm_api3_prospect_converted_getpaymentinfo($params) {
+  $prospectConverted = CRM_Prospect_BAO_ProspectConverted::findByCaseID($params['prospect_case_id']);
+  return $prospectConverted->getPaymentInfo();
+}
