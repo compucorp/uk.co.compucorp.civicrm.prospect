@@ -17,25 +17,25 @@
           title: 'Convert to Pledge',
           action: 'ConvertProspect',
           type: 'pledge',
-          icon: 'fa-pencil-square-o'
+          icon: 'fa-exchange'
         },
         {
           title: 'Convert to Contribution',
           action: 'ConvertProspect',
           type: 'contribution',
-          icon: 'fa-pencil-square-o'
+          icon: 'fa-exchange'
         },
         {
           title: 'View Pledge',
           action: 'ViewPledgeContribution',
           type: 'pledge',
-          icon: 'fa-pencil-square-o'
+          icon: 'fa-list'
         },
         {
           title: 'View Contribution',
           action: 'ViewPledgeContribution',
           type: 'contribution',
-          icon: 'fa-pencil-square-o'
+          icon: 'fa-list'
         }
       ];
     }
