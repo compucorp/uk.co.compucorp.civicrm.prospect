@@ -3,7 +3,7 @@
 
   module.service('ConvertProspectCaseAction', ConvertProspectCaseAction);
 
-  function ConvertProspectCaseAction (crmApi) {
+  function ConvertProspectCaseAction ($location, crmApi, ProspectGlobalValues) {
     var isConvertedToProspect = false;
 
     this.refreshData = checkIfConvertedToProspect;
@@ -12,7 +12,7 @@
      * Checks if the Action is allowed
      */
     this.isActionAllowed = function () {
-      return !isConvertedToProspect;
+      return checkIfProspectingCaseTypeCategory() && !isConvertedToProspect;
     };
 
     /**
@@ -56,6 +56,20 @@
         }).then(function (caseData) {
           isConvertedToProspect = caseData.values.length > 0;
         });
+      }
+    }
+
+    /**
+     * Check if Case Type Category is Prospecting.
+     *
+     * @return {Boolean}
+     */
+    function checkIfProspectingCaseTypeCategory () {
+      var filtersQueryParams = $location.search().cf;
+      if (filtersQueryParams) {
+        var caseTypeCategory = JSON.parse(filtersQueryParams).case_type_category;
+
+        return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
       }
     }
   }

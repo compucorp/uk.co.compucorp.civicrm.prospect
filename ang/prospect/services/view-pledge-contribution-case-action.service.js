@@ -3,7 +3,7 @@
 
   module.service('ViewPledgeContributionCaseAction', ViewPledgeContributionCaseAction);
 
-  function ViewPledgeContributionCaseAction (crmApi) {
+  function ViewPledgeContributionCaseAction ($location, crmApi, ProspectGlobalValues) {
     var prospectConverted = {
       isConverted: false,
       paymentInfo: {
@@ -39,10 +39,11 @@
      */
     this.isActionAllowed = function (action, cases) {
       var isActionAllowed = action.type === 'pledge'
-      ? prospectConverted.paymentInfo.payment_entity === 'pledge'
-      : prospectConverted.paymentInfo.payment_entity === 'contribute';
+        ? prospectConverted.paymentInfo.payment_entity === 'pledge'
+        : prospectConverted.paymentInfo.payment_entity === 'contribute';
 
-      return prospectConverted.isConverted && isActionAllowed;
+      return checkIfProspectingCaseTypeCategory()
+        && prospectConverted.isConverted && isActionAllowed;
     };
 
     /**
@@ -86,6 +87,20 @@
         }).then(function (paymentInfo) {
           prospectConverted.paymentInfo = paymentInfo;
         })
+      }
+    }
+
+    /**
+     * Check if Case Type Category is Prospecting.
+     *
+     * @return {Boolean}
+     */
+    function checkIfProspectingCaseTypeCategory () {
+      var filtersQueryParams = $location.search().cf;
+      if (filtersQueryParams) {
+        var caseTypeCategory = JSON.parse(filtersQueryParams).case_type_category;
+
+        return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
       }
     }
   }
