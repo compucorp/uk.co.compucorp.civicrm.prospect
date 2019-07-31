@@ -42,8 +42,8 @@
         ? prospectConverted.paymentInfo.payment_entity === 'pledge'
         : prospectConverted.paymentInfo.payment_entity === 'contribute';
 
-      return checkIfProspectingCaseTypeCategory()
-        && prospectConverted.isConverted && isActionAllowed;
+      return checkIfProspectingCaseTypeCategory() &&
+        prospectConverted.isConverted && isActionAllowed;
     };
 
     /**
@@ -86,7 +86,7 @@
           'prospect_case_id': caseID
         }).then(function (paymentInfo) {
           prospectConverted.paymentInfo = paymentInfo;
-        })
+        });
       }
     }
 

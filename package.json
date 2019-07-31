@@ -13,8 +13,20 @@
     "url": "git+https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git"
   },
   "lint-staged": {
+    "*.js": [
+      "semistandard --fix",
+      "git add"
+    ],
     "*.php": [
       "./bin/phpcs.phar --standard=phpcs-ruleset.xml"
+    ]
+  },
+  "semistandard": {
+    "globals": [
+      "CRM",
+      "angular",
+      "inject",
+      "moment"
     ]
   },
   "author": "Compucorp <info@compucorp.co.uk>",
@@ -25,6 +37,7 @@
   "homepage": "https://github.com/compucorp/uk.co.compucorp.civicrm.prospect#readme",
   "devDependencies": {
     "husky": "^3.0.0",
-    "lint-staged": "^9.2.0"
+    "lint-staged": "^9.2.0",
+    "semistandard": "^13.0.1"
   }
 }
