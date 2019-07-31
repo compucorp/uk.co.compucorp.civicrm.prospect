@@ -57,7 +57,7 @@
       var contactID = cases[0].client[0].contact_id;
       var url = prospectConverted.paymentInfo.payment_url + '&cid=' + contactID;
 
-      CRM.loadForm(url);
+      return url;
     };
 
     /**

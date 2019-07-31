@@ -29,15 +29,18 @@
 
       var caseId = cases[0].id;
       var contactID = cases[0].client[0].contact_id;
-      var url = CRM.url('civicrm/contact/view/' + action.type, {
-        action: 'add',
-        reset: 1,
-        cid: contactID,
-        context: action.type,
-        caseid: caseId
-      });
+      var popupPath = {
+        path: 'civicrm/contact/view/' + action.type,
+        query: {
+          action: 'add',
+          reset: 1,
+          cid: contactID,
+          context: action.type,
+          caseid: caseId
+        }
+      };
 
-      CRM.loadForm(url);
+      return popupPath;
     };
 
     /**
