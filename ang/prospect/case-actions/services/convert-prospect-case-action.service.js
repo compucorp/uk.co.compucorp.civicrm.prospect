@@ -22,12 +22,13 @@
     /**
      * Checks if the Action is allowed
      */
-    this.isActionAllowed = function (action) {
+    this.isActionAllowed = function (action, cases) {
       var isPledgeOrContribution = _.includes(
         ['contribution', 'pledge'], action.type);
 
-      return isPledgeOrContribution &&
-        checkIfProspectingCaseTypeCategory() && !isConvertedToProspect;
+      return cases[0] && isPledgeOrContribution &&
+        ProspectConverted.checkIfProspectingCaseTypeCategory(cases[0]) &&
+        !isConvertedToProspect;
     };
 
     /**
@@ -52,22 +53,5 @@
         }
       };
     };
-
-    /**
-     * Check if Case Type Category is Prospecting.
-     *
-     * @return {Boolean}
-     */
-    function checkIfProspectingCaseTypeCategory () {
-      var filtersQueryParams = $location.search().cf;
-
-      if (!filtersQueryParams) {
-        return false;
-      }
-
-      var caseTypeCategory = JSON.parse(filtersQueryParams).case_type_category;
-
-      return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
-    }
   }
 })(angular, CRM.$, CRM._);

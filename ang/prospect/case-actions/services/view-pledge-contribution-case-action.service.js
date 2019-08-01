@@ -57,7 +57,8 @@
       var isPaymentTypeSameAsActionType =
         actionTypeMapping[action.type] === paymentInfo.payment_entity;
 
-      return checkIfProspectingCaseTypeCategory() &&
+      return cases[0] &&
+        ProspectConverted.checkIfProspectingCaseTypeCategory(cases[0]) &&
         isConvertedToProspect && isPaymentTypeSameAsActionType;
     };
 
@@ -73,19 +74,5 @@
 
       return paymentInfo.payment_url + '&cid=' + contactID;
     };
-
-    /**
-     * Check if Case Type Category is Prospecting.
-     *
-     * @return {Boolean}
-     */
-    function checkIfProspectingCaseTypeCategory () {
-      var filtersQueryParams = $location.search().cf;
-      if (filtersQueryParams) {
-        var caseTypeCategory = JSON.parse(filtersQueryParams).case_type_category;
-
-        return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
-      }
-    }
   }
 })(angular, CRM.$, CRM._);

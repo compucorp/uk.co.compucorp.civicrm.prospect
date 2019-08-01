@@ -39,6 +39,10 @@
             return customField.name === 'Prospect_Financial_Information';
           });
 
+          if (!financialInformationCustomField) {
+            return;
+          }
+
           var fieldToAdd = {};
 
           if (paymentInfo.payment_entity === 'pledge') {
