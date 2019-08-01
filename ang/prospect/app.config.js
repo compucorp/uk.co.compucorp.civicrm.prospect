@@ -3,7 +3,7 @@
 
   module.run(function () {
     (function init () {
-      CRM.civicase.caseActions = CRM.civicase.caseActions.concat(getCaseActionsForProspect());
+      CRM.civicase.caseActions = getCaseActionsForProspect().concat(CRM.civicase.caseActions);
     }());
 
     /**
