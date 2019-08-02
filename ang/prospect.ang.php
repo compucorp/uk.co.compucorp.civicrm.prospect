@@ -19,4 +19,5 @@ function get_prospect_js_files() {
 
 return [
   'js' => get_prospect_js_files(),
+  'basePages' => [],
 ];
