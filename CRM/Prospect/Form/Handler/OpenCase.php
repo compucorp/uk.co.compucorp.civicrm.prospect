@@ -24,7 +24,7 @@ class CRM_Prospect_Form_Handler_OpenCase {
    * @param object $form
    */
   public function handle($formName, $form) {
-    if (!$this->canHandle($formName)) {
+    if (!$this->canHandle($formName, $form)) {
       return;
     }
 
@@ -41,8 +41,8 @@ class CRM_Prospect_Form_Handler_OpenCase {
    *
    * @return bool
    */
-  private function canHandle($formName) {
-    return $formName == 'CRM_Case_Form_Case';
+  private function canHandle($formName, CRM_Core_Form $form) {
+    return $formName == 'CRM_Case_Form_Case' && $this->isProspectCategory($form);
   }
 
   private function addSubstatusCustomGroup() {
@@ -56,5 +56,19 @@ class CRM_Prospect_Form_Handler_OpenCase {
     $prospectSubstatusFieldsForm = $customFieldsFormBuilder->buildFieldsForm('Prospect_Substatus', $fieldsToShow);
     $this->form->assign('prospectSubstatusFieldsForm', $prospectSubstatusFieldsForm->toSmarty());
 
+  /**
+   * Checks if the case is of prospect category.
+   *
+   * @param CRM_Core_Form $form
+   *   Form name.
+   *
+   * @return string|null
+   *   case category name.
+   */
+  private function isProspectCategory(CRM_Core_Form $form) {
+    $urlParams = parse_url(htmlspecialchars_decode($form->controller->_entryURL), PHP_URL_QUERY);
+    parse_str($urlParams, $urlParams);
+
+    return !empty($urlParams['case_type_category']) && $urlParams['case_type_category'] == 'prospecting';
   }
 }

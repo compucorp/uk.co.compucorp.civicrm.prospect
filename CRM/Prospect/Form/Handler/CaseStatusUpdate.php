@@ -1,6 +1,7 @@
 <?php
 
 use CRM_Prospect_CustomFieldsFormBuilder as CustomFieldsFormBuilder;
+use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategoryHelper;
 
 /**
  * Implementation of custom handler executed within prospect_civicrm_buildForm
@@ -49,6 +50,13 @@ class CRM_Prospect_Form_Handler_CaseStatusUpdate {
    * @return bool
    */
   private function canHandle($formName, $form) {
-    return $formName === 'CRM_Case_Form_Activity' && $form->_action == CRM_Core_Action::ADD;
+    $isCaseActivityForm = $formName === 'CRM_Case_Form_Activity';
+    $isAddAction = $form->_action == CRM_Core_Action::ADD;
+    if (!$isCaseActivityForm || !$isAddAction) {
+      return FALSE;
+    }
+
+    return CaseTypeCategoryHelper::isProspectCategory($form->_caseType[0]);
   }
+
 }
