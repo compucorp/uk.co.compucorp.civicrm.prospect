@@ -5,6 +5,9 @@
     $provide.decorator('civicaseCaseDetailsDirective', civicaseCaseDetailsDirectiveDecorator);
   });
 
+  /**
+   * Case Details Directive Decorator
+   */
   function civicaseCaseDetailsDirectiveDecorator ($delegate, ProspectConverted) {
     var civicaseCaseDetails = $delegate[0];
 
@@ -30,7 +33,7 @@
         }
 
         /**
-         * Adds Extra Field to Financial Information Custom Group block
+         * Adds Extra Field to 'Financial Information' Custom Group block
          *
          * @param {Object} paymentInfo
          */

@@ -32,7 +32,7 @@
     };
 
     /**
-     * Check if Case Type Category is Prospecting.
+     * Checks if Case Type Category is 'Prospecting'.
      *
      * @param {Object} caseData
      * @return {Boolean}

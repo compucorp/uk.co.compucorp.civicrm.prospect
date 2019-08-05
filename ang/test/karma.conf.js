@@ -8,7 +8,7 @@ module.exports = (config) => {
     basePath: civicrmPath,
     frameworks: ['jasmine'],
     files: [
-      // the global dependencies
+      // The global dependencies
       'bower_components/jquery/dist/jquery.min.js',
       'bower_components/jquery-ui/jquery-ui.js',
       'bower_components/lodash-compat/lodash.min.js',
@@ -36,7 +36,7 @@ module.exports = (config) => {
     exclude: [
     ],
     reporters: ['progress'],
-    // web server port
+    // Web server port
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

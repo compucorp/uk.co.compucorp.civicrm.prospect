@@ -6,6 +6,11 @@
   function ConvertProspectCaseAction ($location, crmApi, ProspectGlobalValues, ProspectConverted) {
     var isConvertedToProspect = false;
 
+    /**
+     * Refresh Data for the Service
+     *
+     * @param {array} cases
+     */
     this.refreshData = function (cases) {
       if (!cases[0]) {
         return;
@@ -21,6 +26,10 @@
 
     /**
      * Checks if the Action is allowed
+     *
+     * @param {Object} action
+     * @param {Array} cases
+     * @return {boolean}
      */
     this.isActionAllowed = function (action, cases) {
       var isPledgeOrContribution = _.includes(
