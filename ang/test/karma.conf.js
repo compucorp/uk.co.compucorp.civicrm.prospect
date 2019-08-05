@@ -1,8 +1,8 @@
-var cv = require('civicrm-cv')({ mode: 'sync' });
+const cv = require('civicrm-cv')({ mode: 'sync' });
 
-module.exports = function (config) {
-  var civicrmPath = cv("path -d '[civicrm.root]'")[0].value;
-  var extPath = cv('path -x uk.co.compucorp.civicrm.prospect')[0].value;
+module.exports = (config) => {
+  const civicrmPath = cv("path -d '[civicrm.root]'")[0].value;
+  const extPath = cv('path -x uk.co.compucorp.civicrm.prospect')[0].value;
 
   config.set({
     basePath: civicrmPath,
@@ -22,14 +22,16 @@ module.exports = function (config) {
       'bower_components/angular-route/angular-route.min.js',
 
       // Global variables that need to be accessible in the test environment
-      extPath + '/ang/test/global.js',
+      `${extPath}/ang/test/global.js`,
 
       // Source Files
-      extPath + '/ang/prospect.js',
-      { pattern: extPath + '/ang/prospect/**/*.js' },
+      `${extPath}/ang/prospect.js`,
+      { pattern: `${extPath}/ang/prospect/**/*.js` },
 
       // Spec files
-      { pattern: extPath + '/ang/test/prospect/**/*.js' }
+      { pattern: `${extPath}/ang/test/mocks/modules.mock.js` },
+      { pattern: `${extPath}/ang/test/mocks/**/*.js` },
+      { pattern: `${extPath}/ang/test/prospect/**/*.js` },
     ],
     exclude: [
     ],
@@ -47,9 +49,9 @@ module.exports = function (config) {
           '--headless',
           '--disable-gpu',
           // Without a remote debugging port, Google Chrome exits immediately.
-          '--remote-debugging-port=9222'
-        ]
-      }
-    }
+          '--remote-debugging-port=9222',
+        ],
+      },
+    },
   });
 };

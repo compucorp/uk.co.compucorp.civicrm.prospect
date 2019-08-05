@@ -12,23 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git"
   },
-  "lint-staged": {
-    "*.js": [
-      "semistandard --fix",
-      "git add"
-    ],
-    "*.php": [
-      "./bin/phpcs.phar --standard=phpcs-ruleset.xml"
-    ]
-  },
-  "semistandard": {
-    "globals": [
-      "CRM",
-      "angular",
-      "inject",
-      "moment"
-    ]
-  },
   "author": "Compucorp <info@compucorp.co.uk>",
   "license": "GNU Affero Public License 3.0",
   "bugs": {
@@ -36,13 +19,21 @@
   },
   "homepage": "https://github.com/compucorp/uk.co.compucorp.civicrm.prospect#readme",
   "devDependencies": {
+    "civicrm-cv": "^0.1.2",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-config-semistandard": "^14.0.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
     "gulp": "^4.0.2",
     "husky": "^3.0.0",
     "jasmine-core": "^3.4.0",
     "karma": "^4.2.0",
     "karma-chrome-launcher": "^3.0.0",
     "karma-jasmine": "^2.0.1",
-    "lint-staged": "^9.2.0",
-    "semistandard": "^13.0.1"
+    "lint-staged": "^9.2.0"
   }
 }

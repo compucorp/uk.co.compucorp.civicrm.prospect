@@ -1,8 +1,9 @@
 /* eslint-env jasmine */
+/* eslint no-param-reassign: "error" */
 
-(function (CRM) {
+((CRM) => {
   CRM.civicase = {};
   CRM.angular = { requires: {} };
 
   angular.module('civicase', []);
-}(CRM));
+})(CRM);
