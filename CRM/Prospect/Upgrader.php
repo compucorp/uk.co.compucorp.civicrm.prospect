@@ -5,7 +5,6 @@ use CRM_Prospect_Setup_CreateProspectMenus as CreateProspectMenus;
 use CRM_Prospect_Setup_CreateProspectOwnerRelationship as CreateProspectOwnerRelationship;
 use CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses as CreateProspectWorkflowCaseStatuses;
 use CRM_Prospect_Setup_CreateProspectWorkflowCaseType as CreateProspectWorkflowCaseType;
-use CRM_Prospect_Setup_MoveCustomFieldsToWorkflowCaseType as MoveCustomFieldsToWorkflowCaseType;
 
 /**
  * Collection of upgrade steps.
@@ -60,7 +59,6 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       new CreateProspectWorkflowCaseStatuses(),
       new CreateProspectOwnerRelationship(),
       new CreateProspectWorkflowCaseType(),
-      new MoveCustomFieldsToWorkflowCaseType(),
     ];
 
     foreach ($steps as $step) {

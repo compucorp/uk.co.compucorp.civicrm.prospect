@@ -303,7 +303,7 @@ function prospect_civicrm_alterContent(&$content, $context, $tplName, &$object) 
  */
 function _prospect_isOpenCasePage($tplName) {
   $pageType = CRM_Utils_Request::retrieve('type', 'String');
-  return ($tplName == 'CRM/Custom/Form/CustomDataByType.tpl') && ($pageType == 'Case');
+  return ($tplName == 'CRM/Custom/Form/CustomDataByType.tpl') && ($pageType == 'prospecting');
 }
 
 /**

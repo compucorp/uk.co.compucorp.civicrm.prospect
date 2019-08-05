@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class for data manipulation and retrieval on Prospect extension custom groups.
+ * Class for data manipulation and retrieval on Prospect custom groups.
  */
 class CRM_Prospect_ProspectCustomGroups {
   /**
-   * target prospect custom group name
+   * Target prospect custom group name.
    *
    * @var string
    */
@@ -19,7 +19,9 @@ class CRM_Prospect_ProspectCustomGroups {
   private $caseId;
 
   /**
-   *  Custom fields with their machine names and values as
+   * Fields array.
+   *
+   * Custom fields with their machine names and values as
    * {name} => [ 'machine_name' => {machine_name}, 'value' => {value} ].
    *
    * @var array
@@ -27,16 +29,19 @@ class CRM_Prospect_ProspectCustomGroups {
   private $fields = [];
 
   /**
-   * Custom fields list as
-   * {name} => custom_{id}.
+   * Custom fields list as {name} => custom_{id}.
    *
    * @var array
    */
   private $fieldsList = [];
 
   /**
+   * Class constructor.
+   *
    * @param string $customGroupName
+   *   Custom group name.
    * @param int $caseId
+   *   Case ID.
    */
   public function __construct($customGroupName, $caseId = 0) {
     $this->customGroupName = $customGroupName;
@@ -47,8 +52,9 @@ class CRM_Prospect_ProspectCustomGroups {
    * Updates values with specified params.
    *
    * @param array $params
+   *   Parameters.
    */
-  public function updateFieldsFromParams($params) {
+  public function updateFieldsFromParams(array $params) {
     if (!$this->caseId) {
       return;
     }
@@ -76,8 +82,9 @@ class CRM_Prospect_ProspectCustomGroups {
    * Updates field values with request data.
    *
    * @param array $fields
+   *   Custom Fields.
    */
-  public function updateFieldsFromRequest($fields) {
+  public function updateFieldsFromRequest(array $fields) {
     $updateParams = [];
 
     foreach ($fields as $field) {
@@ -97,8 +104,10 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets the value of a custom field.
    *
    * @param string $field
+   *   Custom Field.
    *
    * @return mixed
+   *   Returns the field value.
    */
   public function getValueOf($field) {
     $fields = $this->getFields();
@@ -110,7 +119,9 @@ class CRM_Prospect_ProspectCustomGroups {
    * Sets the value of a custom field.
    *
    * @param string $field
+   *   Custom field.
    * @param mixed $value
+   *   Custom field value.
    */
   public function setValueOf($field, $value) {
     $machineName = $this->getMachineNameOf($field);
@@ -124,8 +135,10 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets the data type of a custom field.
    *
    * @param string $field
+   *   Custom Field.
    *
-   * @return string|NULL
+   * @return string|null
+   *   Returns the data type.
    */
   private function getDataTypeOf($field) {
     $fields = $this->getFields();
@@ -137,8 +150,10 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets the Option Group ID of a custom field.
    *
    * @param string $field
+   *   Custom field.
    *
-   * @return int|NULL
+   * @return int|null
+   *   Returns the option group ID.
    */
   private function getOptionGroupIdOf($field) {
     $fields = $this->getFields();
@@ -150,8 +165,10 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets the machine name of a custom field.
    *
    * @param string $field
+   *   Custom field.
    *
    * @return string
+   *   Machine name.
    */
   public function getMachineNameOf($field) {
     $fields = $this->getFields();
@@ -163,8 +180,10 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets the label of a custom field.
    *
    * @param string $field
+   *   Custom field.
    *
    * @return string
+   *   Custom field label.
    */
   public function getLabelOf($field) {
     $fields = $this->getFields();
@@ -173,12 +192,13 @@ class CRM_Prospect_ProspectCustomGroups {
   }
 
   /**
-   * Checks if the custom field
-   * required.
+   * Checks if the custom field required.
    *
    * @param string $field
+   *   Custom field.
    *
-   * @return boolean
+   * @return bool
+   *   Returns boolean.
    */
   public function isRequired($field) {
     $fields = $this->getFields();
@@ -190,49 +210,55 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets Option Value's label of a custom field.
    *
    * @param string $field
+   *   Custom field.
    *
-   * @return string|NULL
+   * @return string|null
+   *   Option label.
    */
   public function getOptionLabelOf($field) {
     $optionGroupId = $this->getOptionGroupIdOf($field);
 
     try {
-      $option = civicrm_api3('OptionValue', 'getsingle', array(
+      $option = civicrm_api3('OptionValue', 'getsingle', [
         'option_group_id' => $optionGroupId,
         'value' => $this->getValueOf($field),
-      ));
+      ]);
 
       return $option['label'];
-    } catch (CiviCRM_API3_Exception $e) {
+    }
+    catch (CiviCRM_API3_Exception $e) {
       return NULL;
     }
   }
 
   /**
    * Gets a value of a custom field from request.
+   *
    * Used to retrieve field's value of Custom Field input generated by CiviCRM.
    *
    * @param string $field
+   *   Custom field.
    *
    * @return mixed
+   *   Returns request value.
    */
   private function getRequestValueOf($field) {
     $fieldKey = $this->getMachineNameOf($field) . '_-1';
     $dataType = $this->getDataTypeOf($field);
     $value = CRM_Utils_Request::retrieve($fieldKey, $dataType);
 
-    // CRM_Utils_Request::retrieve() method expects date value in YYYYMMDD format.
+    // CRM_Utils_Request::retrieve() expects date value in YYYYMMDD format.
     // So if the field's type is Date then we need to pick its value
     // from Request array and then convert it into CiviCRM date format.
     if ($dataType === 'Date') {
-      if(method_exists(CRM_Utils_Request, 'retrieveValue')) {
+      if (method_exists('CRM_Utils_Request', 'retrieveValue')) {
         $dateArray = [
           'value' => CRM_Utils_Request::retrieveValue($fieldKey, 'String', NULL, FALSE, CRM_Utils_Request::exportValues()),
         ];
       }
       else {
         $dateArray = [
-          'value' => CRM_Utils_Request::getValue($fieldKey, CRM_Utils_Request::exportValues()),
+          'value' => CRM_Utils_Array::value($fieldKey, CRM_Utils_Request::exportValues()),
         ];
       }
 
@@ -245,6 +271,8 @@ class CRM_Prospect_ProspectCustomGroups {
   }
 
   /**
+   * Getfields function.
+   *
    * Returns an array of a custom fields as
    * name => [
    *   data_type => 'data_type',
@@ -252,14 +280,16 @@ class CRM_Prospect_ProspectCustomGroups {
    *   machine_name => 'machine_name',
    *   option_group_id => 'option_group_id',
    *   value => 'value',
-   * ]
+   * ].
    *
    * It caches the result within class private variable but it may be
    * updated setting $force parameter value to TRUE.
    *
    * @param bool $force
+   *   Whether to force retrieving custom data or not.
    *
    * @return array
+   *   Returns formatted custom fields.
    */
   private function getFields($force = FALSE) {
     if (!empty($this->fields) && !$force) {
@@ -272,7 +302,7 @@ class CRM_Prospect_ProspectCustomGroups {
       $customFieldMachineNameList = $this->getCustomFieldMachineNameList();
       $parameters = [
         'entity_id' => $this->caseId,
-        'entity_type' => 'prospecting'
+        'entity_type' => 'prospecting',
       ];
       foreach ($customFieldMachineNameList as $machineName) {
         $parameters['return.' . $machineName] = 1;
@@ -300,14 +330,17 @@ class CRM_Prospect_ProspectCustomGroups {
   }
 
   /**
+   * Get Custom fields data.
+   *
    * Gets an array of a custom fields as
    * name => [
    *   key => machine_name,
    *   data_type => data_type
    *   option_group_id => option_group_id
-   * ]
+   * ].
    *
    * @return array
+   *   Custom field data.
    */
   private function getCustomFieldData() {
     if (!empty($this->fieldsList)) {
@@ -316,7 +349,13 @@ class CRM_Prospect_ProspectCustomGroups {
 
     $customFields = civicrm_api3('CustomField', 'get', [
       'custom_group_id' => $this->customGroupName,
-      'return' => ['name', 'label', 'data_type', 'option_group_id', 'is_required'],
+      'return' => [
+        'name',
+        'label',
+        'data_type',
+        'option_group_id',
+        'is_required',
+      ],
     ]);
 
     foreach ($customFields['values'] as $customField) {
@@ -336,10 +375,12 @@ class CRM_Prospect_ProspectCustomGroups {
    * Gets an array of a custom field machine names.
    *
    * @return array
+   *   Returns machine name list.
    */
   private function getCustomFieldMachineNameList() {
     $fields = $this->getCustomFieldData();
 
     return CRM_Utils_Array::collect('key', $fields);
   }
+
 }
