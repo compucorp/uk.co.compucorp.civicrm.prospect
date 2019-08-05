@@ -3,7 +3,7 @@
 
   module.service('ProspectConverted', ProspectConverted);
 
-  function ProspectConverted (crmApi) {
+  function ProspectConverted (crmApi, ProspectGlobalValues) {
     /**
      * Returns if the case is converted to Prospect
      *
@@ -29,6 +29,18 @@
       return crmApi('ProspectConverted', 'getpaymentinfo', {
         prospect_case_id: caseID
       });
+    };
+
+    /**
+     * Checks if Case Type Category is 'Prospecting'.
+     *
+     * @param {Object} caseData
+     * @return {Boolean}
+     */
+    this.checkIfProspectingCaseTypeCategory = function (caseData) {
+      var caseTypeCategory = CRM.civicase.caseTypeCategories[caseData['case_type_id.case_type_category']].name;
+
+      return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
     };
   }
 })(angular, CRM.$, CRM._);
