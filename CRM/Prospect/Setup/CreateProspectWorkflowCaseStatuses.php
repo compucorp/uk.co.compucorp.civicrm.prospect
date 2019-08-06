@@ -16,6 +16,7 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses {
         'option_group_id' => 'case_status',
         'name' => $caseStatus['name'],
         'label' => $caseStatus['label'],
+        'grouping' => $caseStatus['class'],
         'is_active' => TRUE,
         'is_reserved' => TRUE,
       ]);
@@ -30,12 +31,36 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses {
    */
   public static function getStatuses() {
     $caseStatuses = [
-      ['name' => 'enquiry', 'label' => 'Enquiry (positive)'],
-      ['name' => 'qualified', 'label' => 'Qualified (positive)'],
-      ['name' => 'in_progress', 'label' => 'In progress (positive)'],
-      ['name' => 'submitted', 'label' => 'Submitted (positive)'],
-      ['name' => 'won', 'label' => 'Won (positive)'],
-      ['name' => 'lost', 'label' => 'Lost (negative)'],
+      [
+        'name' => 'enquiry',
+        'label' => 'Enquiry (positive)',
+        'class' => 'Opened',
+      ],
+      [
+        'name' => 'qualified',
+        'label' => 'Qualified (positive)',
+        'class' => 'Opened',
+      ],
+      [
+        'name' => 'in_progress',
+        'label' => 'In progress (positive)',
+        'class' => 'Opened',
+      ],
+      [
+        'name' => 'submitted',
+        'label' => 'Submitted (positive)',
+        'class' => 'Opened',
+      ],
+      [
+        'name' => 'won',
+        'label' => 'Won (positive)',
+        'class' => 'Closed',
+      ],
+      [
+        'name' => 'lost',
+        'label' => 'Lost (negative)',
+        'class' => 'Closed',
+      ],
     ];
 
     return $caseStatuses;
