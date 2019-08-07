@@ -30,36 +30,39 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses {
    *   Workflow case statuses.
    */
   public static function getStatuses() {
+    $openCaseStatusClass = 'Opened';
+    $closedCaseStatusClass = 'Closed';
+
     $caseStatuses = [
       [
         'name' => 'enquiry',
         'label' => 'Enquiry (positive)',
-        'class' => 'Opened',
+        'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'qualified',
         'label' => 'Qualified (positive)',
-        'class' => 'Opened',
+        'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'in_progress',
         'label' => 'In progress (positive)',
-        'class' => 'Opened',
+        'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'submitted',
         'label' => 'Submitted (positive)',
-        'class' => 'Opened',
+        'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'won',
         'label' => 'Won (positive)',
-        'class' => 'Closed',
+        'class' => $closedCaseStatusClass,
       ],
       [
         'name' => 'lost',
         'label' => 'Lost (negative)',
-        'class' => 'Closed',
+        'class' => $closedCaseStatusClass,
       ],
     ];
 
