@@ -7,6 +7,7 @@ use CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses as CreateProspectWorkf
 use CRM_Prospect_Setup_CreateProspectWorkflowCaseType as CreateProspectWorkflowCaseType;
 use CRM_Prospect_Setup_MoveCustomFieldsToProspecting as MoveCustomFieldsToProspecting;
 use CRM_Prospect_Setup_AddProspectCategoryCgExtendsValue as AddProspectCategoryCgExtendsValue;
+use CRM_Prospect_Setup_EnableRequiredComponents as EnableRequiredComponents;
 
 /**
  * Collection of upgrade steps.
@@ -56,6 +57,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    */
   public function install() {
     $steps = [
+      new EnableRequiredComponents(),
       new CreateProspectingOptionValue(),
       new CreateProspectMenus(),
       new CreateProspectWorkflowCaseStatuses(),
