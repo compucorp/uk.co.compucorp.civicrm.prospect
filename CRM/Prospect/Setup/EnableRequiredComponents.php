@@ -21,10 +21,10 @@ class CRM_Prospect_Setup_EnableRequiredComponents {
       return;
     }
 
-    $enabledComponents = array_merge($enabledComponents, $componentsToEnable);
+    $componentsToEnable = array_merge($enabledComponents, $componentsToEnable);
 
     civicrm_api3('setting', 'create', [
-      'enable_components' => array_unique($enabledComponents),
+      'enable_components' => array_unique($componentsToEnable),
     ]);
   }
 
