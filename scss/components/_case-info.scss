@@ -1,8 +1,8 @@
 .___outside-namespace {
   .prospect__case-info {
     background-color: $crm-white;
-    border-radius: 4px;
-    padding: 5px;
+    border-radius: $border-radius-child;
+    padding: $crm-gap-small;
     position: absolute;
     right: 24px;
     top: 53px;
