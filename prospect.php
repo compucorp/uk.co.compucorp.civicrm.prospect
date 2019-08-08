@@ -268,10 +268,10 @@ function _prospect_civicrm_alterTemplateFile_CRM_Pledge_Page_Tab($formName, &$fo
 }
 
 /**
- * Adds 'style.css' to resource files.
+ * Adds 'prospect.min.css' to resource files.
  */
 function _prospect_civicrm_addMainCSSFile() {
-  CRM_Core_Resources::singleton()->addStyleFile('uk.co.compucorp.civicrm.prospect', 'css/style.css');
+  CRM_Core_Resources::singleton()->addStyleFile('uk.co.compucorp.civicrm.prospect', 'css/prospect.min.css');
 }
 
 /**
