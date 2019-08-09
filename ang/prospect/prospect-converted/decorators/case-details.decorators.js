@@ -53,6 +53,7 @@
               value: { display: paymentInfo.pledge_balance }
             });
           }
+
           if (paymentInfo.payment_completed) {
             addUpdateCustomField(financialInformationCustomField, 'payment_completed', {
               label: 'Payment completed',
