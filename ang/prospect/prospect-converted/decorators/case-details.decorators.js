@@ -46,23 +46,40 @@
             return;
           }
 
-          var fieldToAdd = {};
-
-          if (paymentInfo.payment_entity === 'pledge') {
-            fieldToAdd = {
+          if (paymentInfo.pledge_balance) {
+            addUpdateCustomField(financialInformationCustomField, 'pledge_balance', {
               label: 'Pledge balance',
               name: 'pledge_balance',
               value: { display: paymentInfo.pledge_balance }
-            };
-          } else if (paymentInfo.payment_entity === 'contribute') {
-            fieldToAdd = {
+            });
+          }
+
+          if (paymentInfo.payment_completed) {
+            addUpdateCustomField(financialInformationCustomField, 'payment_completed', {
               label: 'Payment completed',
               name: 'payment_completed',
               value: { display: paymentInfo.payment_completed }
-            };
+            });
           }
+        }
 
-          financialInformationCustomField.fields = financialInformationCustomField.fields.concat(fieldToAdd);
+        /**
+         * Adds or Updates Custom fields
+         *
+         * @param {Object} financialInformationCustomField
+         * @param {String} fieldName
+         * @param {Object} fieldToAdd
+         */
+        function addUpdateCustomField (financialInformationCustomField, fieldName, fieldToAdd) {
+          var field = _.find(financialInformationCustomField.fields, function (customField) {
+            return customField.name === fieldName;
+          });
+
+          if (field) {
+            field.value = fieldToAdd.value;
+          } else {
+            financialInformationCustomField.fields = financialInformationCustomField.fields.concat(fieldToAdd);
+          }
         }
       };
     };
