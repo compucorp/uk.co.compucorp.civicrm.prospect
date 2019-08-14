@@ -47,4 +47,20 @@ class CRM_Prospect_Helper_CaseTypeCategory {
     return $results;
   }
 
+  /**
+   * Returns the case types for the prospect category.
+   *
+   * @return array
+   *   Array of Case Types indexed by Id.
+   */
+  public static function getProspectCaseTypes() {
+    $result = civicrm_api3('CaseType', 'get', [
+      'sequential' => 1,
+      'return' => ['title', 'id'],
+      'case_type_category' => self::PROSPECT_CASE_TYPE_CATEGORY_NAME,
+    ]);
+
+    return array_column($result['values'], 'title', 'id');
+  }
+
 }
