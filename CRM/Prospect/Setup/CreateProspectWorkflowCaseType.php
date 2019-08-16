@@ -23,6 +23,7 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseType {
       'statuses' => $this->getStatusDefinition(),
       'activityTypes' => $this->getActivityTypeDefinition(),
       'caseRoles' => $this->getCaseRolesDefinition(),
+      'activitySets' => $this->getActivitySets(),
     ];
 
     civicrm_api3('CaseType', 'create', [
@@ -88,6 +89,22 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseType {
     ];
 
     return $caseRoles;
+  }
+
+  /**
+   * Returns the Timeline.
+   *
+   * @return array
+   *   The timeline.
+   */
+  private function getActivitySets() {
+    return [
+      [
+        'timeline' => TRUE,
+        'name' => 'standard_timeline',
+        'label' => 'Standard Timeline',
+      ],
+    ];
   }
 
 }
