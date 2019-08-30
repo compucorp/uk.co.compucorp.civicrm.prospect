@@ -65,7 +65,7 @@ class CRM_Prospect_Setup_CreateProspectMenus {
       [
         'label' => ts('Dashboard'),
         'name' => 'prospect_dashboard',
-        'url' => 'civicrm/case/a/#/case?case_type_category=prospecting',
+        'url' => 'civicrm/case/a/?case_type_category=prospecting#/case?case_type_category=prospecting',
         'permission' => 'access my cases and activities,access all cases and activities',
         'permission_operator' => 'OR',
       ],
@@ -79,7 +79,7 @@ class CRM_Prospect_Setup_CreateProspectMenus {
       [
         'label' => ts('Manage Prospects'),
         'name' => 'manage_prospect',
-        'url' => 'civicrm/case/a/#/case/list?cf=%7B"case_type_category":"prospecting"%7D',
+        'url' => 'civicrm/case/a/?case_type_category=prospecting#/case/list?cf=%7B"case_type_category":"prospecting"%7D',
         'permission' => 'access my cases and activities,access all cases and activities',
         'permission_operator' => 'OR',
       ],
