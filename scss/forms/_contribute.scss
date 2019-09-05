@@ -1,0 +1,7 @@
+.___outside-namespace {
+  .CRM_Contribute_Form_Contribution {
+    ~ .prospect__case-info {
+      top: 110px;
+    }
+  }
+}

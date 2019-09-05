@@ -1,5 +1,5 @@
 {if $caseID}
-<div class="prospect-info">
+<div class="prospect__case-info">
   <div class="case-id">
     {ts}Case ID{/ts}:
     <span>{$caseID}</span></div>
