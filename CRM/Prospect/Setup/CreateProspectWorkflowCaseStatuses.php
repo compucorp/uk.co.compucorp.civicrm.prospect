@@ -36,32 +36,32 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses {
     $caseStatuses = [
       [
         'name' => 'enquiry',
-        'label' => 'Enquiry (positive)',
+        'label' => 'Enquiry',
         'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'qualified',
-        'label' => 'Qualified (positive)',
+        'label' => 'Qualified',
         'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'in_progress',
-        'label' => 'In progress (positive)',
+        'label' => 'In progress',
         'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'submitted',
-        'label' => 'Submitted (positive)',
+        'label' => 'Submitted',
         'class' => $openCaseStatusClass,
       ],
       [
         'name' => 'won',
-        'label' => 'Won (positive)',
+        'label' => 'Won',
         'class' => $closedCaseStatusClass,
       ],
       [
         'name' => 'lost',
-        'label' => 'Lost (negative)',
+        'label' => 'Lost',
         'class' => $closedCaseStatusClass,
       ],
     ];
