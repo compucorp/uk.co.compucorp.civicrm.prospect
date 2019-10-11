@@ -1,0 +1,53 @@
+{
+  "name": "uk.co.compucorp.civicrm.prospect",
+  "version": "2.0.0",
+  "description": "CiviProspect provides the core structure for creating/ managing/ converting the fundraising opportunities of an organisation. It can also be used to manage any monetary opportunities such as sales opportunities and event sponsorships.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "lint-staged",
+    "postinstall": "cd bin && ./install-php-linter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git"
+  },
+  "author": "Compucorp <info@compucorp.co.uk>",
+  "license": "GNU Affero Public License 3.0",
+  "bugs": {
+    "url": "https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/issues"
+  },
+  "homepage": "https://github.com/compucorp/uk.co.compucorp.civicrm.prospect#readme",
+  "devDependencies": {
+    "civicrm-cv": "^0.1.2",
+    "civicrm-scssroot": "git://github.com/totten/civicrm-scssroot.git#v0.1.1",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-config-semistandard": "^14.0.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-strip-css-comments": "^2.0.0",
+    "gulp-transform-selectors": "0.0.2",
+    "husky": "^3.0.0",
+    "jasmine-core": "^3.4.0",
+    "karma": "^4.2.0",
+    "karma-chrome-launcher": "^3.0.0",
+    "karma-jasmine": "^2.0.1",
+    "lint-staged": "^9.2.1",
+    "postcss-discard-duplicates": "^4.0.2",
+    "postcss-prefix-selector": "^1.7.2",
+    "stylelint": "^10.1.0",
+    "stylelint-config-sass-guidelines": "^6.0.0"
+  }
+}
