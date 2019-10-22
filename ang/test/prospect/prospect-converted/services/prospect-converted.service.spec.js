@@ -34,7 +34,7 @@ describe('ProspectConverted', () => {
       it('calls ProspectConverted API', () => {
         expect(crmApi).toHaveBeenCalledWith('ProspectConverted', 'get', {
           sequential: 1,
-          prospect_case_id: caseID,
+          prospect_case_id: caseID
         });
       });
 
@@ -51,7 +51,7 @@ describe('ProspectConverted', () => {
 
       beforeEach(() => {
         crmApi.and.returnValue($q.resolve({
-          count: 0, values: [],
+          count: 0, values: []
         }));
         getProspectIsConvertedPromise = ProspectConverted.getProspectIsConverted(caseID);
       });
@@ -76,7 +76,7 @@ describe('ProspectConverted', () => {
 
     it('calls ProspectConverted API', () => {
       expect(crmApi).toHaveBeenCalledWith('ProspectConverted', 'getpaymentinfo', {
-        prospect_case_id: caseID,
+        prospect_case_id: caseID
       });
     });
 
@@ -94,7 +94,7 @@ describe('ProspectConverted', () => {
     describe('when the case type category is prospect', () => {
       beforeEach(() => {
         returnValue = ProspectConverted.checkIfProspectingCaseTypeCategory({
-          'case_type_id.case_type_category': 2,
+          'case_type_id.case_type_category': 2
         });
       });
 
@@ -106,7 +106,7 @@ describe('ProspectConverted', () => {
     describe('when the case type category is not prospect', () => {
       beforeEach(() => {
         returnValue = ProspectConverted.checkIfProspectingCaseTypeCategory({
-          'case_type_id.case_type_category': 1,
+          'case_type_id.case_type_category': 1
         });
       });
 

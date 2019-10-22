@@ -3,12 +3,18 @@
 
   module.service('ProspectConverted', ProspectConverted);
 
+  /**
+   * Prospect converted service
+   *
+   * @param {object} crmApi crm api
+   * @param {*} ProspectGlobalValues prospect global values
+   */
   function ProspectConverted (crmApi, ProspectGlobalValues) {
     /**
      * Returns if the case is converted to Prospect
      *
-     * @param {string/int} caseID
-     * @return {Promise}
+     * @param {string} caseID case id
+     * @returns {Promise} promise
      */
     this.getProspectIsConverted = function (caseID) {
       return crmApi('ProspectConverted', 'get', {
@@ -22,8 +28,8 @@
     /**
      * Gets the payment information
      *
-     * @param {String/Int} caseID
-     * @return {Promise}
+     * @param {string} caseID case id
+     * @returns {Promise} promise
      */
     this.getPaymentInfo = function (caseID) {
       return crmApi('ProspectConverted', 'getpaymentinfo', {
@@ -34,8 +40,8 @@
     /**
      * Checks if Case Type Category is 'Prospecting'.
      *
-     * @param {Object} caseData
-     * @return {Boolean}
+     * @param {object} caseData case data
+     * @returns {boolean} if prospect type category
      */
     this.checkIfProspectingCaseTypeCategory = function (caseData) {
       var caseTypeCategory = CRM.civicase.caseTypeCategories[caseData['case_type_id.case_type_category']].name;

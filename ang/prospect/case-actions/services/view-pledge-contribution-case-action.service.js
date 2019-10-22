@@ -3,6 +3,13 @@
 
   module.service('ViewPledgeContributionCaseAction', ViewPledgeContributionCaseAction);
 
+  /**
+   *
+   * @param {object} $location location service
+   * @param {object} crmApi crm api service
+   * @param {object} ProspectGlobalValues Prospect Global Values Constant
+   * @param {object} ProspectConverted Prospect Converted Service
+   */
   function ViewPledgeContributionCaseAction (
     $location, crmApi, ProspectGlobalValues, ProspectConverted) {
     var isConvertedToProspect = false;
@@ -16,7 +23,7 @@
     /**
      * Refresh Data for the Service
      *
-     * @param {array} cases
+     * @param {Array} cases cases
      */
     this.refreshData = function (cases) {
       if (!cases[0]) {
@@ -46,9 +53,9 @@
      *  Case is Converted to Prospect
      *  Payment Entity matches the Action Type
      *
-     * @param {Object} action
-     * @param {Array} cases
-     * @return {boolean}
+     * @param {object} action action
+     * @param {Array} cases cases
+     * @returns {boolean} if action is allowed
      */
     this.isActionAllowed = function (action, cases) {
       var actionTypeMapping = {
@@ -65,9 +72,10 @@
     /**
      * Click event handler for the Action
      *
-     * @param {Array} cases
-     * @param {Object} action
-     * @param {Function} callbackFn
+     * @param {Array} cases cases
+     * @param {object} action action
+     * @param {Function} callbackFn callback function
+     * @returns {string} url
      */
     this.doAction = function (cases, action, callbackFn) {
       var contactID = cases[0].client[0].contact_id;
