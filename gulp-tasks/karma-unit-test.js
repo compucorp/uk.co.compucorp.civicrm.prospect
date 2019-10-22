@@ -9,6 +9,6 @@ const path = require('path');
 module.exports = (done) => {
   new karma.Server({
     configFile: path.resolve(__dirname, '../ang/test/karma.conf.js'),
-    singleRun: true,
+    singleRun: true
   }, done).start();
 };

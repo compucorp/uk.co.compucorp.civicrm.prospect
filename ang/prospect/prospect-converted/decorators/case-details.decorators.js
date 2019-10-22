@@ -7,6 +7,10 @@
 
   /**
    * Case Details Directive Decorator
+   *
+   * @param {object} $delegate delegate service
+   * @param {object} ProspectConverted ProspectConverted
+   * @returns {object} decorated directive
    */
   function civicaseCaseDetailsDirectiveDecorator ($delegate, ProspectConverted) {
     var civicaseCaseDetails = $delegate[0];
@@ -35,7 +39,7 @@
         /**
          * Adds Extra Field to 'Financial Information' Custom Group block
          *
-         * @param {Object} paymentInfo
+         * @param {object} paymentInfo payment info
          */
         function addExtraProspectField (paymentInfo) {
           var financialInformationCustomField = _.find($scope.item.customData, function (customField) {
@@ -66,9 +70,9 @@
         /**
          * Adds or Updates Custom fields
          *
-         * @param {Object} financialInformationCustomField
-         * @param {String} fieldName
-         * @param {Object} fieldToAdd
+         * @param {object} financialInformationCustomField financial information custom field
+         * @param {string} fieldName field name
+         * @param {object} fieldToAdd field to add
          */
         function addUpdateCustomField (financialInformationCustomField, fieldName, fieldToAdd) {
           var field = _.find(financialInformationCustomField.fields, function (customField) {

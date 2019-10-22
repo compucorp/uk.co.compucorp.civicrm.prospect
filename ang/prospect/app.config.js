@@ -9,7 +9,7 @@
     /**
      * Get the Case Actions for Prospect.
      *
-     * @return {Array}
+     * @returns {Array} case actions
      */
     function getCaseActionsForProspect () {
       return [

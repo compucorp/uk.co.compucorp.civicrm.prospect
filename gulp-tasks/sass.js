@@ -6,7 +6,7 @@
 const autoprefixer = require('gulp-autoprefixer');
 const glob = require('gulp-sass-glob');
 const civicrmScssRoot = require('civicrm-scssroot')();
-const cssmin = require('gulp-cssmin');
+const cleanCSS = require('gulp-clean-css');
 const gulp = require('gulp');
 const postcss = require('gulp-postcss');
 const postcssDiscardDuplicates = require('postcss-discard-duplicates');
@@ -24,34 +24,39 @@ const OUTSIDE_NAMESPACE_REGEX = /^\.___outside-namespace/;
  * Deletes the special class that was used as marker for styles that should
  * not be nested inside the bootstrap namespace from the given selector
  *
- * @param  {String} selector
- * @return {String}
+ * @param {string} selector selector
+ * @returns {string} string
  */
-function removeOutsideNamespaceMarker(selector) {
+function removeOutsideNamespaceMarker (selector) {
   return selector.replace(OUTSIDE_NAMESPACE_REGEX, '');
 }
 
-function sassTask() {
+/**
+ * Gulp task to convert SCSS to CSS
+ *
+ * @returns {object} stream
+ */
+function sassTask () {
   return civicrmScssRoot.update()
     .then(() => {
       gulp.src('scss/prospect.scss')
         .pipe(glob())
         .pipe(sourcemaps.init())
         .pipe(autoprefixer({
-          cascade: false,
+          cascade: false
         }))
         .pipe(sass({
           outputStyle: 'compressed',
           includePaths: civicrmScssRoot.getPath(),
-          precision: 10,
+          precision: 10
         }).on('error', sass.logError))
         .pipe(stripCssComments({ preserve: false }))
         .pipe(postcss([postcssPrefix({
           prefix: `${BOOTSTRAP_NAMESPACE} `,
-          exclude: [/^body/, /page-civicrm-case/, OUTSIDE_NAMESPACE_REGEX],
+          exclude: [/^body/, /page-civicrm-case/, OUTSIDE_NAMESPACE_REGEX]
         }), postcssDiscardDuplicates]))
         .pipe(transformSelectors(removeOutsideNamespaceMarker, { splitOnCommas: true }))
-        .pipe(cssmin({ sourceMap: true }))
+        .pipe(cleanCSS({ sourceMap: true }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('css/'));

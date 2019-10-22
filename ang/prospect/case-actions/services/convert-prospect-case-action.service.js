@@ -3,13 +3,20 @@
 
   module.service('ConvertProspectCaseAction', ConvertProspectCaseAction);
 
+  /**
+   *
+   * @param {object} $location location service
+   * @param {object} crmApi crm api service
+   * @param {object} ProspectGlobalValues Prospect Global Values Constant
+   * @param {object} ProspectConverted Prospect Converted Service
+   */
   function ConvertProspectCaseAction ($location, crmApi, ProspectGlobalValues, ProspectConverted) {
     var isConvertedToProspect = false;
 
     /**
      * Refresh Data for the Service
      *
-     * @param {array} cases
+     * @param {Array} cases cases
      */
     this.refreshData = function (cases) {
       if (!cases[0]) {
@@ -27,9 +34,9 @@
     /**
      * Checks if the Action is allowed
      *
-     * @param {Object} action
-     * @param {Array} cases
-     * @return {boolean}
+     * @param {object} action action
+     * @param {Array} cases cases
+     * @returns {boolean} if action is allowed
      */
     this.isActionAllowed = function (action, cases) {
       var isPledgeOrContribution = _.includes(
@@ -43,9 +50,10 @@
     /**
      * Click event handler for the Action
      *
-     * @param {Array} cases
-     * @param {Object} action
-     * @param {Function} callbackFn
+     * @param {Array} cases cases
+     * @param {object} action action
+     * @param {Function} callbackFn call back function
+     * @returns {string} url
      */
     this.doAction = function (cases, action, callbackFn) {
       var caseId = cases[0].id;
