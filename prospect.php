@@ -128,6 +128,13 @@ function prospect_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
 }
 
 /**
+ * Implements addCiviCaseDependentAngularModules().
+ */
+function prospect_addCiviCaseDependentAngularModules(&$dependentModules) {
+  $dependentModules[] = "prospect";
+}
+
+/**
  * Implements hook_civicrm_entityTypes().
  */
 function prospect_civicrm_entityTypes(&$entityTypes) {
