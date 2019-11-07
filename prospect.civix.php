@@ -338,7 +338,6 @@ function _prospect_civix_civicrm_caseTypes(&$caseTypes) {
  */
 function _prospect_civix_civicrm_angularModules(&$angularModules) {
   _prospect_includeAngularModules($angularModules);
-  _prospect_addProspectAsRequirementForCivicase($angularModules);
 }
 
 /**
@@ -363,25 +362,6 @@ function _prospect_includeAngularModules(array &$angularModules) {
       $module['ext'] = E::LONG_NAME;
     }
     $angularModules[$name] = $module;
-  }
-}
-
-/**
- * Add Prospect as a requirement of civicase.
- *
- * @param array $angularModules
- *   Angular Modules.
- */
-function _prospect_addProspectAsRequirementForCivicase(array &$angularModules) {
-  if (isset($angularModules['civicase'])) {
-    $angularModules['civicase']['requires'][] = 'prospect';
-  }
-  else {
-    CRM_Core_Session::setStatus(
-      'The <strong>Prospect</strong> extension requires <strong>CiviCase</strong> to be installed first.',
-      'Warning',
-      'no-popup'
-    );
   }
 }
 

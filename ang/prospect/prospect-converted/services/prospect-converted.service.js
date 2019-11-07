@@ -8,8 +8,9 @@
    *
    * @param {object} crmApi crm api
    * @param {*} ProspectGlobalValues prospect global values
+   * @param CaseTypeCategory
    */
-  function ProspectConverted (crmApi, ProspectGlobalValues) {
+  function ProspectConverted (crmApi, ProspectGlobalValues, CaseTypeCategory) {
     /**
      * Returns if the case is converted to Prospect
      *
@@ -44,7 +45,7 @@
      * @returns {boolean} if prospect type category
      */
     this.checkIfProspectingCaseTypeCategory = function (caseData) {
-      var caseTypeCategory = CRM.civicase.caseTypeCategories[caseData['case_type_id.case_type_category']].name;
+      var caseTypeCategory = CaseTypeCategory.getAll()[caseData['case_type_id.case_type_category']].name;
 
       return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
     };
