@@ -12,10 +12,14 @@ class CRM_Prospect_Hook_APIWrappers_CaseCreationAPIWrapper {
    *
    * @param array $wrappers
    *   Wrappers.
-   * @param array $apiRequest
+   * @param mixed $apiRequest
    *   Api Request.
    */
-  public function run(array &$wrappers, array $apiRequest) {
+  public function run(array &$wrappers, $apiRequest) {
+    if (is_object($apiRequest)) {
+      return;
+    }
+
     if (!$this->shouldRun($apiRequest)) {
       return;
     }
