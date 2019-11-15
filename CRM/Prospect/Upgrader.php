@@ -147,7 +147,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       return TRUE;
     }
 
-    return ($currentRevisionNum < max(array_keys($revisions)));
+    return ($currentRevisionNum < max($revisions));
   }
 
   /**
@@ -157,7 +157,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    */
   public function enqueuePendingRevisions(CRM_Queue_Queue $queue) {
     $currentRevisionNum = (int) $this->getCurrentRevision();
-    foreach ($this->getRevisions() as $revisionNum => $revisionClass) {
+    foreach ($this->getRevisions() as $revisionClass => $revisionNum) {
 
       if ($revisionNum <= $currentRevisionNum) {
         continue;
@@ -201,7 +201,7 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    * Get a list of revisions.
    *
    * @return array
-   *   An array of revision classes sorted numerically by their key
+   *   An array of revisions sorted by the upgrader class as keys
    */
   public function getRevisions() {
     $extensionRoot = __DIR__;
@@ -212,9 +212,9 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       $numberPrefix = 'Steps_Step';
       $startPos = strpos($class, $numberPrefix) + strlen($numberPrefix);
       $revisionNum = (int) substr($class, $startPos);
-      $sortedKeyedClasses[$revisionNum] = $class;
+      $sortedKeyedClasses[$class] = $revisionNum;
     }
-    ksort($sortedKeyedClasses, SORT_NUMERIC);
+    asort($sortedKeyedClasses, SORT_NUMERIC);
 
     return $sortedKeyedClasses;
   }
