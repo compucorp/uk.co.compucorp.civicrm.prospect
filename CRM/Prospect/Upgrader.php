@@ -44,6 +44,9 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    */
   public function enable() {
     $this->toggleDefaulValues(1);
+
+    $prospectCategoryCgExtendsValue = new AddProspectCategoryCgExtendsValue();
+    $prospectCategoryCgExtendsValue->toggleOptionValueStatus(TRUE);
   }
 
   /**
@@ -51,6 +54,9 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    */
   public function disable() {
     $this->toggleDefaulValues(0);
+
+    $prospectCategoryCgExtendsValue = new AddProspectCategoryCgExtendsValue();
+    $prospectCategoryCgExtendsValue->toggleOptionValueStatus(FALSE);
   }
 
   /**
