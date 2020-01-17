@@ -195,22 +195,9 @@ function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
  * Implements hook_civicrm_apiWrappers().
  */
 function prospect_civicrm_apiWrappers(&$wrappers, $apiRequest) {
-  // hook_civicrm_config is responsible for including an extension path to
-  // autoload files for that extension.
-  // Since Prospect extension implements the hook_civicrm_fieldOptions
-  // it calls an API internally to fetch Campaign_Id Custom field,
-  // This causes the API wrapper hook to be invoked prematurely.
-  // Hence the below condition is required to avoid `Class Not Found` error.
-  if ($apiRequest['entity'] === 'CustomField') {
-    return;
-  }
-
-  $hooks = [
-    new CRM_Prospect_Hook_APIWrappers_CaseCreationAPIWrapper(),
-  ];
-
-  foreach ($hooks as $hook) {
-    $hook->run($wrappers, $apiRequest);
+  if ($apiRequest == 'Case') {
+    $caseCreationApiWrapper = new CRM_Prospect_Hook_APIWrappers_CaseCreationAPIWrapper();
+    $caseCreationApiWrapper->run($wrappers, $apiRequest);
   }
 }
 
