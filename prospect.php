@@ -181,13 +181,16 @@ function _prospect_civicrm_get_custom_group_id($customGroupName) {
  */
 function prospect_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   $hooks = [
-    new CRM_Prospect_Hook_Post_UpdateProspectFields(),
-    new CRM_Prospect_Hook_Post_ConvertContributionToProspect(),
-    new CRM_Prospect_Hook_Post_ConvertPledgeToProspect(),
+    'CRM_Prospect_Hook_Post_UpdateProspectFields',
+    'CRM_Prospect_Hook_Post_ConvertContributionToProspect',
+    'CRM_Prospect_Hook_Post_ConvertPledgeToProspect',
   ];
 
-  foreach ($hooks as $hook) {
-    $hook->run($op, $objectName, $objectId, $objectRef);
+  foreach ($hooks as $hookClass) {
+    if (class_exists($hookClass)) {
+      $hook = new $hookClass();
+      $hook->run($op, $objectName, $objectId, $objectRef);
+    }
   }
 }
 
