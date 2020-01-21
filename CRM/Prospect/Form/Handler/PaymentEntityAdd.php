@@ -45,8 +45,6 @@ class CRM_Prospect_Form_Handler_PaymentEntityAdd {
       }
     }
 
-    $defaults['campaign_id'] = $fields->getValueOf('Campaign_Id');
-
     $form->setDefaults($defaults);
   }
 

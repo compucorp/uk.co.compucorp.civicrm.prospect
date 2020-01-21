@@ -282,21 +282,6 @@ function _prospect_civicrm_addMainCSSFile() {
 }
 
 /**
- * Gets Campaign label by Campaign ID.
- *
- * @param int $id
- *   ID.
- *
- * @return string|null
- *   Campaign Label.
- */
-function _prospect_civicrm_get_campaign_label_by_id($id) {
-  $campaign = _prospect_civicrm_get_campaign_options($id);
-
-  return !empty($campaign[$id]) ? $campaign[$id] : NULL;
-}
-
-/**
  * Implements hook_civicrm_alterContent().
  */
 function prospect_civicrm_alterContent(&$content, $context, $tplName, &$object) {
@@ -338,45 +323,4 @@ function prospect_civicrm_buildForm($formName, &$form) {
   foreach ($handlers as $handler) {
     $handler->handle($formName, $form);
   }
-}
-
-/**
- * Implements hook_civicrm_fieldOptions().
- */
-function prospect_civicrm_fieldOptions($entity, $field, &$options, $params) {
-  $campaignCustomFieldID = CRM_Core_BAO_CustomField::getCustomFieldID('Campaign', 'Prospect_Financial_Information');
-
-  if ($entity === 'Case' && $field === 'custom_' . $campaignCustomFieldID) {
-    $options = _prospect_civicrm_get_campaign_options();
-  }
-}
-
-/**
- * Get list of active Campaigns or a single Campaign if ID is specified.
- *
- * @param int $id
- *   ID.
- *
- * @return array
- *   Result.
- */
-function _prospect_civicrm_get_campaign_options($id = NULL) {
-  $result = [];
-
-  $campaigns = civicrm_api3('Campaign', 'get', [
-    'sequential' => 1,
-    'id' => $id,
-    'is_active' => 1,
-    'return' => ['title'],
-    'options' => [
-      'limit' => 0,
-      'sort' => 'title ASC',
-    ],
-  ]);
-
-  foreach ($campaigns['values'] as $campaign) {
-    $result[$campaign['id']] = $campaign['title'];
-  }
-
-  return $result;
 }
