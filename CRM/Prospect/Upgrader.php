@@ -21,7 +21,6 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    * @var array
    */
   private static $defaultOptionGroups = [
-    'Prospect_Financial_Information_Campaign',
     'Prospect_Financial_Information_Fin_Yr',
     'Prospect_Financial_Information_Capital',
     'Prospect_Financial_Information_Restricted_Code',
