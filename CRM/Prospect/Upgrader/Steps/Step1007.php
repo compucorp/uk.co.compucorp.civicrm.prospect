@@ -19,7 +19,7 @@ class CRM_Prospect_Upgrader_Steps_Step1007 {
         'name' => 'Campaign_Id',
       ]);
 
-      if ($result['id']) {
+      if (!empty($result['id'])) {
         civicrm_api3('CustomField', 'delete', ['id' => $result['id']]);
       }
     }

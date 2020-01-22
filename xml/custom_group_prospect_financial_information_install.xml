@@ -188,13 +188,6 @@
 
   <OptionGroups>
     <OptionGroup>
-      <name>Prospect_Financial_Information_Campaign</name>
-      <title>Custom Group (Financial_Information): Campaign</title>
-      <is_reserved>1</is_reserved>
-      <is_active>1</is_active>
-      <is_locked>1</is_locked>
-    </OptionGroup>
-    <OptionGroup>
       <name>Prospect_Financial_Information_Fin_Yr</name>
       <title>Custom Group (Financial_Information): Fin / Yr</title>
       <is_reserved>1</is_reserved>
