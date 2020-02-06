@@ -1,5 +1,6 @@
 <?php
 
+use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategoryHelper;
 /**
  * CRM_Prospect_Setup_AddProspectCategoryCgExtendsValue class.
  */
@@ -26,7 +27,7 @@ class CRM_Prospect_Setup_AddProspectCategoryCgExtendsValue {
       'option_group_id' => 'cg_extend_objects',
       'name' => 'civicrm_case',
       'label' => self::PROSPECTS_CATEGORY_LABEL,
-      'value' => 'prospecting',
+      'value' => CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
       'description' => 'CRM_Prospect_Helper_CaseTypeCategory::getProspectCaseTypes;',
       'is_active' => TRUE,
       'is_reserved' => TRUE,

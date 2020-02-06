@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategoryHelper;
+
 /**
  * Moves prospect custom fields to prospect category type..
  */
@@ -27,7 +29,7 @@ class CRM_Prospect_Setup_MoveCustomFieldsToProspecting {
     foreach ($result['values'] as $value) {
       civicrm_api3('CustomGroup', 'create', [
         'id' => $value['id'],
-        'extends' => 'prospecting',
+        'extends' => CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
       ]);
     }
   }
