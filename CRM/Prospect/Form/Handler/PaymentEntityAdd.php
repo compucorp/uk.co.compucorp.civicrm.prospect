@@ -1,24 +1,26 @@
 <?php
 
 /**
- * Implementation of custom handler executed within prospect_civicrm_buildForm
- * hook.
+ * Implementation of custom handler for prospect_civicrm_buildForm hook.
  */
 class CRM_Prospect_Form_Handler_PaymentEntityAdd {
 
   /**
-   * Updates payment create form with Case Id, Prospect Amount, Campaign Id
-   * and (Prospect Financial Information) values.
+   * Updates payment create form fields.
+   *
+   * With Case Id, Prospect Amount and (Prospect Financial Information) values.
    *
    * @param string $formName
+   *   Form name.
    * @param object $form
+   *   Form Object.
    */
   public function handle($formName, $form) {
     if (!$this->canHandle($formName, $form)) {
       return;
     }
 
-    $caseId = $this->getProspectConvertedCaseID();
+    $caseId = $this->getProspectConvertedCaseId();
 
     if (!$caseId) {
       return;
@@ -40,23 +42,24 @@ class CRM_Prospect_Form_Handler_PaymentEntityAdd {
 
       if ($formName === 'CRM_Contribute_Form_Contribution') {
         $defaults['total_amount'] = $prospectAmount;
-      } else {
+      }
+      else {
         $defaults['amount'] = $prospectAmount;
       }
     }
-
-    $defaults['campaign_id'] = $fields->getValueOf('Campaign_Id');
 
     $form->setDefaults($defaults);
   }
 
   /**
-   * Returns Case Id basing on request parameter or basing on Pledge Payment Id
-   * if specified.
+   * Returns Case Id.
+   *
+   * Basing on request parameter or Pledge Payment Id if specified.
    *
    * @return int
+   *   Prospect converted id.
    */
-  private function getProspectConvertedCaseID() {
+  private function getProspectConvertedCaseId() {
     $caseId = CRM_Utils_Request::retrieve('caseid', 'Integer');
 
     $pledgePaymentId = CRM_Utils_Request::retrieve('ppid', 'Integer');
@@ -83,11 +86,15 @@ class CRM_Prospect_Form_Handler_PaymentEntityAdd {
    * Checks if we are on add Contribution/Pledge form.
    *
    * @param string $formName
+   *   Form name.
    * @param object $form
+   *   Form Object.
    *
    * @return bool
+   *   Whether it can handle.
    */
   private function canHandle($formName, $form) {
     return in_array($formName, ['CRM_Contribute_Form_Contribution', 'CRM_Pledge_Form_Pledge']) && $form->_action == CRM_Core_Action::ADD;
   }
+
 }
