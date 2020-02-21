@@ -9,8 +9,8 @@ use CRM_Prospect_Setup_MoveCustomFieldsToProspecting as MoveCustomFieldsToProspe
 use CRM_Prospect_Setup_AddProspectCategoryCgExtendsValue as AddProspectCategoryCgExtendsValue;
 use CRM_Prospect_Setup_AddProspectCategoryWordReplacement as AddProspectCategoryWordReplacement;
 use CRM_Prospect_Setup_EnableRequiredComponents as EnableRequiredComponents;
-use CRM_Prospect_Setup_DeleteInstalledCustomGroups as DeleteInstalledCustomGroups;
-use CRM_Prospect_Setup_DeleteProspectMenus as DeleteProspectMenus;
+use CRM_Prospect_Uninstall_DeleteInstalledCustomGroups as DeleteInstalledCustomGroups;
+use CRM_Prospect_Uninstall_DeleteProspectMenus as DeleteProspectMenus;
 
 /**
  * Collection of upgrade steps.

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Prospect_Setup_DeleteInstalledCustomGroups.
+ * Class CRM_Prospect_Uninstall_DeleteInstalledCustomGroups.
  */
-class CRM_Prospect_Setup_DeleteInstalledCustomGroups {
+class CRM_Prospect_Uninstall_DeleteInstalledCustomGroups {
 
   /**
    * Deletes the Default Installed Custom Groups.

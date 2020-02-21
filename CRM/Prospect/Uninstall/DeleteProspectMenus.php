@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Prospect_Setup_DeleteProspectMenus.
+ * Class CRM_Prospect_Uninstall_DeleteProspectMenus.
  */
-class CRM_Prospect_Setup_DeleteProspectMenus {
+class CRM_Prospect_Uninstall_DeleteProspectMenus {
 
   /**
    * Deletes the Default Prospect menus added on installation.
