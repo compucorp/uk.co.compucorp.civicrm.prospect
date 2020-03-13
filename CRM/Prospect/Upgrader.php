@@ -39,26 +39,6 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
   ];
 
   /**
-   * Action triggered on enable the extension.
-   */
-  public function enable() {
-    $this->toggleDefaulValues(1);
-
-    $prospectCategoryCgExtendsValue = new AddProspectCategoryCgExtendsValue();
-    $prospectCategoryCgExtendsValue->toggleOptionValueStatus(TRUE);
-  }
-
-  /**
-   * Action triggered on disable the extension.
-   */
-  public function disable() {
-    $this->toggleDefaulValues(0);
-
-    $prospectCategoryCgExtendsValue = new AddProspectCategoryCgExtendsValue();
-    $prospectCategoryCgExtendsValue->toggleOptionValueStatus(FALSE);
-  }
-
-  /**
    * Tasks to perform when the module is installed.
    */
   public function install() {
