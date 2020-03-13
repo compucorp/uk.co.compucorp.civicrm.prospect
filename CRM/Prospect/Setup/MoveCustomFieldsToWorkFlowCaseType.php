@@ -1,11 +1,9 @@
 <?php
 
-use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategoryHelper;
-
 /**
- * Moves prospect custom fields to prospect category type..
+ * Moves prospect custom fields to the workflow case type..
  */
-class CRM_Prospect_Setup_MoveCustomFieldsToProspecting {
+class CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType {
 
   /**
    * Migrates the Prospect Custom fields to the prospecting case category.
@@ -26,12 +24,27 @@ class CRM_Prospect_Setup_MoveCustomFieldsToProspecting {
       return TRUE;
     }
 
+    $workflowCaseType = $this->getProspectWorkFlowCaseType();
     foreach ($result['values'] as $value) {
       civicrm_api3('CustomGroup', 'create', [
         'id' => $value['id'],
-        'extends' => CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
+        'extends_entity_column_value' => CRM_Core_DAO::VALUE_SEPARATOR . $workflowCaseType . CRM_Core_DAO::VALUE_SEPARATOR,
       ]);
     }
+  }
+
+  /**
+   * Fetches the prospect workflow case type.
+   *
+   * @return array
+   *   Case type details.
+   */
+  private function getProspectWorkFlowCaseType() {
+    $result = civicrm_api3('CaseType', 'getsingle', [
+      'name' => 'default_prospect_workflow',
+    ]);
+
+    return $result;
   }
 
 }

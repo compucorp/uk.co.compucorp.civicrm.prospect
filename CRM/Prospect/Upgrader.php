@@ -5,8 +5,8 @@ use CRM_Prospect_Setup_CreateProspectMenus as CreateProspectMenus;
 use CRM_Prospect_Setup_CreateProspectOwnerRelationship as CreateProspectOwnerRelationship;
 use CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses as CreateProspectWorkflowCaseStatuses;
 use CRM_Prospect_Setup_CreateProspectWorkflowCaseType as CreateProspectWorkflowCaseType;
-use CRM_Prospect_Setup_MoveCustomFieldsToProspecting as MoveCustomFieldsToProspecting;
-use CRM_Prospect_Setup_AddProspectCategoryCgExtendsValue as AddProspectCategoryCgExtendsValue;
+use CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType as MoveCustomFieldsToWorkFlowCaseType;
+use CRM_Prospect_Setup_ProcessProspectCategoryForCustomGroupSupport as ProcessProspectCategoryForCustomGroupSupport;
 use CRM_Prospect_Setup_AddProspectCategoryWordReplacement as AddProspectCategoryWordReplacement;
 use CRM_Prospect_Setup_EnableRequiredComponents as EnableRequiredComponents;
 
@@ -70,8 +70,8 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       new CreateProspectWorkflowCaseStatuses(),
       new CreateProspectOwnerRelationship(),
       new CreateProspectWorkflowCaseType(),
-      new AddProspectCategoryCgExtendsValue(),
-      new MoveCustomFieldsToProspecting(),
+      new ProcessProspectCategoryForCustomGroupSupport(),
+      new MoveCustomFieldsToWorkFlowCaseType(),
     ];
 
     foreach ($steps as $step) {
