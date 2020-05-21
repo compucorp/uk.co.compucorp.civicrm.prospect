@@ -9,6 +9,8 @@ use CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType as MoveCustomFieldsToW
 use CRM_Prospect_Setup_ProcessProspectCategoryForCustomGroupSupport as ProcessProspectCategoryForCustomGroupSupport;
 use CRM_Prospect_Setup_AddProspectCategoryWordReplacement as AddProspectCategoryWordReplacement;
 use CRM_Prospect_Setup_EnableRequiredComponents as EnableRequiredComponents;
+use CRM_Prospect_Uninstall_DeleteInstalledCustomGroups as DeleteInstalledCustomGroups;
+use CRM_Prospect_Uninstall_DeleteProspectMenus as DeleteProspectMenus;
 
 /**
  * Collection of upgrade steps.
@@ -52,6 +54,20 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       new CreateProspectWorkflowCaseType(),
       new ProcessProspectCategoryForCustomGroupSupport(),
       new MoveCustomFieldsToWorkFlowCaseType(),
+    ];
+
+    foreach ($steps as $step) {
+      $step->apply();
+    }
+  }
+
+  /**
+   * Tasks to perform when the module is uninstalled.
+   */
+  public function uninstall() {
+    $steps = [
+      new DeleteInstalledCustomGroups(),
+      new DeleteProspectMenus(),
     ];
 
     foreach ($steps as $step) {
