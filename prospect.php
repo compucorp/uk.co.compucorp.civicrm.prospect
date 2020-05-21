@@ -8,6 +8,15 @@
 require_once 'prospect.civix.php';
 
 /**
+ * Implements hook_civicrm_alterAPIPermissions().
+ *
+ * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_alterAPIPermissions/
+ */
+function prospect_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+  $permissions['prospect_converted']['get'] = ['access CiviCRM'];
+}
+
+/**
  * Implements hook_civicrm_config().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
