@@ -35,6 +35,16 @@ function prospect_civicrm_xmlMenu(&$files) {
 }
 
 /**
+ * Implements hook_civicrm_alterMenu().
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterMenu
+ */
+function prospect_civicrm_alterMenu(&$items) {
+  $items['civicrm/contact/view/pledge']['ids_arguments']['json'][] = 'civicase_reload';
+  $items['civicrm/contact/view/contribution']['ids_arguments']['json'][] = 'civicase_reload';
+}
+
+/**
  * Implements hook_civicrm_install().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
