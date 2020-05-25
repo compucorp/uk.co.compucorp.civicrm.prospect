@@ -302,7 +302,7 @@ class CRM_Prospect_ProspectCustomGroups {
       $customFieldMachineNameList = $this->getCustomFieldMachineNameList();
       $parameters = [
         'entity_id' => $this->caseId,
-        'entity_type' => 'prospecting',
+        'entity_type' => 'Case',
       ];
       foreach ($customFieldMachineNameList as $machineName) {
         $parameters['return.' . $machineName] = 1;
