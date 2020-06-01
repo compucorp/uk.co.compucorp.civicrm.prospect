@@ -77,7 +77,7 @@ class CRM_Prospect_Form_Handler_OpenCase {
     $urlParams = parse_url(htmlspecialchars_decode($form->controller->_entryURL), PHP_URL_QUERY);
     parse_str($urlParams, $urlParams);
 
-    return !empty($urlParams['case_type_category']) && $urlParams['case_type_category'] == 'prospecting';
+    return !empty($urlParams['case_type_category']) && strtolower($urlParams['case_type_category']) == strtolower(CRM_Prospect_Helper_CaseTypeCategory::PROSPECT_CASE_TYPE_CATEGORY_NAME);
   }
 
 }

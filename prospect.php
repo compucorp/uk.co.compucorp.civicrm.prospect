@@ -8,6 +8,15 @@
 require_once 'prospect.civix.php';
 
 /**
+ * Implements hook_civicrm_alterAPIPermissions().
+ *
+ * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_alterAPIPermissions/
+ */
+function prospect_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+  $permissions['prospect_converted']['get'] = ['access CiviCRM'];
+}
+
+/**
  * Implements hook_civicrm_config().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
@@ -23,6 +32,16 @@ function prospect_civicrm_config(&$config) {
  */
 function prospect_civicrm_xmlMenu(&$files) {
   _prospect_civix_civicrm_xmlMenu($files);
+}
+
+/**
+ * Implements hook_civicrm_alterMenu().
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterMenu
+ */
+function prospect_civicrm_alterMenu(&$items) {
+  $items['civicrm/contact/view/pledge']['ids_arguments']['json'][] = 'civicase_reload';
+  $items['civicrm/contact/view/contribution']['ids_arguments']['json'][] = 'civicase_reload';
 }
 
 /**
@@ -285,7 +304,7 @@ function prospect_civicrm_alterContent(&$content, $context, $tplName, &$object) 
  */
 function _prospect_isOpenCasePage($tplName) {
   $pageType = CRM_Utils_Request::retrieve('type', 'String');
-  return ($tplName == 'CRM/Custom/Form/CustomDataByType.tpl') && ($pageType == 'prospecting');
+  return ($tplName == 'CRM/Custom/Form/CustomDataByType.tpl') && ($pageType == 'Case');
 }
 
 /**
