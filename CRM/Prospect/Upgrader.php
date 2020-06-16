@@ -51,8 +51,8 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       new CreateProspectMenus(),
       new CreateProspectWorkflowCaseStatuses(),
       new CreateProspectOwnerRelationship(),
-      new CreateProspectWorkflowCaseType(),
       new ProcessProspectCategoryForCustomGroupSupport(),
+      new CreateProspectWorkflowCaseType(),
       new MoveCustomFieldsToWorkFlowCaseType(),
     ];
 
