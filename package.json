@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "description": "CiviProspect provides the core structure for creating/ managing/ converting the fundraising opportunities of an organisation. It can also be used to manage any monetary opportunities such as sales opportunities and event sponsorships.",
   "main": "index.js",
+  "engines": {
+    "node": ">=10.15.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "lint-staged",
