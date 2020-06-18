@@ -2,6 +2,7 @@ const cv = require('civicrm-cv')({ mode: 'sync' });
 
 module.exports = (config) => {
   const civicrmPath = cv("path -d '[civicrm.root]'")[0].value;
+  var civicasePath = cv('path -x uk.co.compucorp.civicase')[0].value;
   const extPath = cv('path -x uk.co.compucorp.civicrm.prospect')[0].value;
 
   config.set({
@@ -21,17 +22,26 @@ module.exports = (config) => {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-route/angular-route.min.js',
 
+      civicasePath + '/packages/moment.min.js',
+
       // Global variables that need to be accessible in the test environment
       `${extPath}/ang/test/global.js`,
 
       // Source Files
+      civicasePath + '/ang/civicase-base.js',
+      { pattern: civicasePath + '/ang/civicase-base/**/*.js' },
+      // @Todo: extensions should only depend on civicase-base:
+      civicasePath + '/ang/civicase.js',
+
       `${extPath}/ang/prospect.js`,
       { pattern: `${extPath}/ang/prospect/**/*.js` },
 
       // Spec files
+      { pattern: civicasePath + '/ang/test/mocks/modules.mock.js' },
+      { pattern: civicasePath + '/ang/test/mocks/**/*.js' },
       { pattern: `${extPath}/ang/test/mocks/modules.mock.js` },
       { pattern: `${extPath}/ang/test/mocks/**/*.js` },
-      { pattern: `${extPath}/ang/test/prospect/**/*.js` },
+      { pattern: `${extPath}/ang/test/prospect/**/*.js` }
     ],
     exclude: [
     ],
@@ -49,9 +59,9 @@ module.exports = (config) => {
           '--headless',
           '--disable-gpu',
           // Without a remote debugging port, Google Chrome exits immediately.
-          '--remote-debugging-port=9222',
-        ],
-      },
-    },
+          '--remote-debugging-port=9222'
+        ]
+      }
+    }
   });
 };
