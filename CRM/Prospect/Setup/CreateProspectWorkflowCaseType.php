@@ -1,6 +1,8 @@
 <?php
 
 use CRM_Prospect_Setup_CreateProspectWorkflowCaseStatuses as ProspectWorkflowCaseStatusesSetup;
+use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategory;
+use CRM_Case_BAO_CaseType as CaseType;
 
 /**
  * Creates the Default Prospect Workflow case type.
@@ -26,14 +28,33 @@ class CRM_Prospect_Setup_CreateProspectWorkflowCaseType {
       'activitySets' => $this->getActivitySets(),
     ];
 
-    civicrm_api3('CaseType', 'create', [
+    $result = civicrm_api3('CaseType', 'create', [
       'name' => 'default_prospect_workflow',
       'title' => 'Default Prospect Workflow',
       'description' => "The Default Prospect Workflow Case Type",
       'definition' => $definition,
       'is_active' => 0,
-      'case_type_category' => 'Prospecting',
     ]);
+
+    $caseType = CRM_Utils_Array::first($result['values']);
+    $this->updateWorkflowCaseTypeCategory($caseType['id']);
+  }
+
+  /**
+   * Updates the workflow case type category to "Prospect" category.
+   *
+   * @param int $workflowCaseTypeId
+   *   Case Type Id.
+   */
+  private function updateWorkflowCaseTypeCategory($workflowCaseTypeId) {
+    $caseCategories = CRM_Core_OptionGroup::values('case_type_categories', TRUE, FALSE, TRUE, NULL, 'name');
+    $prospectCaseCategoryValue = $caseCategories[CaseTypeCategory::PROSPECT_CASE_TYPE_CATEGORY_NAME];
+    $caseTypeTable = CaseType::getTableName();
+
+    CRM_Core_DAO::executeQuery(
+      "UPDATE {$caseTypeTable} SET case_type_category = %1 WHERE id = {$workflowCaseTypeId}",
+      [1 => [$prospectCaseCategoryValue, 'Integer']]
+    );
   }
 
   /**
