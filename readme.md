@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/workflows/Tests/badge.svg)](https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/workflows/Tests/badge.svg)
+
 # CiviProspect
 ## Is CiviProspect for me?
 CiviProspect provides the core structure for creating/ managing/ converting the fundraising opportunities of an organisation. It can also be used to manage any monetary opportunities such as sales opportunities and event sponsorships.
