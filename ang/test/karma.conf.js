@@ -27,12 +27,14 @@ module.exports = (config) => {
       // Global variables that need to be accessible in the test environment
       `${extPath}/ang/test/global.js`,
 
-      // Source Files
+      // Civicase files
       civicasePath + '/ang/civicase-base.js',
-      { pattern: civicasePath + '/ang/civicase-base/**/*.js' },
-      // @Todo: extensions should only depend on civicase-base:
       civicasePath + '/ang/civicase.js',
+      { pattern: civicasePath + '/ang/test/mocks/modules.mock.js' },
+      { pattern: civicasePath + '/ang/test/mocks/**/*.js' },
+      { pattern: civicasePath + '/ang/civicase-base/**/*.js' },
 
+      // Source Files
       `${extPath}/ang/prospect.js`,
       { pattern: `${extPath}/ang/prospect/**/*.js` },
 
