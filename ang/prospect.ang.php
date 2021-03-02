@@ -14,9 +14,13 @@ use CRM_Civicase_Helper_GlobRecursive as GlobRecursive;
  * Get a list of JS files.
  */
 function get_prospect_js_files() {
-  return array_merge([
-    'ang/prospect.js',
-  ], GlobRecursive::get(dirname(__FILE__) . '/prospect/*.js'));
+  return array_merge(
+    ['ang/prospect.js'],
+    GlobRecursive::getRelativeToExtension(
+      'uk.co.compucorp.civiawards',
+      'ang/prospect/*.js'
+    )
+  );
 }
 
 return [
