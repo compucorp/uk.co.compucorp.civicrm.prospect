@@ -19,7 +19,7 @@
   <version>2.0.0-beta.3</version>
   <develStage></develStage>
   <compatibility>
-    <ver>4.7</ver>
+    <ver>5.35</ver>
   </compatibility>
   <civix>
     <namespace>CRM/Prospect</namespace>
