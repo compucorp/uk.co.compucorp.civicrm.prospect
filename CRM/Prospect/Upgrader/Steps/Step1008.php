@@ -14,7 +14,7 @@ class CRM_Prospect_Upgrader_Steps_Step1008 {
    *   Return value in boolean.
    */
   public function apply() {
-    (new ProspectingMenu())->updateCaseCategorySubmenus(
+    (new ProspectingMenu())->resetCaseCategorySubmenusUrl(
         CRM_Prospect_Helper_CaseTypeCategory::PROSPECT_CASE_TYPE_CATEGORY_NAME
     );
 
