@@ -5,6 +5,7 @@
  */
 class CRM_Prospect_Helper_CaseTypeCategory {
 
+  const PROSPECT_INSTANCE_NAME = 'prospect_management';
   const PROSPECT_CASE_TYPE_CATEGORY_NAME = 'Prospecting';
 
   /**
