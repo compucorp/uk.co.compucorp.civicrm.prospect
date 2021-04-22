@@ -1,6 +1,6 @@
 <?php
 
-use CRM_Prospect_Service_ProspectingMenu as ProspectingMenu;
+use CRM_Prospect_Service_SalesOpportunityTrackingMenu as SalesOpportunityTrackingMenu;
 
 /**
  * Update menus with new URL.
@@ -14,7 +14,7 @@ class CRM_Prospect_Upgrader_Steps_Step1008 {
    *   Return value in boolean.
    */
   public function apply() {
-    (new ProspectingMenu())->resetCaseCategorySubmenusUrl(
+    (new SalesOpportunityTrackingMenu())->resetCaseCategorySubmenusUrl(
         CRM_Prospect_Helper_CaseTypeCategory::PROSPECT_CASE_TYPE_CATEGORY_NAME
     );
 

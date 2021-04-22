@@ -3,6 +3,6 @@
 
   module.constant('ProspectGlobalValues', {
     caseTypeCategory: 'Prospecting',
-    instanceName: 'prospect_management'
+    instanceName: 'sales_opportunity_tracking'
   });
 })(angular);

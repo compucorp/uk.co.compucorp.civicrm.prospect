@@ -39,12 +39,12 @@
     };
 
     /**
-     * Checks if Case Type Category is 'Prospecting'.
+     * Checks if Case Type Category is Sales Opportunity Tracking type.
      *
      * @param {string} caseTypeCategoryID case type category id
      * @returns {boolean} if prospect type category
      */
-    this.checkIfProspectManagementWorkflow = function (caseTypeCategoryID) {
+    this.checkIfSalesOpportunityTrackingWorkflow = function (caseTypeCategoryID) {
       var instanceName = CaseTypeCategory.getCaseTypeCategoryInstance(caseTypeCategoryID).name;
 
       return instanceName === ProspectGlobalValues.instanceName;

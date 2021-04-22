@@ -60,7 +60,7 @@
         actionTypeMapping[action.type] === paymentInfo.payment_entity;
 
       return cases[0] &&
-        ProspectConverted.checkIfProspectManagementWorkflow(cases[0]['case_type_id.case_type_category']) &&
+        ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
         isConvertedToProspect && isPaymentTypeSameAsActionType;
     };
 

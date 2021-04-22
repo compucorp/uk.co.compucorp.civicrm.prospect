@@ -39,7 +39,7 @@
         ['contribution', 'pledge'], action.type);
 
       return cases[0] && isPledgeOrContribution &&
-        ProspectConverted.checkIfProspectManagementWorkflow(cases[0]['case_type_id.case_type_category']) &&
+        ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
         !isConvertedToProspect;
     };
 

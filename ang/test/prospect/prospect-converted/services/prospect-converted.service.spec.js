@@ -84,12 +84,12 @@ describe('ProspectConverted', () => {
     });
   });
 
-  describe('checkIfProspectManagementWorkflow()', () => {
+  describe('checkIfSalesOpportunityTrackingWorkflow()', () => {
     let returnValue;
 
-    describe('when the case type category is prospect', () => {
+    describe('when the case type category is sales opportunity type', () => {
       beforeEach(() => {
-        returnValue = ProspectConverted.checkIfProspectManagementWorkflow('4');
+        returnValue = ProspectConverted.checkIfSalesOpportunityTrackingWorkflow('4');
       });
 
       it('returns true', () => {
@@ -97,9 +97,9 @@ describe('ProspectConverted', () => {
       });
     });
 
-    describe('when the case type category is not prospect', () => {
+    describe('when the case type category is not sales opportunity type', () => {
       beforeEach(() => {
-        returnValue = ProspectConverted.checkIfProspectManagementWorkflow('1');
+        returnValue = ProspectConverted.checkIfSalesOpportunityTrackingWorkflow('1');
       });
 
       it('returns false', () => {

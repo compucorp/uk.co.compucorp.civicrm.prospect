@@ -1,6 +1,6 @@
 <?php
 
-use CRM_Civicase_Service_CaseCategoryMenu as CaseCategoryMenu;
+use CRM_Civicase_Service_ManageWorkflowMenu as ManageWorkflowMenu;
 use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategoryHelper;
 
 /**
@@ -12,21 +12,11 @@ class CRM_Prospect_Setup_AddManageWorkflowMenu {
    * Create Manage Workflow menu for Prospecting.
    */
   public function apply() {
-    $parentMenuForCaseCategory = civicrm_api3('Navigation', 'get', [
-      'sequential' => 1,
-      'label' => 'Prospects',
-    ])['values'][0];
-
-    if ($parentMenuForCaseCategory['id']) {
-      CaseCategoryMenu::addSeparatorToTheLastMenuOf(
-        $parentMenuForCaseCategory['id']
-      );
-      CaseCategoryMenu::createManageWorkflowMenuItemInto(
-        $parentMenuForCaseCategory['id'],
-        CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
-        'Manage Workflows'
-      );
-    }
+    (new ManageWorkflowMenu())->create(
+      CaseTypeCategoryHelper::PROSPECT_INSTANCE_NAME,
+      FALSE,
+      'Prospects'
+    );
   }
 
 }

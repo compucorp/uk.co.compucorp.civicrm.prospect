@@ -26,8 +26,8 @@ class CRM_Prospect_Setup_CaseCategoryInstanceSupport {
       [
         'option_group_id' => self::INSTANCE_OPTION_GROUP,
         'name' => CaseTypeCategoryHelper::PROSPECT_INSTANCE_NAME,
-        'label' => 'Prospect Management',
-        'grouping' => 'CRM_Civicase_Service_CaseManagementUtils',
+        'label' => 'Sales/Opportunity Tracking',
+        'grouping' => 'CRM_Prospect_Service_SalesOpportunityTrackingUtils',
         'is_active' => TRUE,
         'is_reserved' => TRUE,
       ]
