@@ -2,6 +2,7 @@
   var module = angular.module('prospect');
 
   module.constant('ProspectGlobalValues', {
-    caseTypeCategory: 'Prospecting'
+    caseTypeCategory: 'Prospecting',
+    instanceName: 'prospect_management'
   });
 })(angular);

@@ -4,13 +4,9 @@
   module.service('ConvertProspectCaseAction', ConvertProspectCaseAction);
 
   /**
-   *
-   * @param {object} $location location service
-   * @param {object} crmApi crm api service
-   * @param {object} ProspectGlobalValues Prospect Global Values Constant
    * @param {object} ProspectConverted Prospect Converted Service
    */
-  function ConvertProspectCaseAction ($location, crmApi, ProspectGlobalValues, ProspectConverted) {
+  function ConvertProspectCaseAction (ProspectConverted) {
     var isConvertedToProspect = false;
 
     /**
@@ -43,7 +39,7 @@
         ['contribution', 'pledge'], action.type);
 
       return cases[0] && isPledgeOrContribution &&
-        ProspectConverted.checkIfProspectingCaseTypeCategory(cases[0]) &&
+        ProspectConverted.checkIfProspectManagementWorkflow(cases[0]['case_type_id.case_type_category']) &&
         !isConvertedToProspect;
     };
 

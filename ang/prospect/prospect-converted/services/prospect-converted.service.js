@@ -8,7 +8,7 @@
    *
    * @param {object} crmApi crm api
    * @param {*} ProspectGlobalValues prospect global values
-   * @param CaseTypeCategory
+   * @param {object} CaseTypeCategory case type category service
    */
   function ProspectConverted (crmApi, ProspectGlobalValues, CaseTypeCategory) {
     /**
@@ -41,13 +41,13 @@
     /**
      * Checks if Case Type Category is 'Prospecting'.
      *
-     * @param {object} caseData case data
+     * @param {string} caseTypeCategoryID case type category id
      * @returns {boolean} if prospect type category
      */
-    this.checkIfProspectingCaseTypeCategory = function (caseData) {
-      var caseTypeCategory = CaseTypeCategory.getAll()[caseData['case_type_id.case_type_category']].name;
+    this.checkIfProspectManagementWorkflow = function (caseTypeCategoryID) {
+      var instanceName = CaseTypeCategory.getCaseTypeCategoryInstance(caseTypeCategoryID).name;
 
-      return caseTypeCategory === ProspectGlobalValues.caseTypeCategory;
+      return instanceName === ProspectGlobalValues.instanceName;
     };
   }
 })(angular, CRM.$, CRM._);

@@ -4,14 +4,9 @@
   module.service('ViewPledgeContributionCaseAction', ViewPledgeContributionCaseAction);
 
   /**
-   *
-   * @param {object} $location location service
-   * @param {object} crmApi crm api service
-   * @param {object} ProspectGlobalValues Prospect Global Values Constant
    * @param {object} ProspectConverted Prospect Converted Service
    */
-  function ViewPledgeContributionCaseAction (
-    $location, crmApi, ProspectGlobalValues, ProspectConverted) {
+  function ViewPledgeContributionCaseAction (ProspectConverted) {
     var isConvertedToProspect = false;
     var paymentInfo = {
       payment_completed: false,
@@ -65,7 +60,7 @@
         actionTypeMapping[action.type] === paymentInfo.payment_entity;
 
       return cases[0] &&
-        ProspectConverted.checkIfProspectingCaseTypeCategory(cases[0]) &&
+        ProspectConverted.checkIfProspectManagementWorkflow(cases[0]['case_type_id.case_type_category']) &&
         isConvertedToProspect && isPaymentTypeSameAsActionType;
     };
 
