@@ -7,26 +7,6 @@
    * @param {object} ProspectConverted Prospect Converted Service
    */
   function ConvertProspectCaseAction (ProspectConverted) {
-    var isConvertedToProspect = false;
-
-    /**
-     * Refresh Data for the Service
-     *
-     * @param {Array} cases cases
-     */
-    this.refreshData = function (cases) {
-      if (!cases[0]) {
-        return;
-      }
-
-      var caseID = cases[0].id;
-
-      ProspectConverted.getProspectIsConverted(caseID)
-        .then(function (isConverted) {
-          isConvertedToProspect = isConverted;
-        });
-    };
-
     /**
      * Checks if the Action is allowed
      *
@@ -35,12 +15,16 @@
      * @returns {boolean} if action is allowed
      */
     this.isActionAllowed = function (action, cases) {
+      if (!cases[0] || !cases[0].prospect) {
+        return;
+      }
+
       var isPledgeOrContribution = _.includes(
         ['contribution', 'pledge'], action.type);
 
-      return cases[0] && isPledgeOrContribution &&
+      return isPledgeOrContribution &&
         ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
-        !isConvertedToProspect;
+        !cases[0].prospect.isProspectConverted;
     };
 
     /**
