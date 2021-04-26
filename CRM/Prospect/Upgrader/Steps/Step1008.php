@@ -15,7 +15,7 @@ class CRM_Prospect_Upgrader_Steps_Step1008 {
    */
   public function apply() {
     (new SalesOpportunityTrackingMenu())->resetCaseCategorySubmenusUrl(
-        CRM_Prospect_Helper_CaseTypeCategory::PROSPECT_CASE_TYPE_CATEGORY_NAME
+        CRM_Prospect_Helper_CaseTypeCategory::getDataForMenu()
     );
 
     CRM_Core_BAO_Navigation::resetNavigation();
