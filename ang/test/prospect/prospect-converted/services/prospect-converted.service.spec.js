@@ -1,12 +1,8 @@
 /* eslint-env jasmine */
 
 describe('ProspectConverted', () => {
-  let crmApi;
-  let $q;
-  let $rootScope;
-  let PaymentInfoData;
-  let ProspectConverted;
-  let ProspectConvertedData;
+  let crmApi, $q, $rootScope, PaymentInfoData, ProspectConverted,
+    ProspectConvertedData;
 
   beforeEach(module('crmUtil', 'prospect', 'prospect.data'));
 
@@ -88,14 +84,12 @@ describe('ProspectConverted', () => {
     });
   });
 
-  describe('checkIfProspectingCaseTypeCategory()', () => {
+  describe('checkIfSalesOpportunityTrackingWorkflow()', () => {
     let returnValue;
 
-    describe('when the case type category is prospect', () => {
+    describe('when the case type category is sales opportunity type', () => {
       beforeEach(() => {
-        returnValue = ProspectConverted.checkIfProspectingCaseTypeCategory({
-          'case_type_id.case_type_category': 2
-        });
+        returnValue = ProspectConverted.checkIfSalesOpportunityTrackingWorkflow('4');
       });
 
       it('returns true', () => {
@@ -103,11 +97,9 @@ describe('ProspectConverted', () => {
       });
     });
 
-    describe('when the case type category is not prospect', () => {
+    describe('when the case type category is not sales opportunity type', () => {
       beforeEach(() => {
-        returnValue = ProspectConverted.checkIfProspectingCaseTypeCategory({
-          'case_type_id.case_type_category': 1
-        });
+        returnValue = ProspectConverted.checkIfSalesOpportunityTrackingWorkflow('1');
       });
 
       it('returns false', () => {

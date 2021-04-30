@@ -17,7 +17,7 @@ function get_prospect_js_files() {
   return array_merge(
     ['ang/prospect.js'],
     GlobRecursive::getRelativeToExtension(
-      'uk.co.compucorp.civiawards',
+      'uk.co.compucorp.civicrm.prospect',
       'ang/prospect/*.js'
     )
   );

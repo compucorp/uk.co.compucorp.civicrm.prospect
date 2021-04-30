@@ -1,6 +1,6 @@
 <?php
 
-use CRM_Prospect_Service_ProspectingMenu as ProspectingMenu;
+use CRM_Prospect_Service_SalesOpportunityTrackingMenu as SalesOpportunityTrackingMenu;
 use CRM_Prospect_Helper_CaseTypeCategory as CaseTypeCategoryHelper;
 
 /**
@@ -12,7 +12,7 @@ class CRM_Prospect_Setup_CreateProspectMenus {
    * Creates the Prospect menu items.
    */
   public function apply() {
-    (new ProspectingMenu())->createItems(CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME);
+    (new SalesOpportunityTrackingMenu())->createItems(CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME);
   }
 
 }

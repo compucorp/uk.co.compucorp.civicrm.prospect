@@ -23,6 +23,8 @@
          * Listener for `updateCaseData` event
          */
         function updateCaseListener () {
+          $scope.item.prospect = {};
+
           var caseID = $scope.item.id;
 
           ProspectConverted.getProspectIsConverted(caseID)
@@ -30,6 +32,8 @@
               if (!isConverted) {
                 return;
               }
+
+              $scope.item.prospect.isProspectConverted = isConverted;
 
               ProspectConverted.getPaymentInfo(caseID)
                 .then(addExtraProspectField);
@@ -42,6 +46,7 @@
          * @param {object} paymentInfo payment info
          */
         function addExtraProspectField (paymentInfo) {
+          $scope.item.prospect.paymentInfo = paymentInfo;
           var financialInformationCustomField = _.find($scope.item.customData, function (customField) {
             return customField.name === 'Prospect_Financial_Information';
           });
