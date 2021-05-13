@@ -12,7 +12,7 @@ class CRM_Prospect_Setup_CreateProspectMenus {
    * Creates the Prospect menu items.
    */
   public function apply() {
-    (new SalesOpportunityTrackingMenu())->createItems(CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME);
+    (new SalesOpportunityTrackingMenu())->createItems(CaseTypeCategoryHelper::getDataForMenu());
   }
 
 }

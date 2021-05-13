@@ -5,8 +5,25 @@
  */
 class CRM_Prospect_Helper_CaseTypeCategory {
 
+  /**
+   * Prospect instance name.
+   */
   const PROSPECT_INSTANCE_NAME = 'sales_opportunity_tracking';
+
+  /**
+   * Prospect category name.
+   */
   const PROSPECT_CASE_TYPE_CATEGORY_NAME = 'Prospecting';
+
+  /**
+   * Prospect category label.
+   */
+  const PROSPECT_CASE_TYPE_CATEGORY_LABEL = 'Prospecting';
+
+  /**
+   * Prospect category singular label.
+   */
+  const PROSPECT_CASE_TYPE_CATEGORY_SINGULAR_LABEL = 'Prospecting';
 
   /**
    * Checks if Case Type ID/Name belongs to Prospect Category.
@@ -62,6 +79,20 @@ class CRM_Prospect_Helper_CaseTypeCategory {
     ]);
 
     return array_column($result['values'], 'title', 'id');
+  }
+
+  /**
+   * Get data for creating the menu.
+   *
+   * @return string[]
+   *   Category data.
+   */
+  public static function getDataForMenu() {
+    return [
+      'name' => self::PROSPECT_CASE_TYPE_CATEGORY_NAME,
+      'label' => self::PROSPECT_CASE_TYPE_CATEGORY_LABEL,
+      'singular_label' => self::PROSPECT_CASE_TYPE_CATEGORY_SINGULAR_LABEL,
+    ];
   }
 
 }
