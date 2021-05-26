@@ -2,9 +2,12 @@
 
 describe('ProspectConverted', () => {
   let crmApi, $q, $rootScope, PaymentInfoData, ProspectConverted,
-    ProspectConvertedData;
+    ProspectConvertedData, crmApiMock;
 
-  beforeEach(module('crmUtil', 'prospect', 'prospect.data'));
+  beforeEach(module('crmUtil', 'prospect', 'prospect.data', function ($provide) {
+    crmApiMock = jasmine.createSpy('crmApi');
+    $provide.value('crmApi', crmApiMock);
+  }));
 
   beforeEach(inject((_$q_, _ProspectConverted_, _crmApi_,
     _ProspectConvertedData_, _$rootScope_, _PaymentInfo_) => {
@@ -16,15 +19,15 @@ describe('ProspectConverted', () => {
     crmApi = _crmApi_;
   }));
 
-  describe('getProspectIsConverted()', () => {
+  describe('getProspectConvertedValue()', () => {
     const caseID = '1';
 
     describe('when case is already converted to prospect', () => {
-      let getProspectIsConvertedPromise;
+      let getProspectConvertedValuePromise;
 
       beforeEach(() => {
-        crmApi.and.returnValue($q.resolve(ProspectConvertedData));
-        getProspectIsConvertedPromise = ProspectConverted.getProspectIsConverted(caseID);
+        crmApiMock.and.returnValue($q.resolve(ProspectConvertedData));
+        getProspectConvertedValuePromise = ProspectConverted.getProspectConvertedValue(caseID);
       });
 
       it('calls ProspectConverted API', () => {
@@ -34,27 +37,27 @@ describe('ProspectConverted', () => {
         });
       });
 
-      it('resolved the promise with a true value', () => {
-        getProspectIsConvertedPromise.then((returnValue) => {
-          expect(returnValue).toBe(true);
+      it('resolved the promise with the found prospects', () => {
+        getProspectConvertedValuePromise.then((returnValue) => {
+          expect(returnValue).toBe(ProspectConvertedData.values[0]);
         });
         $rootScope.$digest();
       });
     });
 
     describe('when case is NOT already converted to prospect', () => {
-      let getProspectIsConvertedPromise;
+      let getProspectConvertedValuePromise;
 
       beforeEach(() => {
-        crmApi.and.returnValue($q.resolve({
+        crmApiMock.and.returnValue($q.resolve({
           count: 0, values: []
         }));
-        getProspectIsConvertedPromise = ProspectConverted.getProspectIsConverted(caseID);
+        getProspectConvertedValuePromise = ProspectConverted.getProspectConvertedValue(caseID);
       });
 
-      it('resolved the promise with a false value', () => {
-        getProspectIsConvertedPromise.then((returnValue) => {
-          expect(returnValue).toBe(false);
+      it('resolved the promise with a empty list', () => {
+        getProspectConvertedValuePromise.then((returnValue) => {
+          expect(returnValue).toBeUndefined();
         });
         $rootScope.$digest();
       });

@@ -27,13 +27,14 @@
 
           var caseID = $scope.item.id;
 
-          ProspectConverted.getProspectIsConverted(caseID)
-            .then(function (isConverted) {
-              if (!isConverted) {
+          ProspectConverted.getProspectConvertedValue(caseID)
+            .then(function (prospectConverted) {
+              if (!prospectConverted) {
                 return;
               }
 
-              $scope.item.prospect.isProspectConverted = isConverted;
+              $scope.item.prospect.isProspectConverted = !!prospectConverted;
+              $scope.item.prospect.id = prospectConverted.id;
 
               ProspectConverted.getPaymentInfo(caseID)
                 .then(addExtraProspectField);

@@ -36,6 +36,12 @@
           action: 'ViewPledgeContribution',
           type: 'contribution',
           icon: 'fa-list'
+        },
+        {
+          title: 'Unlink Contribution',
+          action: 'UnlinkContribution',
+          type: 'contribution',
+          icon: 'fa-ban'
         }
       ];
     }
