@@ -54,7 +54,7 @@ describe('UnlinkContributionCaseAction', () => {
         });
 
         it('hides the action', () => {
-          expect(returnValue).toBe(false);
+          expect(returnValue).toBeFalsy();
         });
       });
     });

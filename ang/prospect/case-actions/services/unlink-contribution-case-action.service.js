@@ -22,9 +22,12 @@
       var isContributeTypeProspect =
         cases[0].prospect.paymentInfo.payment_entity === 'contribute';
 
-      return cases[0] &&
-        ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
-        cases[0].prospect.isProspectConverted && isContributeTypeProspect;
+      if (!isContributeTypeProspect) {
+        return;
+      }
+
+      return ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
+        cases[0].prospect.isProspectConverted;
     };
 
     /**

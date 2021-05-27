@@ -12,7 +12,7 @@
    */
   function ProspectConverted (crmApi, ProspectGlobalValues, CaseTypeCategory) {
     /**
-     * Returns if the prospect converted value
+     * Returns the prospect converted value
      *
      * @param {string} caseID case id
      * @returns {Promise} promise
