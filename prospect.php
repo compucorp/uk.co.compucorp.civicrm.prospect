@@ -14,6 +14,7 @@ require_once 'prospect.civix.php';
  */
 function prospect_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   $permissions['prospect_converted']['get'] = ['access CiviCRM'];
+  $permissions['prospect_converted']['delete'] = ['administer CiviProspecting'];
 }
 
 /**

@@ -12,17 +12,17 @@
    */
   function ProspectConverted (crmApi, ProspectGlobalValues, CaseTypeCategory) {
     /**
-     * Returns if the case is converted to Prospect
+     * Returns the prospect converted value
      *
      * @param {string} caseID case id
      * @returns {Promise} promise
      */
-    this.getProspectIsConverted = function (caseID) {
+    this.getProspectConvertedValue = function (caseID) {
       return crmApi('ProspectConverted', 'get', {
         sequential: 1,
         prospect_case_id: caseID
-      }).then(function (caseData) {
-        return caseData.count > 0;
+      }).then(function (prospect) {
+        return prospect.values[0];
       });
     };
 
