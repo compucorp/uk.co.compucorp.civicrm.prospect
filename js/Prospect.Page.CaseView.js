@@ -6,6 +6,7 @@ CRM.Prospect.Page.CaseView = (function($) {
     this._alignProspectFinancialInformationCustomFieldsTable();
     this._setupExpectedDateInput();
     this._bindProspectConvertAction();
+    this._bindUnlinkContributionAction();
     this._hideDuplicateFinancialInformationFields();
     this._bindExpectationUpdate();
     this._bindExpectedDateUpdate();
@@ -86,6 +87,23 @@ CRM.Prospect.Page.CaseView = (function($) {
 
     $('select.prospect-convert').change(function() {
       that._convertProspect($(this).data('contact-id'), $(this).val());
+    });
+  };
+
+  CaseView.prototype._bindUnlinkContributionAction = function() {
+    $('.contribution-unlink').click(function(e) {
+      CRM.confirm({message: 'Are you sure?' })
+        .on('crmConfirm:yes', function() {
+          var prospectID = $('.contribution-unlink').data('prospect-id');
+          var contributionId = $('.contribution-unlink').data('contribution-id');
+
+          CRM.api3([
+            ['ProspectConverted', 'delete', { id: prospectID }],
+            ['Contribution', 'create', { id: contributionId, contribution_status_id: 'Cancelled' }]
+          ]).then(function () {
+            location.reload();
+          });
+        });
     });
   };
 

@@ -24,3 +24,7 @@ div.prospect-pledge-payment-wrapper div.restriction-code {
   display: inline;
   margin-left: 12px;
 }
+
+a.contribution-unlink {
+  cursor: pointer;
+}
