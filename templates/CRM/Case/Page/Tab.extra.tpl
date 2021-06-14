@@ -65,7 +65,7 @@
                 {if $paymentInfo.payment_entity == 'contribute'}
                 <br>
                 <a
-                  class="action-item contribution-unlink btn"
+                  class="action-item contribution-unlink"
                   data-contribution-id="{$paymentInfo.payment_entity_id}"
                   data-prospect-id="{$prospectID}">
                   {ts}Unlink Contribution{/ts}
