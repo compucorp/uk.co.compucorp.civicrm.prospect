@@ -483,9 +483,13 @@ function prospect_civicrm_buildForm($formName, &$form) {
  * Implements hook_civicrm_fieldOptions().
  */
 function prospect_civicrm_fieldOptions($entity, $field, &$options, $params) {
+  if ($entity !== 'Case') {
+    return;
+  }
+
   $campaignCustomFieldID = CRM_Core_BAO_CustomField::getCustomFieldID('Campaign', 'Prospect_Financial_Information');
 
-  if ($entity === 'Case' && $field === 'custom_' . $campaignCustomFieldID) {
+  if ($field === 'custom_' . $campaignCustomFieldID) {
     $options = _prospect_civicrm_get_campaign_options();
   }
 }
