@@ -122,6 +122,13 @@ function prospect_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
   _prospect_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
+/**
+ * Implements hook_civicrm_alterAPIPermissions().
+ */
+function prospect_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+  $permissions['prospect_converted']['delete'] = ['administer CiviCase'];
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
