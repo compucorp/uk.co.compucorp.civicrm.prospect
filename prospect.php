@@ -336,6 +336,7 @@ function prospect_civicrm_alterTemplateFile($formName, &$form, $context, &$tplNa
  * @param string $tplName
  */
 function _prospect_civicrm_alterTemplateFile_CRM_Case_Page_Tab($formName, &$form, $context, &$tplName) {
+  _prospect_civicrm_addMainCSSFile();
   $caseId = CRM_Utils_Request::retrieve('id', 'Integer');
 
   if (empty($caseId)) {
@@ -350,6 +351,7 @@ function _prospect_civicrm_alterTemplateFile_CRM_Case_Page_Tab($formName, &$form
   }
 
   $form->assign('isCaseConverted', !empty($prospectConverted));
+  $form->assign('prospectID', $prospectConverted->id);
   $form->assign('prospectFinancialInformationFields', $fields);
   $form->assign('campaignLabel', _prospect_civicrm_get_campaign_label_by_id($fields->getValueOf('Campaign_Id')));
   $form->assign('currency', CRM_Core_BAO_Country::getDefaultCurrencySymbol());
