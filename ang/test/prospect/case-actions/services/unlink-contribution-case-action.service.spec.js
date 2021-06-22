@@ -9,12 +9,61 @@ describe('UnlinkContributionCaseAction', () => {
     ProspectConverted = _ProspectConverted_;
     UnlinkContributionCaseAction = _UnlinkContributionCaseAction_;
 
+    CRM.checkPerm = jasmine.createSpy('checkPerm');
+    CRM.checkPerm.and.returnValue(true);
+
     spyOn(ProspectConverted, 'checkIfSalesOpportunityTrackingWorkflow');
   }));
 
   describe('visibility', () => {
     describe('when the case is of sales opportunity type', () => {
-      describe('when prospect is converted to contribution', () => {
+      describe('when "administer CiviProspecting" permission is present', () => {
+        describe('when prospect is converted to contribution', () => {
+          var returnValue;
+
+          beforeEach(() => {
+            var cases = [{
+              prospect: {
+                isProspectConverted: true,
+                paymentInfo: {
+                  payment_entity: 'contribute'
+                }
+              }
+            }];
+
+            ProspectConverted.checkIfSalesOpportunityTrackingWorkflow.and.returnValue(true);
+            returnValue = UnlinkContributionCaseAction.isActionAllowed({}, cases);
+          });
+
+          it('shows the action', () => {
+            expect(returnValue).toBe(true);
+          });
+        });
+
+        describe('when prospect is not converted to contribution', () => {
+          var returnValue;
+
+          beforeEach(() => {
+            var cases = [{
+              prospect: {
+                isProspectConverted: true,
+                paymentInfo: {
+                  payment_entity: 'not contribute'
+                }
+              }
+            }];
+
+            ProspectConverted.checkIfSalesOpportunityTrackingWorkflow.and.returnValue(true);
+            returnValue = UnlinkContributionCaseAction.isActionAllowed({}, cases);
+          });
+
+          it('hides the action', () => {
+            expect(returnValue).toBeFalsy();
+          });
+        });
+      });
+
+      describe('when "administer CiviProspecting" permission is NOT present', () => {
         var returnValue;
 
         beforeEach(() => {
@@ -27,34 +76,14 @@ describe('UnlinkContributionCaseAction', () => {
             }
           }];
 
-          ProspectConverted.checkIfSalesOpportunityTrackingWorkflow.and.returnValue(true);
+          CRM.checkPerm.and.returnValue(false);
+
           returnValue = UnlinkContributionCaseAction.isActionAllowed({}, cases);
-        });
-
-        it('shows the action', () => {
-          expect(returnValue).toBe(true);
-        });
-      });
-
-      describe('when prospect is not converted to contribution', () => {
-        var returnValue;
-
-        beforeEach(() => {
-          var cases = [{
-            prospect: {
-              isProspectConverted: true,
-              paymentInfo: {
-                payment_entity: 'not contribute'
-              }
-            }
-          }];
-
           ProspectConverted.checkIfSalesOpportunityTrackingWorkflow.and.returnValue(true);
-          returnValue = UnlinkContributionCaseAction.isActionAllowed({}, cases);
         });
 
         it('hides the action', () => {
-          expect(returnValue).toBeFalsy();
+          expect(returnValue).toBe(false);
         });
       });
     });
