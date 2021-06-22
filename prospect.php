@@ -354,7 +354,13 @@ function _prospect_civicrm_alterTemplateFile_CRM_Case_Page_Tab($formName, &$form
   $prospectConverted = CRM_Prospect_BAO_ProspectConverted::findByCaseID($caseId);
 
   if (!empty($prospectConverted)) {
-    $form->assign('paymentInfo', $prospectConverted->getPaymentInfo());
+    $paymentInfo = $prospectConverted->getPaymentInfo();
+    $form->assign('paymentInfo', $paymentInfo);
+
+    if (CRM_Core_Permission::check(['administer CiviCase']) &&
+      $paymentInfo['payment_entity'] == 'contribute') {
+      $form->assign('showUnlinkContributionButton', true);
+    }
   }
 
   $form->assign('isCaseConverted', !empty($prospectConverted));

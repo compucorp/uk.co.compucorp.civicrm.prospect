@@ -62,7 +62,7 @@
               {/if}
               <div class="payment-link">
                 <a class="action-item" href="{$paymentInfo.payment_url}&cid={$contactId}">{ts}View {if $paymentInfo.payment_entity == 'pledge'}Pledge{elseif $paymentInfo.payment_entity == 'contribute'}Contribution{/if}{/ts}</a>
-                {if $paymentInfo.payment_entity == 'contribute'}
+                {if $showUnlinkContributionButton}
                 <br>
                 <a
                   class="action-item contribution-unlink"
