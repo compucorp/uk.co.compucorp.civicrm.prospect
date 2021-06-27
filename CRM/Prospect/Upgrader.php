@@ -11,6 +11,9 @@ use CRM_Prospect_Setup_AddProspectCategoryWordReplacement as AddProspectCategory
 use CRM_Prospect_Setup_EnableRequiredComponents as EnableRequiredComponents;
 use CRM_Prospect_Uninstall_DeleteInstalledCustomGroups as DeleteInstalledCustomGroups;
 use CRM_Prospect_Uninstall_DeleteProspectMenus as DeleteProspectMenus;
+use CRM_Prospect_Setup_CaseCategoryInstanceSupport as CaseCategoryInstanceSupport;
+use CRM_Prospect_Setup_AddManageWorkflowMenu as AddManageWorkflowMenu;
+use CRM_Civicase_Setup_AddSingularLabels as AddSingularLabels;
 
 /**
  * Collection of upgrade steps.
@@ -54,6 +57,9 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
       new ProcessProspectCategoryForCustomGroupSupport(),
       new CreateProspectWorkflowCaseType(),
       new MoveCustomFieldsToWorkFlowCaseType(),
+      new CaseCategoryInstanceSupport(),
+      new AddManageWorkflowMenu(),
+      new AddSingularLabels(),
     ];
 
     foreach ($steps as $step) {
