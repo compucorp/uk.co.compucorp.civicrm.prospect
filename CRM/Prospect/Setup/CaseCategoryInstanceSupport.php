@@ -50,7 +50,7 @@ class CRM_Prospect_Setup_CaseCategoryInstanceSupport {
       'name' => CaseTypeCategoryHelper::PROSPECT_CASE_TYPE_CATEGORY_NAME,
     ])['values'][0];
 
-    CaseCategoryInstance::createInstanceTypeFor(
+    (new CaseCategoryInstance())->createInstanceTypeFor(
       $prospectCaseTypeCategory['value'],
       $prospectInstanceId
     );
