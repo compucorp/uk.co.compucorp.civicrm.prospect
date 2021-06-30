@@ -19,7 +19,7 @@ class CRM_Prospect_Hook_alterMailParams_SubjectCaseTypeCategoryProcessorTest ext
     $emailSubjectProcessor = new SubjectCaseTypeCategoryProcessor();
     $_REQUEST['caseid'] = $this->getProspect()['id'];
     $params['subject'] = "[case ] This is a test email subject case";
-    $emailSubjectProcessor->run($params, $context='');
+    $emailSubjectProcessor->run($params, $context = '');
     $prospectWordReplacements = (new SalesOpportunityTrackingWordReplacement())->get();
     $expectedSubject = "[{$prospectWordReplacements['case']} ] This is a test email subject case";
     $this->assertEquals($expectedSubject, $params['subject']);
@@ -27,9 +27,6 @@ class CRM_Prospect_Hook_alterMailParams_SubjectCaseTypeCategoryProcessorTest ext
 
   /**
    * Fabricates a case with given case category.
-   *
-   * @param int $caseTypeCategory
-   *   Case type category value.
    *
    * @return array
    *   Prospect data.
@@ -45,4 +42,5 @@ class CRM_Prospect_Hook_alterMailParams_SubjectCaseTypeCategoryProcessorTest ext
       ]
     );
   }
+
 }
