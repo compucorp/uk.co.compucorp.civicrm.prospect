@@ -5,7 +5,7 @@ use CRM_Prospect_ExtensionUtil as ExtensionUtil;
 /**
  * Class ProspectCategory.
  */
-class CRM_Prospect_WordReplacement_ProspectCategory implements CRM_Civicase_WordReplacement_BaseInterface {
+class CRM_Prospect_WordReplacement_SalesOpportunityTracking implements CRM_Civicase_WordReplacement_BaseInterface {
 
   /**
    * {@inheritdoc}
