@@ -26,7 +26,8 @@
         return;
       }
 
-      return ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
+      return CRM.checkPerm('administer CiviProspecting') &&
+        ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
         cases[0].prospect.isProspectConverted;
     };
 

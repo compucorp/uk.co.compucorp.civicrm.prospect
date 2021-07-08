@@ -10,6 +10,8 @@
 
 use CRM_Civicase_Helper_GlobRecursive as GlobRecursive;
 
+expose_prospect_permissions();
+
 /**
  * Get a list of JS files.
  */
@@ -21,6 +23,16 @@ function get_prospect_js_files() {
       'ang/prospect/*.js'
     )
   );
+}
+
+/**
+ * Expose permissions to frontend.
+ */
+function expose_prospect_permissions() {
+  Civi::resources()
+    ->addPermissions([
+      'administer CiviProspecting',
+    ]);
 }
 
 return [
