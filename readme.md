@@ -25,6 +25,9 @@ You can get the latest release of CiviProspect from [CiviCRM extension directory
 ## How to configure CiviProspect?
 CiviProspect does not require any additional configurations. For basic CiviCase configurations, please visit  [here](https://docs.civicrm.org/user/en/latest/case-management/set-up/) .
 
+### Technical Requirements
+* [CiviCase](https://github.com/compucorp/uk.co.compucorp.civicase/releases): version >= v1.0.0-beta.5, preferably the latest version. Exact CiviCRM and PHP versions can be found on the [CiviCase Repository](https://github.com/compucorp/uk.co.compucorp.civicase#technical-requirements).
+
 ## Support
 CiviCRM extension directory page: [https://civicrm.org/extensions/civiprospect](https://civicrm.org/extensions/civiprospect)
 
