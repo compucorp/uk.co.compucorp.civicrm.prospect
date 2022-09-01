@@ -28,7 +28,8 @@ class CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType {
     foreach ($result['values'] as $value) {
       civicrm_api3('CustomGroup', 'create', [
         'id' => $value['id'],
-        'extends_entity_column_value' => CRM_Core_DAO::VALUE_SEPARATOR . $workflowCaseType['id'] . CRM_Core_DAO::VALUE_SEPARATOR,
+        'extends' => 'Case',
+        'extends_entity_column_value' => [$workflowCaseType['id']],
       ]);
     }
   }
