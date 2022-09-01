@@ -9,6 +9,6 @@ fi
 chmod +x phpcs.phar
 
 # Clone Drupal Coder repo
-if [ ! -d civicrm/coder ]; then
-  git clone --depth 1 https://github.com/civicrm/coder.git civicrm/coder
+if [ ! -d drupal/coder ]; then
+  git clone --depth 1 --branch 8.3.13 https://git.drupalcode.org/project/coder.git drupal/coder
 fi
