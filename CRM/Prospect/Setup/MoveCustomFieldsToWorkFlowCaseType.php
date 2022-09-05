@@ -26,11 +26,7 @@ class CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType {
 
     $workflowCaseType = $this->getProspectWorkFlowCaseType();
     foreach ($result['values'] as $value) {
-      civicrm_api3('CustomGroup', 'create', [
-        'id' => $value['id'],
-        'extends' => 'Case',
-        'extends_entity_column_value' => [$workflowCaseType['id']],
-      ]);
+      $this->updateCustomGroup($value['id'], (array) $workflowCaseType['id']);
     }
   }
 
@@ -46,6 +42,27 @@ class CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType {
     ]);
 
     return $result;
+  }
+
+  /**
+   * Updates a custom group.
+   *
+   * We are using the custom group object here rather than the API because if
+   * this is updated via the API the `extends_entity_column_id` field will be
+   * set to NULL and this is needed to keep track of custom groups extending
+   * case categories.
+   *
+   * @param int $id
+   *   Custom group Id.
+   * @param array|null $entityColumnValues
+   *   Entity custom values for custom group.
+   */
+  protected function updateCustomGroup($id, $entityColumnValues) {
+    $cusGroup = new CRM_Core_BAO_CustomGroup();
+    $cusGroup->id = $id;
+    $entityColValue = is_null($entityColumnValues) ? 'null' : CRM_Core_DAO::VALUE_SEPARATOR . implode(CRM_Core_DAO::VALUE_SEPARATOR, $entityColumnValues) . CRM_Core_DAO::VALUE_SEPARATOR;
+    $cusGroup->extends_entity_column_value = $entityColValue;
+    $cusGroup->save();
   }
 
 }
