@@ -57,11 +57,11 @@ class CRM_Prospect_Setup_MoveCustomFieldsToWorkFlowCaseType {
    *   Entity custom values for custom group.
    */
   protected function updateCustomGroup($id, $entityColumnValues) {
-    $cusGroup = new CRM_Core_BAO_CustomGroup();
-    $cusGroup->id = $id;
+    $customGroup = new CRM_Core_BAO_CustomGroup();
+    $customGroup->id = $id;
     $entityColValue = is_null($entityColumnValues) ? 'null' : CRM_Core_DAO::VALUE_SEPARATOR . implode(CRM_Core_DAO::VALUE_SEPARATOR, $entityColumnValues) . CRM_Core_DAO::VALUE_SEPARATOR;
-    $cusGroup->extends_entity_column_value = $entityColValue;
-    $cusGroup->save();
+    $customGroup->extends_entity_column_value = $entityColValue;
+    $customGroup->save();
   }
 
 }
