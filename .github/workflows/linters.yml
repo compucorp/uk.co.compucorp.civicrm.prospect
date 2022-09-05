@@ -28,7 +28,7 @@ jobs:
       run: git fetch -n origin ${GITHUB_BASE_REF}
 
     - name: Run phpcs linter
-      run: git diff --diff-filter=d origin/${GITHUB_BASE_REF} --name-only -- '*.php' | xargs -r ./bin/phpcs.phar --standard=phpcs-ruleset.xml
+      run: git diff --diff-filter=d  origin/${GITHUB_BASE_REF} --name-only -- '*.php' | xargs -r ./bin/phpcs.phar --standard=phpcs-ruleset.xml
 
     - name: Run stylelint linter
       #This step will always run regardless of previous step's status
