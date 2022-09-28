@@ -3,6 +3,6 @@
   <description>CiviCRM Coder Ruleset</description>
   <rule ref="bin/civicrm/coder/coder_sniffer/Drupal"></rule>
   <exclude-pattern>tests/phpunit/bootstrap.php</exclude-pattern>
-  <exclude-pattern>membershipextras.civix.php</exclude-pattern>
-  <exclude-pattern>CRM/MembershipExtras/Upgrader/Base.php</exclude-pattern>
+  <exclude-pattern>prospect.civix.php</exclude-pattern>
+  <exclude-pattern>CRM/Prospect/Upgrader/Base.php</exclude-pattern>
 </ruleset>
