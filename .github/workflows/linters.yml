@@ -13,12 +13,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Read .nvmrc
+      run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+      id: nvm
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
     - name: Run npm install
-      shell: bash -l {0}
-      run: |
-        nvm install
-        nvm use
-        npm i
+      run: npm i
 
     - name: Fetch target branch
       run: git fetch -n origin ${GITHUB_BASE_REF}
