@@ -19,7 +19,7 @@ class CRM_Prospect_Helper_ProspectConverted {
    * @param int $paymentTypeId
    *   Payment Type ID.
    */
-  public function create($paymentEntityId, $paymentTypeId) {
+  public static function create($paymentEntityId, $paymentTypeId) {
     $caseId = CRM_Utils_Request::retrieve('caseId', 'Integer');
 
     if (!$caseId) {
