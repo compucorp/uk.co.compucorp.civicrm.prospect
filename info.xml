@@ -15,8 +15,8 @@
     <url desc="Support">https://github.com/compucorp/uk.co.compucorp.civicrm.prospect/blob/master/readme.md</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2023-01-20</releaseDate>
-  <version>3.0.0</version>
+  <releaseDate>2023-04-11</releaseDate>
+  <version>3.1.0</version>
   <develStage></develStage>
   <compatibility>
     <ver>5.51</ver>
