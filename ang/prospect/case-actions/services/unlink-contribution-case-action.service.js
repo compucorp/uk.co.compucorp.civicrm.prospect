@@ -15,7 +15,7 @@
      * @returns {boolean} if action is allowed
      */
     this.isActionAllowed = function (action, cases) {
-      if (!cases[0] || !cases[0].prospect.paymentInfo) {
+      if (!cases[0] || !cases[0].prospect || !cases[0].prospect.paymentInfo) {
         return;
       }
 
