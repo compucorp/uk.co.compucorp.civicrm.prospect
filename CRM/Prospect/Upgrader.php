@@ -18,7 +18,7 @@ use CRM_Civicase_Setup_AddSingularLabels as AddSingularLabels;
 /**
  * Collection of upgrade steps.
  */
-class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
+class CRM_Prospect_Upgrader extends CRM_Extension_Upgrader_Base {
 
   /**
    * Option Group names created by the extension.
@@ -162,27 +162,24 @@ class CRM_Prospect_Upgrader extends CRM_Prospect_Upgrader_Base {
    *
    * @inheritdoc
    */
-  public function enqueuePendingRevisions(CRM_Queue_Queue $queue) {
+  public function enqueuePendingRevisions() {
     $currentRevisionNum = (int) $this->getCurrentRevision();
     foreach ($this->getRevisions() as $revisionClass => $revisionNum) {
 
       if ($revisionNum <= $currentRevisionNum) {
         continue;
       }
-      $tsParams = [1 => $this->extensionName, 2 => $revisionNum];
-      $title = ts('Upgrade %1 to revision %2', $tsParams);
+      $title = ts('Upgrade %1 to revision %2', [
+        1 => $this->extensionName,
+        2 => $revisionNum,
+      ]);
       $upgradeTask = new CRM_Queue_Task(
         [get_class($this), 'runStepUpgrade'],
         [(new $revisionClass())],
         $title
       );
-      $queue->createItem($upgradeTask);
-      $setRevisionTask = new CRM_Queue_Task(
-        [get_class($this), '_queueAdapter'],
-        ['setCurrentRevision', $revisionNum],
-        $title
-      );
-      $queue->createItem($setRevisionTask);
+      $this->queue->createItem($upgradeTask);
+      $this->appendTask($title, 'setCurrentRevision', $revisionNum);
     }
   }
 
