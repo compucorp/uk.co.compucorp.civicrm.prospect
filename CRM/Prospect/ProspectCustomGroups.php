@@ -177,6 +177,21 @@ class CRM_Prospect_ProspectCustomGroups {
   }
 
   /**
+   * Gets the id of a custom field.
+   *
+   * @param string $field
+   *   Custom field.
+   *
+   * @return int
+   *   Id for custom field.
+   */
+  public function getIdOf(string $field): int {
+    $fields = $this->getFields();
+
+    return (int) $fields[$field]['id'];
+  }
+
+  /**
    * Gets the label of a custom field.
    *
    * @param string $field
@@ -317,6 +332,7 @@ class CRM_Prospect_ProspectCustomGroups {
 
     foreach ($customFieldData as $name => $value) {
       $this->fields[$name] = [
+        'id' => $value['id'],
         'machine_name' => $value['key'],
         'label' => $value['label'],
         'data_type' => $value['data_type'],
@@ -360,6 +376,7 @@ class CRM_Prospect_ProspectCustomGroups {
 
     foreach ($customFields['values'] as $customField) {
       $this->fieldsList[$customField['name']] = [
+        'id' => $customField['id'],
         'key' => 'custom_' . $customField['id'],
         'label' => $customField['label'],
         'data_type' => $customField['data_type'],

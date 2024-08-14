@@ -23,7 +23,7 @@ class CRM_Prospect_CustomFieldsFormBuilder {
     foreach ($fieldsToShow as $field) {
       $machineName = $prospectCustomFields->getMachineNameOf($field);
       $fieldKey = $machineName . '_-1';
-      $fieldId = substr($fieldKey, 7);
+      $fieldId = $prospectCustomFields->getIdOf($field);
       $isRequired = $prospectCustomFields->isRequired($field);
 
       CRM_Core_BAO_CustomField::addQuickFormElement($fieldsForm, $fieldKey, $fieldId, $isRequired);
@@ -69,8 +69,11 @@ class CRM_Prospect_CustomFieldsFormBuilder {
       ]);
 
       $customGroupId = $customGroupResult['id'];
-    } catch (CiviCRM_API3_Exception $e) {}
+    }
+    catch (CiviCRM_API3_Exception $e) {
+    }
 
     return $customGroupId;
   }
+
 }
