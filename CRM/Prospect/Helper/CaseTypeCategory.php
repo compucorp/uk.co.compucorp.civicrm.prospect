@@ -18,12 +18,12 @@ class CRM_Prospect_Helper_CaseTypeCategory {
   /**
    * Prospect category label.
    */
-  const PROSPECT_CASE_TYPE_CATEGORY_LABEL = 'Prospecting';
+  const PROSPECT_CASE_TYPE_CATEGORY_LABEL = 'Prospects';
 
   /**
    * Prospect category singular label.
    */
-  const PROSPECT_CASE_TYPE_CATEGORY_SINGULAR_LABEL = 'Prospecting';
+  const PROSPECT_CASE_TYPE_CATEGORY_SINGULAR_LABEL = 'Prospect';
 
   /**
    * Checks if Case Type ID/Name belongs to Prospect Category.
