@@ -267,19 +267,13 @@ class CRM_Prospect_ProspectCustomGroups {
     // from Request array and then convert it into CiviCRM date format.
     if ($dataType === 'Date') {
       if (method_exists('CRM_Utils_Request', 'retrieveValue')) {
-        $dateArray = [
-          'value' => CRM_Utils_Request::retrieveValue($fieldKey, 'String', NULL, FALSE, CRM_Utils_Request::exportValues()),
-        ];
+        $date = CRM_Utils_Request::retrieveValue($fieldKey, 'String', NULL, FALSE, CRM_Utils_Request::exportValues());
       }
       else {
-        $dateArray = [
-          'value' => CRM_Utils_Array::value($fieldKey, CRM_Utils_Request::exportValues()),
-        ];
+        $date = CRM_Utils_Array::value($fieldKey, CRM_Utils_Request::exportValues());
       }
 
-      CRM_Utils_Date::convertToDefaultDate($dateArray, 1, 'value');
-
-      $value = $dateArray['value'];
+      $value = ($date !== NULL && $date !== '') ? CRM_Utils_Date::customFormat(CRM_Utils_Date::processDate($date), '%Y%m%d') : NULL;
     }
 
     return $value;
