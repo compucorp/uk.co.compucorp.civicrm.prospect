@@ -71,7 +71,7 @@ class CRM_Prospect_Hook_Post_UpdateProspectFields {
         'Substatus',
       ]);
     }
-    catch (CiviCRM_API3_Exception $e) {
+    catch (CRM_Core_Exception $e) {
       CRM_Core_Session::setStatus(
         ts('Cannot find Case entry. The Case didn\'t get created properly or there is other issue with retrieving the Case.'),
         ts('Error updating Expectation value'),

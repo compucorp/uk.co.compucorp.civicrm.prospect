@@ -70,7 +70,7 @@ class CRM_Prospect_CustomFieldsFormBuilder {
 
       $customGroupId = $customGroupResult['id'];
     }
-    catch (CiviCRM_API3_Exception $e) {
+    catch (CRM_Core_Exception $e) {
     }
 
     return $customGroupId;

@@ -106,7 +106,7 @@ class CRM_Prospect_BAO_ProspectConverted extends CRM_Prospect_DAO_ProspectConver
       $result = civicrm_api3('Contribution', 'getsingle', [
         'id' => $id,
       ]);
-    } catch (CiviCRM_API3_Exception $e) {}
+    } catch (CRM_Core_Exception $e) {}
 
     return $result;
   }
@@ -125,7 +125,7 @@ class CRM_Prospect_BAO_ProspectConverted extends CRM_Prospect_DAO_ProspectConver
       $result = civicrm_api3('Pledge', 'getsingle', [
         'id' => $id,
       ]);
-    } catch (CiviCRM_API3_Exception $e) {}
+    } catch (CRM_Core_Exception $e) {}
 
     return $result;
   }

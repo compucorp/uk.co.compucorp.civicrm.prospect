@@ -41,7 +41,7 @@ class CRM_Prospect_Form_Handler_PaymentEntityUpdate {
 
       $form->assign('caseID', $prospectConverted['prospect_case_id']);
       $form->assign('prospectFinancialInformationFields', new CRM_Prospect_prospectFinancialInformationFields($prospectConverted['prospect_case_id']));
-    } catch (CiviCRM_API3_Exception $e) {}
+    } catch (CRM_Core_Exception $e) {}
   }
 
   /**
