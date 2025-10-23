@@ -14,7 +14,7 @@
  * @return array
  *   API result descriptor
  *
- * @throws API_Exception
+ * @throws CRM_Core_Exception
  */
 function civicrm_api3_prospect_converted_create(array $params) {
   return _civicrm_api3_basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params);
@@ -29,7 +29,7 @@ function civicrm_api3_prospect_converted_create(array $params) {
  * @return array
  *   API result descriptor
  *
- * @throws API_Exception
+ * @throws CRM_Core_Exception
  */
 function civicrm_api3_prospect_converted_delete(array $params) {
   return _civicrm_api3_basic_delete(_civicrm_api3_get_BAO(__FUNCTION__), $params);
@@ -44,7 +44,7 @@ function civicrm_api3_prospect_converted_delete(array $params) {
  * @return array
  *   API result descriptor
  *
- * @throws API_Exception
+ * @throws CRM_Core_Exception
  */
 function civicrm_api3_prospect_converted_get(array $params) {
   return _civicrm_api3_basic_get(_civicrm_api3_get_BAO(__FUNCTION__), $params);
@@ -74,7 +74,7 @@ function _civicrm_api3_prospect_converted_getpaymentinfo_spec(array &$params) {
  * @return array
  *   API result descriptor
  *
- * @throws API_Exception
+ * @throws CRM_Core_Exception
  */
 function civicrm_api3_prospect_converted_getpaymentinfo(array $params) {
   $prospectConverted = CRM_Prospect_BAO_ProspectConverted::findByCaseID($params['prospect_case_id']);
