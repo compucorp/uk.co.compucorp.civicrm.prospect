@@ -14,7 +14,7 @@ class CRM_Prospect_Service_SalesOpportunityTrackingMenu extends CRM_Civicase_Ser
   public function getSubmenus(array $caseTypeCategory, array $permissions = NULL) {
     $singularLabelForMenu = ucfirst(strtolower($caseTypeCategory['singular_label']));
     $caseTypeCategoryName = $caseTypeCategory['name'];
-    $labelForMenu = ucfirst(strtolower($caseTypeCategoryName));
+    $labelForMenu = ucfirst(strtolower($caseTypeCategory['label']));
     $categoryId = civicrm_api3('OptionValue', 'getsingle', [
       'option_group_id' => 'case_type_categories',
       'name' => $caseTypeCategoryName,
