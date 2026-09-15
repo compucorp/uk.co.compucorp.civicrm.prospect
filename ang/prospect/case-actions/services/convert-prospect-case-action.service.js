@@ -1,4 +1,4 @@
-(function (angular, $, _) {
+(function (angular, $) {
   var module = angular.module('prospect');
 
   module.service('ConvertProspectCaseAction', ConvertProspectCaseAction);
@@ -19,8 +19,7 @@
         return;
       }
 
-      var isPledgeOrContribution = _.includes(
-        ['contribution', 'pledge'], action.type);
+      var isPledgeOrContribution = ['contribution', 'pledge'].includes(action.type);
 
       return isPledgeOrContribution &&
         ProspectConverted.checkIfSalesOpportunityTrackingWorkflow(cases[0]['case_type_id.case_type_category']) &&
@@ -51,4 +50,4 @@
       };
     };
   }
-})(angular, CRM.$, CRM._);
+})(angular, CRM.$);

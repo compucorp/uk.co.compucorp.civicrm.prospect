@@ -1,4 +1,4 @@
-(function (angular, $, _) {
+(function (angular, $) {
   var module = angular.module('prospect');
 
   module.service('ViewPledgeContributionCaseAction', ViewPledgeContributionCaseAction);
@@ -48,4 +48,4 @@
       return cases[0].prospect.paymentInfo.payment_url + '&cid=' + contactID;
     };
   }
-})(angular, CRM.$, CRM._);
+})(angular, CRM.$);
