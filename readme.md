@@ -40,6 +40,12 @@ CiviProspect is built against our interface, which is why it requires this exten
 * [Shoreditch](https://github.com/civicrm/org.civicrm.shoreditch/releases): version >= v0.1-alpha32, preferably the latest version.
 * [User Menu](https://github.com/compucorp/uk.co.compucorp.usermenu/releases): latest version.
 
+Note that **CiviCase and User Menu are not listed in the CiviCRM extension directory** — they must be
+downloaded from GitHub. Searching civicrm.org for "CiviCase" returns a listing called *CiviCase v5*,
+which is [a different, unmaintained extension](https://github.com/civicrm/org.civicrm.civicase) (last
+updated 2021) by a different author. It is not this one, and installing it will not satisfy
+CiviProspect's dependency.
+
 ### Already included in CiviCRM
 
 * `org.civicrm.afform` (Form Core) and its own dependency `authx` ship with CiviCRM and are enabled by default on recent versions. Check **Administer → System Settings → Extensions** — you will usually find them installed already, and you only need to enable them if they are not.
@@ -94,6 +100,10 @@ You can also get the latest release of CiviProspect from the [CiviCRM extension 
 
 ## How to configure CiviProspect?
 CiviProspect does not require any additional configurations. For basic CiviCase configurations, please visit  [here](https://docs.civicrm.org/user/en/latest/case-management/set-up/) .
+
+Converting a prospect into a contribution or a pledge relies on the **CiviContribute** and **CiviPledge**
+core components. CiviPledge is not enabled on every site, so if the pledge conversion option is missing,
+check it is turned on under **Administer → System Settings → Enable Components**.
 
 ## Support
 CiviCRM extension directory page: [https://civicrm.org/extensions/civiprospect](https://civicrm.org/extensions/civiprospect)
