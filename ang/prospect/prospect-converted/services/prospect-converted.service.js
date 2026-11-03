@@ -1,4 +1,4 @@
-(function (angular, $, _) {
+(function (angular, $) {
   var module = angular.module('prospect');
 
   module.service('ProspectConverted', ProspectConverted);
@@ -50,4 +50,4 @@
       return instanceName === ProspectGlobalValues.instanceName;
     };
   }
-})(angular, CRM.$, CRM._);
+})(angular, CRM.$);

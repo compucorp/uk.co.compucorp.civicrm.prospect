@@ -1,4 +1,4 @@
-(function (angular, $, _) {
+(function (angular, $) {
   // Declare a list of dependencies.
   angular.module('prospect', CRM.angRequires('prospect'));
-})(angular, CRM.$, CRM._);
+})(angular, CRM.$);
