@@ -64,7 +64,7 @@ class CRM_Prospect_Setup_AddSalesOpportunityTrackingWordReplacement {
     if (empty($optionValue)) {
       return;
     }
-    CRM_Core_BAO_OptionValue::del($optionValue['id']);
+    CRM_Core_BAO_OptionValue::deleteRecord(['id' => $optionValue['id']]);
   }
 
 }
