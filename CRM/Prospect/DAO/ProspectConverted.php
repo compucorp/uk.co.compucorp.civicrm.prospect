@@ -102,33 +102,33 @@ class CRM_Prospect_DAO_ProspectConverted extends CRM_Core_DAO {
    */
   static function &fields() {
     if (!isset(Civi::$statics[__CLASS__]['fields'])) {
-      Civi::$statics[__CLASS__]['fields'] = array(
-        'id' => array(
+      Civi::$statics[__CLASS__]['fields'] = [
+        'id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
           'description' => 'Unique ID',
           'required' => true,
-        ) ,
-        'prospect_case_id' => array(
+        ] ,
+        'prospect_case_id' => [
           'name' => 'prospect_case_id',
           'type' => CRM_Utils_Type::T_INT,
           'description' => 'FK to Case (Prospect)',
           'required' => true,
           'FKClassName' => 'CRM_Case_DAO_Case',
-        ) ,
-        'payment_entity_id' => array(
+        ] ,
+        'payment_entity_id' => [
           'name' => 'payment_entity_id',
           'type' => CRM_Utils_Type::T_INT,
           'description' => 'ID of Contribution / Pledge entity',
           'required' => true,
-        ) ,
-        'payment_type_id' => array(
+        ] ,
+        'payment_type_id' => [
           'name' => 'payment_type_id',
           'type' => CRM_Utils_Type::T_INT,
           'description' => 'Payment type (1 - Contribution, 2 - Pledge)',
           'required' => true,
-        ) ,
-      );
+        ] ,
+      ];
       CRM_Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);
     }
     return Civi::$statics[__CLASS__]['fields'];
@@ -169,7 +169,7 @@ class CRM_Prospect_DAO_ProspectConverted extends CRM_Core_DAO {
    * @return array
    */
   static function &import($prefix = false) {
-    $r = CRM_Core_DAO_AllCoreTables::getImports(__CLASS__, 'prospect_converted', $prefix, array());
+    $r = CRM_Core_DAO_AllCoreTables::getImports(__CLASS__, 'prospect_converted', $prefix, []);
     return $r;
   }
   /**
@@ -180,7 +180,7 @@ class CRM_Prospect_DAO_ProspectConverted extends CRM_Core_DAO {
    * @return array
    */
   static function &export($prefix = false) {
-    $r = CRM_Core_DAO_AllCoreTables::getExports(__CLASS__, 'prospect_converted', $prefix, array());
+    $r = CRM_Core_DAO_AllCoreTables::getExports(__CLASS__, 'prospect_converted', $prefix, []);
     return $r;
   }
 }
